@@ -162,7 +162,7 @@ class Event
   end
 
   def self.get_starting_events(datetime, zone_offset, country, subkasts, minimum, eventsPerDay, topRanked)
-    listEvents = self.get_enough_events_from_day(datetime, zone_offset, country, subkasts, minimum, eventsPerDay)
+    listEvents = self.get_starting_events_query(datetime, zone_offset, country, subkasts, minimum, eventsPerDay)
     topEvents = self.top_ranked(topRanked, datetime, datetime + 7.days, zone_offset, country, subkasts)
     events = listEvents.concat topEvents
     events.uniq!
@@ -202,7 +202,28 @@ class Event
     ).any_in({subkast: subkasts}).to_a
 
     sorted_possible_events = possible_events.sort_by { |event| - (event.upvote_count.nil? ? 0 : event.upvote_count) }
+    massage_events(sorted_possible_events, possible_events, zone_offset, eventsPerDay, minimum)
+  end
 
+  def self.get_starting_events_query(datetime, zone_offset, country, subkasts, minimum, eventsPerDay)
+    date = (datetime - zone_offset.minutes).beginning_of_day
+
+    possible_events = self.any_of(
+      { is_all_day: false, time_format: '', :datetime.gte => datetime, location_type: 'national', country: country, :datetime.lte => datetime + 7.days},
+      { is_all_day: false, time_format: '', :datetime.gte => datetime, location_type: 'international', :datetime.lte => datetime + 7.days},
+      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'national', country: country , :local_date.lte => date + 7.days },
+      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'international', :local_date.lte => date + 7.days },
+      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'national', country: country, :local_date.lte => date + 7.days },
+      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'international', :local_date.lte => date + 7.days },
+      { is_all_day: true, :local_date.gte => date, location_type: 'national', country: country, :local_date.lte => date + 7.days },
+      { is_all_day: true, :local_date.gte => date, location_type: 'international', :local_date.lte => date + 7.days },
+    ).any_in({subkast: subkasts}).to_a
+
+    sorted_possible_events = possible_events.sort_by { |event| - (event.upvote_count.nil? ? 0 : event.upvote_count) }
+    massage_events(sorted_possible_events, possible_events, zone_offset, eventsPerDay, minimum)
+  end
+
+  def self.massage_events(sorted_possible_events, possible_events, zone_offset, eventsPerDay, minimum)
     events = []
 
     dates = possible_events.collect { |event| event.relative_date(zone_offset) }
