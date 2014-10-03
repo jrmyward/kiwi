@@ -4,6 +4,9 @@ FK.App.module "Events.EventPage", (EventPage, App, Backbone, Marionette, $, _) -
 
   @addInitializer (event) ->
     @event = event
+    @event.fetch(success: =>
+      @eventCardView.render()
+    )
     @loadSocialNetworking()
     if @event.get('location_type') is 'national'
       @event.set 'country_full_name', App.request('countryName', @event.get('country'))
