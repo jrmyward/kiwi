@@ -100,7 +100,6 @@ task :deploy => :environment do
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
-    invoke :'rails:assets_precompile'
   end
 end
 
@@ -109,7 +108,6 @@ task :deploy_assets => :environment do
     notify("#{ENV['host']} - deploying assets! ", 'green')
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
-    invoke :'bundle:install'
     invoke :'rails:assets_precompile'
   end
 end
