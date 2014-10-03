@@ -110,6 +110,13 @@ class EventsController < ApplicationController
 
   def startup_events
     @events = Event.get_starting_events(DateTime.parse(params[:datetime]), params[:zone_offset].to_i, params[:country], params[:subkasts], params[:howManyEventsMinimum].to_i, params[:howManyEventsPerDay].to_i, 0)
+    @reminders = {}
+    event_ids = @events.map { |e| e._id }
+    Reminder.where(user: current_user).in(event_id: event_ids).entries.each do |reminder|
+      @reminders[reminder.event_id.to_s] = [] if @reminders[reminder.event_id.to_s].blank?
+      @reminders[reminder.event_id.to_s] << reminder
+    end
+
   end
 
   def events_after_date

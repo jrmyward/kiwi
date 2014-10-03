@@ -8,8 +8,9 @@ json.array!(@events) do |event|
   json.set! :upvote_allowed, user_signed_in?
   if user_signed_in?
     json.set! :have_i_upvoted, event.have_i_upvoted(current_user.username)
-#    json.reminders event.reminders_for_user(current_user), partial: 'reminders/reminder', as: :reminder
-    json.reminders []
+    if @reminders[event._id.to_s].present?
+      json.reminders @reminders[event._id.to_s], partial: 'reminders/reminder', as: :reminder
+    end
   end
   json.set! :upvotes, event.how_many_upvotes()
 end
