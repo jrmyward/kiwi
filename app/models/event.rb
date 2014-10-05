@@ -30,6 +30,8 @@ class Event
   field :subkast, type: String
   has_many :reminders
   has_many :comments
+  index({"local_date":1})
+  index({"datetime":1})
 
   validates_length_of :name, minimum: 1, maximum: 100
 
