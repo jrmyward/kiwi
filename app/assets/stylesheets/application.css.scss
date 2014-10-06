@@ -1025,9 +1025,10 @@ form.event_form {
 
   .event-description-container {
     margin:15px 0px;
-    overflow: scroll;
+    overflow-x: hidden;
     .event-description {
       color:#666;
+      word-wrap: break-word;
     }
     p {
       margin: 0px;
