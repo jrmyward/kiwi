@@ -106,6 +106,7 @@
 }
 
 /* USERVOICE */
+
 a.uservoice {
 	display: block;
 	position: fixed;
@@ -115,11 +116,10 @@ a.uservoice {
 	height: 110px;
 	background: transparent url(asset-path('feedback.png')) no-repeat;
 	opacity: 0.8;
-		&:hover {
-			opacity: 1;
-		}
+	&:hover {
+		opacity: 1;
+	}
 }
-
 
 /* GENERAL STYLES */
 
@@ -131,6 +131,36 @@ body, h1, h2, h6, .h1, .h2, .h4, .h6, p, a, span, label, button {
 }
 h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col-lg-3, .btn-more {
 	font-family: 'Open Sans', Helvetica, sans-serif !important;
+}
+.center {
+	text-align: center;
+	p {
+		margin-top: 20px;
+	}
+}
+body.not-found {
+	background: #DBCBB6;
+	h1 {
+		text-align: center;
+		color: #FFF;
+		font-weight: bold;
+	}
+	.slug-404 {
+		background: transparent url(asset-path('404.png')) no-repeat;
+		background-size: 100%;
+		width: 100%;
+		min-height: 400px;
+	}
+	h3 {
+		text-align: center;
+		a {
+			text-decoration: underline;
+			color: #333;
+		}
+	}
+	.fa-spinner {
+		display: none;
+	}
 }
 
 /* BUTTON STYLES */
@@ -1158,43 +1188,24 @@ form.event_form {
 		margin-right: 5px;
 	}
 }
-#mobile-sidebar {
-	padding: 10px 0;
-	margin-top: -10px;
-	display: none;
-	.filter {
-		border: none;
-		padding: 0;
+
+/* USER EDIT PAGE */
+
+div.label {
+	font-weight: bold;
+}
+.subkast-edit-container {
+	.row {
+		margin-left: 0;
 	}
-	.sidebar {
-		margin-top: 0;
-	}
-	h5 {
-		font-size: 13px;
-		line-height: 13px;
-		padding: 0 0;
-		margin: 0;
-	}
-	.country-filter-title {
-		float: left;
-	}
-	.country-filter {
-		width: auto;
-	}
-	.checkbox	{
-		margin: 0;
-	}
-	.form-control {
-		margin-bottom: 5px;
-	}
-	#subkast-filter {
-		border-bottom: none;
-		margin-bottom: 0;
-	}
-	#sidebar-social {
-		display: none;
+	div.subkast-list-container {
+		margin-top: 20px;
+		margin-bottom: 70px;
 	}
 }
+
+/* FOOTER */
+
 #footer {
 	position: fixed;
 	bottom: 0;
@@ -1221,106 +1232,21 @@ form.event_form {
 		}
 	}
 }
-body.not-found {
-	background: #DBCBB6;
-	h1 {
-		text-align: center;
-		color: #FFF;
-		font-weight: bold;
-	}
-	.slug-404 {
-		background: transparent url(asset-path('404.png')) no-repeat;
-		background-size: 100%;
-		width: 100%;
-		min-height: 400px;
-	}
-	h3 {
-		text-align: center;
-		a {
-			text-decoration: underline;
-			color: #333;
-		}
-	}
-	.fa-spinner {
-		display: none;
-	}
-}
 
-@media (max-width: 991px) {
-	body .navbar ul.navbar-right {
-		li {
-			padding: 5px 0;
-		}
-	}
-	.navbar-container {
-		a.logo {
-			margin: -2px 20px;
-			position: absolute;
-			display: block;
-			left: 18px;
-			width: 256px;
-			height: 52px;
-			background: transparent url(asset-path('forekast_logo.png')) no-repeat;
-			background-size: 80%;
-			&:hover {
-				opacity: 1;
-			}
-		}
-		.forekast-navbar {
-			.navbar-nav .active a.add-new,
-			.navbar-nav a.add-new {
-				border: 1px solid #606880;
-				color: #FFF;
-				background-color: #3E4252;
-				margin: 10px 0 0 0;
-				font-weight: 100;
-				background-color: #6E7690;
-			}
-		}
-	}
-	.navbar {
-		margin-bottom: 20px;
-		.checkbox-container {
-			padding-bottom: 20px;
-		}
-	}
-	.navbar-collapse.in {
-		overflow: visible;
-	}
-	.navbar-collapse {
-		max-height: auto;
-	}
-	#mobile-sidebar {
-		display: block;
-		.sidebar {
-			padding-bottom: 10px;
-		}
-		#sidebar-event-list {
-			display: none;
-		}
-	}
-	#sidebar-region {
-		display: none;
-	}
-}
-#footer {
-	.footer-text {
-		color: #333A3D;
-		font-size: 13px;
-		font-weight: 100;
-		text-align: center;
-		a {
-			font-size: 13px;
-			color: #666;
-			:hover {
-				color: #AAA;
-			}
-		}
+/* LOGIN / FORMS */
+
+.login-container {
+	width: 100%;
+	margin: 0;
+	.login-subcontainer {
+		margin: 0 auto;
+		float: none;
+		padding: 0;
 	}
 }
 .formlegend {
 	border-top: 1px solid #666;
-	margin-bottom: 20px;
+	margin: 30px 0 20px;
 	div {
 		text-align: center;
 		background: #FFF;
@@ -1331,19 +1257,43 @@ body.not-found {
 		font-weight: bold;
 	}
 }
-.center {
-	text-align: center;
-	p {
-		margin-top: 20px;
+.sign-up {
+	width: 400px;
+	margin: 0 auto;
+	.form-group {
+		label.control-label {
+			width: 100px;
+			text-align: left;
+			padding-left: 0;
+			padding-right: 0;
+		}
+		div {
+			width: 300px;
+			padding: 0;
+			margin: 0;
+			text-align: center;
+		}
+		div.remember-me {
+			width: 300px;
+			padding: 0;
+			margin: 0 0 0 100px;
+			text-align: left;
+		}
 	}
+}
+.forgot-password {
+	text-align: center;
 }
 .omniauth-login {
 	width: 100%;
+	height: 80px;
 	margin: 20px auto;
 	padding-left: 0;
 	li {
 		list-style: none;
-		margin-bottom: 20px;
+		width: 48%;
+		float: left;
+		height: 80px;
 		a {
 			font-weight: lighter;
 			color: #FFF;
@@ -1353,7 +1303,7 @@ body.not-found {
 		}
 		a span.txt {
 			display: block;
-			padding: 30px 0;
+			line-height: 80px;
 			text-indent: 20px;
 		}
 		span.icon {
@@ -1365,6 +1315,9 @@ body.not-found {
 			padding: 10px 20px 10px 20px;
 		}
 	}
+	li.twitter {
+		margin-right: 2%;
+	}
 	li.twitter a {
 		background: #90C7E7;
 	}
@@ -1372,8 +1325,12 @@ body.not-found {
 		background: darken(#90C7E7, 5%);
 		text-decoration: none;
 	}
+	li.facebook {
+		margin-left: 2%;
+	}
 	li.facebook a {
 		background: #7690BC;
+		margin-left: 2%;
 		span.icon {
 			padding-left: 15px;
 			padding-right: 25px;
@@ -1382,21 +1339,6 @@ body.not-found {
 	li.facebook a:hover {
 		background: darken(#7690BC, 5%);
 		text-decoration: none;
-	}
-}
-
-/* USER EDIT PAGE */
-
-div.label {
-	font-weight: bold;
-}
-.subkast-edit-container {
-	.row {
-		margin-left: 0;
-	}
-	div.subkast-list-container {
-		margin-top: 20px;
-		margin-bottom: 70px;
 	}
 }
 
@@ -1515,7 +1457,103 @@ body.dark .container {
 		width: 56.2%;
 	}
 }
+
+/* RESPONSIVE DESIGN */
+
+#mobile-sidebar {
+	padding: 10px 0;
+	margin-top: -10px;
+	display: none;
+	.filter {
+		border: none;
+		padding: 0;
+	}
+	.sidebar {
+		margin-top: 0;
+	}
+	h5 {
+		font-size: 13px;
+		line-height: 13px;
+		padding: 0 0;
+		margin: 0;
+	}
+	.country-filter-title {
+		float: left;
+	}
+	.country-filter {
+		width: auto;
+	}
+	.checkbox	{
+		margin: 0;
+	}
+	.form-control {
+		margin-bottom: 5px;
+	}
+	#subkast-filter {
+		border-bottom: none;
+		margin-bottom: 0;
+	}
+	#sidebar-social {
+		display: none;
+	}
+}
+
 @media (max-width: 991px) {
+	body .navbar ul.navbar-right {
+		li {
+			padding: 5px 0;
+		}
+	}
+	.navbar-container {
+		a.logo {
+			margin: -2px 20px;
+			position: absolute;
+			display: block;
+			left: 18px;
+			width: 256px;
+			height: 52px;
+			background: transparent url(asset-path('forekast_logo.png')) no-repeat;
+			background-size: 80%;
+			&:hover {
+				opacity: 1;
+			}
+		}
+		.forekast-navbar {
+			.navbar-nav .active a.add-new,
+			.navbar-nav a.add-new {
+				border: 1px solid #606880;
+				color: #FFF;
+				background-color: #3E4252;
+				margin: 10px 0 0 0;
+				font-weight: 100;
+				background-color: #6E7690;
+			}
+		}
+	}
+	.navbar {
+		margin-bottom: 20px;
+		.checkbox-container {
+			padding-bottom: 20px;
+		}
+	}
+	.navbar-collapse.in {
+		overflow: visible;
+	}
+	.navbar-collapse {
+		max-height: auto;
+	}
+	#mobile-sidebar {
+		display: block;
+		.sidebar {
+			padding-bottom: 10px;
+		}
+		#sidebar-event-list {
+			display: none;
+		}
+	}
+	#sidebar-region {
+		display: none;
+	}
 	body.dark .container dl.about-list dd {
 		font-size: 16px;
 	}
