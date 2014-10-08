@@ -446,6 +446,9 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 	.image-container {
 		margin-right: 15px;
 		margin-bottom: 10px;
+		width: 80px;
+		height: 60px;
+		overflow: hidden;
 	}
 	.meta-container {
 		width: 78%;
@@ -950,6 +953,7 @@ form.event_form {
 		max-width: 430px;
 		margin: 0 auto;
 		text-align: left;
+		overflow: hidden;
 	}
 	.event-image-container img {
 		max-width: 100%;
