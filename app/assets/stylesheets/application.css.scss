@@ -1203,13 +1203,13 @@ form.event_form {
 	opacity: 0.9;
 	border-top: 1px solid #AAA;
 	.footer-text {
-		padding: 5px 20px 5px 0;
+		padding: 5px 15px 5px 0;
 		color: #333A3D;
-		font-size: 14px;
+		font-size: 13px;
 		float: right;
 		font-weight: 100;
 		a {
-			font-size: 14px;
+			font-size: 13px;
 			color: #666;
 			:hover {
 				color: #222;
@@ -1217,6 +1217,7 @@ form.event_form {
 		}
 		i {
 			padding: 0 0 0 5px;
+			font-size: 14px;
 		}
 	}
 }
@@ -1305,11 +1306,11 @@ body.not-found {
 #footer {
 	.footer-text {
 		color: #333A3D;
-		font-size: 14px;
+		font-size: 13px;
 		font-weight: 100;
 		text-align: center;
 		a {
-			font-size: 14px;
+			font-size: 13px;
 			color: #666;
 			:hover {
 				color: #AAA;
