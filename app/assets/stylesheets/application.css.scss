@@ -170,7 +170,7 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 /* NAVBAR */
 
 .navbar-title {
-	color: white;
+	color: #FFF;
 	padding-right: 315px;
 	margin-top: 16px;
 	display: none;
@@ -178,6 +178,7 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 }
 .navbar-container { 
 	.navbar-collapse {
+		padding: 0 !important;
 		.tagline { 
 			color: #FFF;
 			font-size: 18px;
@@ -217,7 +218,7 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 	height: 57px;
 }
 .navbar-container {
-	forekast-navbar {
+	.forekast-navbar {
 		border-width: 0;
 		padding: 0 15px 0 0;
 	}
@@ -251,7 +252,7 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 		}
 		li>.dropdown-toggle {
 			background-color: #3E4252;
-			color: white;
+			color: #FFF;
 			&:hover {
 				border-bottom: 1px solid #3E4252;
 				background: #3E4252;
@@ -270,7 +271,7 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 		.navbar-nav .active a.add-new,
 		.navbar-nav a.add-new {
 			border: 1px solid #606880;
-			color: white;
+			color: #FFF;
 			background-color: #3E4252;
 			margin: 11px 0 0 0;
 			font-weight: 100;
@@ -289,8 +290,23 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 				a {
 					background-color: #EBEBEB;
 					&:hover {
-						background-color: white;
+						background-color: #FFF;
 					}
+				}
+			}
+		}
+		.dropdown-menu {
+			padding: 0;
+			margin: 0;
+			li {
+				a {
+					margin: 0;
+					padding: 15px;
+				}
+			}
+			li:first-child {
+				a {
+					border-bottom: 1px solid #F5F5F5;
 				}
 			}
 		}
@@ -309,7 +325,7 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 			font-weight: 600;
 		}
 		.subkast {
-			color: white;
+			color: #FFF;
 			font-size: 16px;
 			font-weight: 600;
 		}
@@ -516,7 +532,7 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 		border-radius: 4px;
 		span,
 		label {
-			color: white;
+			color: #FFF;
 			font-size: 12px;
 		}
 		span {
@@ -655,7 +671,7 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 				margin-left: 10px;
 				line-height: 1.24;
 				margin-bottom: 6px;
-				white-space: nowrap;
+				#FFF-space: nowrap;
 				overflow: hidden;
 				text-overflow: ellipsis;
 			}
@@ -888,7 +904,7 @@ form.event_form {
 					height: 20px;
 					width: 20px;
 					border-radius: 10px;
-					background-color: white;
+					background-color: #FFF;
 					border: solid 1px #CCC;
 					top: -6px;
 					cursor: pointer;
@@ -1015,7 +1031,7 @@ form.event_form {
 			.event-tool {
 				&.btn {
 					height: 18px;
-					color: white;
+					color: #FFF;
 					text-decoration: none;
 				}
 				font-size: 12px;
@@ -1196,7 +1212,7 @@ body.not-found {
 	background: #DBCBB6;
 	h1 {
 		text-align: center;
-		color: white;
+		color: #FFF;
 		font-weight: bold;
 	}
 	.slug-404 {
@@ -1241,7 +1257,7 @@ body.not-found {
 			.navbar-nav .active a.add-new,
 			.navbar-nav a.add-new {
 				border: 1px solid #606880;
-				color: white;
+				color: #FFF;
 				background-color: #3E4252;
 				margin: 10px 0 0 0px;
 				font-weight: 100;
