@@ -261,7 +261,6 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 		.navbar-right li a {
 			margin: 11px 0 0 10px;
 		}
-		/* Override strong bootstrap styles */
 		.dropdown-toggle:hover {
 			border-bottom: 1px solid #606880;
 		}
@@ -407,7 +406,7 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 	.upvote-container {
 		height: 60px;
 		margin-right: 14px;
-		width: 14px;
+		width: 20px;
 		color: #666;
 		text-align: center;
 		cursor: pointer;
@@ -417,6 +416,7 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 		i {
 			padding-top: 5px;
 			cursor: pointer;
+			text-align: center;
 			&.glyphicon-ok {
 				font-size: 15px;
 				color: $active;
@@ -434,6 +434,7 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 			font-size: 18px;
 			line-height: 1;
 			font-weight: 700;
+			text-align: center;
 		}
 	}
 	img {
