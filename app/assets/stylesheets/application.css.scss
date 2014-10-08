@@ -214,7 +214,7 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 	}
 }
 .navbar-indom-container {
-	height: 60px;
+	height: 57px;
 }
 .navbar-container {
 	forekast-navbar {
@@ -296,9 +296,12 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 		}
 	}
 	.subkast-navbar {
-		top: 54px;
-		min-height: 24px;
-		padding: 2px 0px 2px 36px;
+		top: 57px;
+		min-height: initial;
+		height: 32px;
+		line-height: 32px;
+		border: 0;
+		padding: 0 0 0 20px;
 		background-color: #B6C8CF;
 		.subkast-header {
 			color: #6A7E97;
@@ -446,6 +449,8 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 	}
 	.meta-container {
 		width: 78%;
+		padding: 0 0 5px;
+		margin: -4px 0 0;
 		.event-meta {
 			font-size: 14px;
 			color: #999;
@@ -470,8 +475,8 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 .event {
 	.reminder-container {
 		position: absolute;
-		top: 25px;
-		right: 20px;
+		top: 15px;
+		right: 15px;
 		width: 14px;
 		height: 20px;
 	}
