@@ -183,7 +183,7 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 			font-size: 18px;
 			padding: 20px 20px 0 20px;
 		}
-		.nav .what-is-global > a { 
+		.nav .what-is-global>a { 
 			color: #FFF;
 			display: block;
 			padding-top: 20px;
@@ -191,7 +191,7 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 			width: 80px;
 			line-height: 11px;
 		}
-		.nav .what-is-global > a:hover { 
+		.nav .what-is-global>a:hover { 
 			background: none;
 		}
 	}
@@ -230,14 +230,14 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 		ul.nav a {
 			cursor: pointer;
 			padding: 6px 10px;
-			li > .dropdown-toggle {
-				background-color: #3E4252;
-				color: white;
-				&:hover {
-					border-bottom: 1px solid #3E4252;
-					background: #3E4252;
-					opacity: 0.7;
-				}
+		}
+		li>.dropdown-toggle {
+			background-color: #3E4252;
+			color: white;
+			&:hover {
+				border-bottom: 1px solid #3E4252;
+				background: #3E4252;
+				opacity: 0.7;
 			}
 		}
 		.navbar-right li {
@@ -874,7 +874,7 @@ form.event_form {
 @media (max-width: 991px) {
 	.navbar-container {
 		.forekast-navbar {
-			li > .dropdown-toggle {
+			li>.dropdown-toggle {
 					border: 1px solid #606880;
 				&:hover {
 					border-bottom: 1px solid #606880;
