@@ -133,7 +133,7 @@ class FK.Models.Event extends Backbone.GSModel
 
     dateAsString: () ->
       return "" unless @get('datetime')
-      return @get('fk_datetime').format('dddd, MMM Do, YYYY')
+      return @get('fk_datetime').format('dddd, MMM Do YYYY')
 
     datetimeAsString: () ->
       return "#{@.get('dateAsString')}, #{@.get('timeAsString')}"

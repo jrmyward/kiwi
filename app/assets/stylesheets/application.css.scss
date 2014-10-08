@@ -215,7 +215,7 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 	}
 }
 .navbar-indom-container {
-	height: 57px;
+	height: 56px;
 }
 .navbar-container {
 	.forekast-navbar {
@@ -504,7 +504,7 @@ h3, .h3, , h4, .h4, h5, .h5, .upvote-counter, .event-title, .event-upvotes, .col
 	.reminder-container {
 		position: relative;
 		display: inline-block;
-		margin: 0 8px;
+		margin: 0 0 0 5px;
 	}
 }
 .reminder-container {
@@ -963,10 +963,13 @@ form.event_form {
 	margin-left: 24px;
 	padding-top: 25px;
 }
+#event-card-region {
+	width: 830px;
+}
 .event-card {
 	.event-image-container {
 		height: 340px;
-		max-width: 430px;
+		width: 430px;
 		margin: 0 auto;
 		text-align: left;
 		overflow: hidden;
@@ -975,27 +978,26 @@ form.event_form {
 		max-width: 100%;
 	}
 	.event-info-container {
-		max-width: 400px;
+		width: 415px;
 		text-align: left;
 		margin: 0 auto;
 		background-color: #F7F7F7;
-		padding: 10px 20px;
-	}
-	.event-heading-container {
-		margin-bottom: 6px;
+		padding: 10px 15px 15px;
 	}
 	.event-title {
 		font-size: 24px;
 		font-weight: bold;
-		line-height: 1.2;
+		line-height: 1.3;
 	}
 	.event-time-location {
 		font-size: 17px;
 		color: #888;
-		line-height: 2;
+		line-height: 1.2;
+		display: block;
+		padding: 10px 0;
 	}
 	.event-description-container {
-		margin: 15px 0px;
+		margin: 15px 0 0;
 		overflow-x: hidden;
 		.event-description {
 			color: #666;
@@ -1077,8 +1079,16 @@ form.event_form {
 /* COMMENTS */
 
 #event-comments-region {
+	width: 830px;
+	.markdown-supported {
+		font-size: 12px;
+		padding: 0 10px 0 0;
+	}
+	.comment {
+		margin: 10px 0 0;
+	}
 	.user-comment {
-		margin-bottom: 18px;
+		margin: 10px 0;
 		display: inline-block;
 		float: left;
 	}
