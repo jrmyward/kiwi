@@ -985,44 +985,6 @@ form.event_form {
 		}
 	}
 }
-@media (max-width: 991px) {
-	.navbar-container {
-		.forekast-navbar {
-			li>.dropdown-toggle {
-					border: 1px solid #606880;
-				&:hover {
-					border-bottom: 1px solid #606880;
-				}
-			}
-		}
-	}
-	.navbar-title {
-		display: none !important;
-	}
-	form.event_form {
-		.form-group {
-			min-height: 40px;
-			margin-bottom: 0;
-			.control-label {
-				line-height: 30px;
-			}
-		}
-		input,
-		select {
-			max-width: 400px;
-		}
-		.event_form_name,
-		.event_form_subkast,
-		.event_form_location,
-		.event_form_date,
-		.event_form_date.is_all_day,
-		.event_form_image,
-		.event_form_description {
-			height: auto;
-			padding: 15px 0;
-		}
-	}
-}
 
 /* EVENT PAGE */
 
@@ -1544,6 +1506,200 @@ body.dark .container {
 	}
 }
 
+// Handheld
+@media only screen and (max-width: 767px) {
+	.forekast-navbar {
+		padding: 0 !important;
+		margin: 0 !important;
+	}
+	.navbar-header {
+		.logo {
+			margin: 0 0 0 10px;
+		}
+		.navbar-toggle {
+			border-radius: 0;
+			padding: 0;
+			margin: 20px 20px 0 0;
+			.icon-bar {
+				background: #FFF;
+			}
+		}
+	}
+	.navbar-collapse.in {
+		.navbar-nav {
+		margin: 0;
+			li {
+				margin: 0;
+				a.add-new {
+					margin: 10px 0 0;
+					border: 0;
+				}
+				a.dropdown-toggle {
+					margin: 0;
+					padding: 0 0 10px;
+					border: 0;
+				}
+			}
+			.dropdown-menu {
+				li {
+					padding: 10px 0;
+					margin: 0;
+					a {
+						padding: 5px 0;
+						border-radius: 4px;
+						text-align: center;
+					}
+				}
+			}
+		}
+	}
+	#sidebar-region {
+		display: none;
+	}
+	.container {
+		padding: 0 20px 20px;
+	}
+	#event-blocks-region {
+		width: initial;
+		.event-block {
+			h3 {
+				font-size: 14px;
+				margin: 15px 0 0;
+			}
+			.event {
+				padding: 10px;
+				.meta-container {
+					clear: both;
+					padding: 10px 0 0;
+					width: 100%;
+					font-size: 14px;
+					.event-info {
+						font-size: 12px;
+					}
+					.event-meta {
+						font-size: 12px;
+						display: block;
+					}
+				}
+				.image-container {
+					margin: 0 10px 0 0;
+				}
+			}
+		}
+	}
+	.event-page {
+		padding: 0 0 15px;
+		width: initial;
+		a {
+			word-break: break-all;
+			word-wrap: break-word;
+		}
+		#event-card-region {
+			width: initial;
+			.event-card {
+				margin: 0;
+				padding: 0;
+				.event-image-container {
+					width: initial;
+					height: initial;
+					margin: 0;
+					padding: 0;
+				}
+				.event-likes-container {
+					padding: 10px;
+				}
+				.event-heading-container {
+					.event-title {
+						font-size: 18px;
+					}
+					.event-time-location {
+						font-size: 12px;
+						padding: 5px 0 10px;
+					}
+				}
+				.event-info-container {
+					width: initial;
+					.event-description-container {
+						margin: 10px 0 0;
+						.event-submitter {
+							padding: 5px 0 0;
+						}
+					}
+				}
+			}
+		}
+		#event-comments-region {
+			width: initial;
+			padding: 0 15px;
+			.row {
+				margin: 0;
+				.col-md-12 {
+					padding: 0;
+				}
+			}
+			h3 {
+				margin: 10px 0;
+				font-weight: 18px;
+			}
+			.pull-right {
+				margin: 0;
+			}
+			.comment {
+				margin: 10px 0 0;
+				.info {
+					padding: 13px 0 0;
+				}
+				.user-comment {
+					padding: 0 0 0 25px;
+					float: none;
+					display: block;
+					margin: 0;
+					.up-vote {
+						margin: 0 5px 0 0;
+						display: block;
+					}
+					.username {
+						font-size: 15px;
+					}
+				}
+				.comment-text {
+					font-size: 13px;
+				}
+			}
+		}
+	}
+	#footer {
+		padding: 5px 20px;
+		opacity: 1;
+		.footer-text {
+			padding: 0;
+			text-align: center;
+			font-size: 11px;
+			height: 13px;
+			overflow: hidden;
+			line-height: 11px;
+			a {
+				font-size: 11px;
+			}
+			i {
+				font-size: 12px;
+			}
+		}
+	}
+}
+
+// Tablet
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+	
+}
+
+
+
+
+
+
+
+/*
 @media (max-width: 991px) {
 	body .navbar ul.navbar-right {
 		li {
@@ -1614,3 +1770,43 @@ body.dark .container {
 		}
 	}
 }
+
+@media (max-width: 991px) {
+	.navbar-container {
+		.forekast-navbar {
+			li>.dropdown-toggle {
+					border: 1px solid #606880;
+				&:hover {
+					border-bottom: 1px solid #606880;
+				}
+			}
+		}
+	}
+	.navbar-title {
+		display: none !important;
+	}
+	form.event_form {
+		.form-group {
+			min-height: 40px;
+			margin-bottom: 0;
+			.control-label {
+				line-height: 30px;
+			}
+		}
+		input,
+		select {
+			max-width: 400px;
+		}
+		.event_form_name,
+		.event_form_subkast,
+		.event_form_location,
+		.event_form_date,
+		.event_form_date.is_all_day,
+		.event_form_image,
+		.event_form_description {
+			height: auto;
+			padding: 15px 0;
+		}
+	}
+}
+*/
