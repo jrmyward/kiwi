@@ -1507,7 +1507,7 @@ body.dark .container {
 }
 
 // Handheld
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 991px) {
 	.forekast-navbar {
 		padding: 0 !important;
 		margin: 0 !important;
@@ -1557,7 +1557,7 @@ body.dark .container {
 		display: none;
 	}
 	.container {
-		padding: 0 20px 20px;
+		padding: 0 20px 20px !important;
 	}
 	#event-blocks-region {
 		width: initial;
@@ -1604,9 +1604,10 @@ body.dark .container {
 					height: initial;
 					margin: 0;
 					padding: 0;
-				}
-				.event-likes-container {
-					padding: 10px;
+					text-align: center;
+					.event-likes-container {
+						display: none;
+					}
 				}
 				.event-heading-container {
 					.event-title {
@@ -1690,7 +1691,16 @@ body.dark .container {
 
 // Tablet
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-	
+	#event-blocks-region {
+		.event-block {
+			.event {
+				.meta-container {
+					clear: none;
+					width: initial;
+				}
+			}
+		}
+	}
 }
 
 
