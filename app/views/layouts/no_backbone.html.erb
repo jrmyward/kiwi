@@ -8,9 +8,11 @@
   <div id="navbar" class="navbar-container-region">
     <div class="navbar-indom-container">
       <div class="navbar-container">
-        <div id="navbar-navbar-region"><div class="navbar navbar-fixed-top forekast-navbar"><div class="navbar-header">
-        <a href="/" class="logo">Forekast</a>
-      </div>
+        <div id="navbar-navbar-region">
+        <div class="navbar navbar-fixed-top forekast-navbar">
+        <div class="navbar-header">
+          <a href="/" class="logo">Forekast</a>
+        </div>
       <% if current_user.present? %>
         <ul class="nav navbar-nav hidden-xs">
           <li data-option="new">
@@ -19,22 +21,25 @@
         </ul>
       <% end %>
       <% if current_user.blank? %>
-        <ul class="nav navbar-nav navbar-right">
-              <li><a href="<%= new_user_registration_path %>" class="btn btn-focus">Join the Community</a></li>
-              <li><a href="<%= new_user_session_path %> " class="btn btn-alt">Log In</a></li>
+        <ul class="nav navbar-nav navbar-right hidden-xs">
+          <li><a href="<%= new_user_registration_path %>" class="btn btn-focus">Join the Community</a></li>
+          <li><a href="<%= new_user_session_path %> " class="btn btn-alt">Log In</a></li>
         </ul>
       <% else %>
         <ul class="nav navbar-nav navbar-right hidden-xs">
-              <li class="">
-                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><%= current_user.username %> <span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="<%= edit_user_registration_path %>">Profile Settings</a></li>
-                    <li><a href="<%= destroy_user_session_path %>">Logout</a></li>
-                  </ul>
-              </li>
+          <li class="">
+            <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><%= current_user.username %> <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="<%= edit_user_registration_path %>">Profile Settings</a></li>
+                <li><a href="<%= destroy_user_session_path %>">Logout</a></li>
+              </ul>
+          </li>
         </ul>
         <p class="navbar-title"></p>
       <% end %>
+        </div>
+        </div>
+      </div>
     </div>
   </div>
   <div id="container" class="container">
