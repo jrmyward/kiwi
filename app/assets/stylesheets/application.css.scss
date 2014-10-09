@@ -167,7 +167,10 @@ body.not-found {
 	padding: 0 20px;
 }
 #main_body {
-	margin-top: 56px;
+	margin-top: 0;
+}
+.navbar-header {
+	padding: 0 20px 0 0;
 }
 
 /* BUTTON STYLES */
@@ -219,7 +222,7 @@ body.not-found {
 		.tagline { 
 			color: #FFF;
 			font-size: 16px;
-			padding: 0 20px;
+			padding: 0 20px 0 0;
 			line-height: 56px;
 		}
 		.nav .what-is-global > a { 
@@ -1237,6 +1240,11 @@ div.label {
 
 /* LOGIN / FORMS */
 
+#main_body {
+	h3 {
+		margin: 20px 0;
+	}
+}
 .login-container,
 .signup-container {
 	width: 100%;
@@ -1361,6 +1369,28 @@ div.label {
 	li.facebook a:hover {
 		background: darken(#7690BC, 5%);
 		text-decoration: none;
+	}
+}
+.profile-settings {
+	padding-bottom: 10px;
+	.control-label {
+		padding: 7px 0 0 0;
+		text-align: left;
+	}
+	.subkast-edit-container {
+		padding: 0 0 10px;
+		.subkast-list-container {
+			margin: 0 0 10px;
+			width: 400px;
+		}
+	}
+}
+.change-password {
+	.control-label {
+		padding: 7px 0 0;
+	}
+	.form-footer {
+		text-align: center;
 	}
 }
 
@@ -1558,6 +1588,7 @@ body.dark .container {
 					margin: 0;
 					padding: 0 0 10px;
 					border: 0;
+					box-shadow: none !important;
 				}
 			}
 			.dropdown-menu {
@@ -1569,6 +1600,9 @@ body.dark .container {
 						border-radius: 4px;
 						text-align: center;
 					}
+				}
+				li:first-child {
+					display: none;
 				}
 			}
 		}
@@ -1740,11 +1774,12 @@ body.dark .container {
 				padding: 0;
 				margin: 15px 0;
 				height: initial;
+				float: none;
 				.zone-display {
 					display: block;
 					margin: 5px 0 0;
 					font-size: 12px;
-					text-align: center;
+					text-align: left;
 				}
 			}
 			.date_picker_special_time_group {
@@ -1760,8 +1795,10 @@ body.dark .container {
 			}
 			.image-trimmer {
 				width: initial;
+				#image-trimmer-region {
+					display: none;
+				}
 				#image-chooser-region {
-					height: 89px;
 					.image-trimmer-input-container {
 						.image_trimmer_choose_toolbar {
 							.form-group {
@@ -1871,122 +1908,17 @@ body.dark .container {
 			}
 		}
 	}
-}
-
-
-
-
-
-
-
-/*
-@media (max-width: 991px) {
-	body .navbar ul.navbar-right {
-		li {
-			padding: 5px 0;
-		}
-	}
-	.navbar-container {
-		a.logo {
-			margin: -2px 20px;
-			position: absolute;
-			display: block;
-			left: 18px;
-			width: 256px;
-			height: 52px;
-			background: transparent url(asset-path('forekast_logo.png')) no-repeat;
-			background-size: 80%;
-			&:hover {
-				opacity: 1;
-			}
-		}
-		.forekast-navbar {
-			.navbar-nav .active a.add-new,
-			.navbar-nav a.add-new {
-				border: 1px solid #606880;
-				color: #FFF;
-				background-color: #3E4252;
-				margin: 10px 0 0 0;
-				font-weight: 100;
-				background-color: #6E7690;
-			}
-		}
-	}
-	.navbar {
-		margin-bottom: 20px;
-		.checkbox-container {
-			padding-bottom: 20px;
-		}
-	}
-	.navbar-collapse.in {
-		overflow: visible;
-	}
-	.navbar-collapse {
-		max-height: auto;
-	}
-	#mobile-sidebar {
-		display: block;
-		.sidebar {
-			padding-bottom: 10px;
-		}
-		#sidebar-event-list {
-			display: none;
-		}
-	}
-	#sidebar-region {
-		display: none;
-	}
-	body.dark .container dl.about-list dd {
-		font-size: 16px;
-	}
-	body.dark .container dl.about-list dt.double {
-		height: 138px;
-		font-size: 18px;
-	}
-	.event-reminders-super-container {
-		right: -13px;
-		.up-arrow {
-			margin-right: 10px;
-		}
-	}
-}
-
-@media (max-width: 991px) {
-	.navbar-container {
-		.forekast-navbar {
-			li>.dropdown-toggle {
-					border: 1px solid #606880;
-				&:hover {
-					border-bottom: 1px solid #606880;
+	.image-trimmer {
+		#image-chooser-region {
+			.image-trimmer-input-container {
+				.image_trimmer_choose_toolbar {
+					.btn {
+						float: left;
+						clear: none;
+						margin: 0 0 0 10px;
+					}
 				}
 			}
 		}
 	}
-	.navbar-title {
-		display: none !important;
-	}
-	form.event_form {
-		.form-group {
-			min-height: 40px;
-			margin-bottom: 0;
-			.control-label {
-				line-height: 30px;
-			}
-		}
-		input,
-		select {
-			max-width: 400px;
-		}
-		.event_form_name,
-		.event_form_subkast,
-		.event_form_location,
-		.event_form_date,
-		.event_form_date.is_all_day,
-		.event_form_image,
-		.event_form_description {
-			height: auto;
-			padding: 15px 0;
-		}
-	}
 }
-*/
