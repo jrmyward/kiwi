@@ -13,10 +13,15 @@
 //= require jstz.min
 //= require moment-timezone.min
 //= require moment-timezone-data.min
+//= require moment-config
 //= require backbone.getters.setters
 //= require serialize
 //= require bootstrap-datepicker
 //= require ./kiwi/kiwi
+//= require_tree ./kiwi/utils
+//= require ./kiwi/init
+//= require ./kiwi/singletons
+//= require ./kiwi/router
 //= require ./kiwi/events
 //= require_tree ./kiwi/regions
 //= require_tree ./kiwi/templates

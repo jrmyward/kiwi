@@ -1,7 +1,7 @@
 FK.App.module "DatePicker", (DatePicker, App, Backbone, Marionette, $, _) ->
   class DatePicker.DatePickerView extends Marionette.ItemView
     className: 'date_picker'
-    template: FK.Template 'date_picker'
+    template: FK.Template('event_form_page/date_picker')
 
     templateHelpers: =>
       local_hour: => @model.get('local_hour')
