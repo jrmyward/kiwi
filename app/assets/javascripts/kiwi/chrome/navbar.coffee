@@ -72,7 +72,7 @@ FK.App.module "Navbar", (Navbar, App, Backbone, Marionette, $, _) ->
     @view.close()
 
   class Navbar.NavbarLayout extends Marionette.Layout
-    template: FK.Template('navbar_layout')
+    template: FK.Template('chrome/navbar_layout')
     regions:
       navbar: '#navbar-navbar-region'
       navbarSeparatorView: '#navbar-separator-region'
@@ -87,7 +87,7 @@ FK.App.module "Navbar", (Navbar, App, Backbone, Marionette, $, _) ->
 
   class Navbar.NavbarView extends Marionette.Layout
     className: "navbar navbar-fixed-top forekast-navbar"
-    template: FK.Template('navbar')
+    template: FK.Template('chrome/navbar')
 
     regions:
       'mobileSidebarRegion': '#mobile-sidebar'
@@ -119,11 +119,11 @@ FK.App.module "Navbar", (Navbar, App, Backbone, Marionette, $, _) ->
 
   class Navbar.NavbarSeparatorView extends Marionette.ItemView
     className: "outer"
-    template: FK.Template('navbar_separator')
+    template: FK.Template('chrome/navbar_separator')
 
   class Navbar.NavbarSubkastView extends Marionette.ItemView
     className: 'navbar navbar-fixed-top subkast-navbar'
-    template: FK.Template('navbar_subkast')
+    template: FK.Template('chrome/navbar_subkast')
 
     triggers:
       'click .subkast-header-link': 'click:subkast'

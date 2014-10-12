@@ -26,7 +26,7 @@
 //= require ./kiwi/front_page/event_summary
 //= require_tree ./kiwi/components
 //= require_tree ./kiwi/models
-//= require_tree ./kiwi/views
+//= require_tree ./kiwi/chrome
 //= require_tree ./kiwi/event_form_page
 //= require_tree ./kiwi/not_found_page
 //= require_tree ./kiwi/event_show_page
