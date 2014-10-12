@@ -1,6 +1,6 @@
 FK.App.module "Sidebar", (Sidebar, App, Backbone, Marionette, $, _) ->
   class Sidebar.CountryFilterView extends Marionette.ItemView
-    template: FK.Template('country_filter')
+    template: FK.Template('front_page/sidebar/country_filter')
     className: 'country-filter filter'
     events:
       'change select': 'save'

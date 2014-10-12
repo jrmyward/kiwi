@@ -39,14 +39,14 @@ FK.App.module "Sidebar", (Sidebar, App, Backbone, Marionette, $, _) ->
       @config.setSubkast(subkast.get('code'))
 
   class Sidebar.EventName extends Marionette.ItemView
-    template: FK.Template('event_name')
+    template: FK.Template('front_page/sidebar/event_name')
     tagName: 'a'
     className: 'event-name'
     triggers:
       'click': 'clicked:event'
 
   class Sidebar.EventList extends Marionette.CompositeView
-    template: FK.Template('sidebar_event_list')
+    template: FK.Template('front_page/sidebar/event_list')
     className: 'top-ranked'
     itemView: Sidebar.EventName
     itemViewContainer: 'ul.events'

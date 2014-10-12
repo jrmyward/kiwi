@@ -28,10 +28,6 @@
 //= require_tree ./kiwi/models
 //= require_tree ./kiwi/views
 //= require_tree ./kiwi/event_form_page
-//= require_tree ./kiwi/templates/event_form_page
 //= require_tree ./kiwi/not_found_page
-//= require_tree ./kiwi/templates/not_found_page
 //= require_tree ./kiwi/event_show_page
-//= require_tree ./kiwi/templates/event_show_page
 //= require_tree ./kiwi/front_page
-//= require_tree ./kiwi/templates/front_page
