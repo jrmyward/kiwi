@@ -52,7 +52,7 @@ FK.App.module "Sidebar", (Sidebar, App, Backbone, Marionette, $, _) ->
     itemViewContainer: 'ul.events'
 
   class Sidebar.Layout extends Marionette.Layout
-    template: FK.Template('sidebar')
+    template: FK.Template('front_page/aside_section')
     className: 'sidebar'
     regions:
       event_list: '#sidebar-event-list'

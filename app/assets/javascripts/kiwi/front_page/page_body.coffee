@@ -108,4 +108,4 @@ FK.App.module "Events.EventList", (EventList, App, Backbone, Marionette, $, _) -
       event_block: '#event-blocks-region'
       sidebar: '#sidebar-region'
 
-    template: FK.Template('events')
+    template: FK.Template('front_page/page_body')

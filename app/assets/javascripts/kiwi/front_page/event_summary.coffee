@@ -1,7 +1,7 @@
 FK.App.module "Events.EventList", (EventList, App, Backbone, Marionette, $, _) ->
 
   class EventList.EventCollapsed extends Backbone.Marionette.ItemView
-    template: FK.Template('event_collapsed')
+    template: FK.Template('front_page/event_summary')
     className: 'event'
     tagName: 'div'
 
