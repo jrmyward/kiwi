@@ -22,8 +22,6 @@
 //= require ./kiwi/init
 //= require ./kiwi/singletons
 //= require ./kiwi/router
-//= require ./kiwi/events
-//= require_tree ./kiwi/regions
 //= require_tree ./kiwi/templates
 //= require ./kiwi/views/event_collapsed.js.coffee
 //= require_tree ./kiwi/views

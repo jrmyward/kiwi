@@ -19,8 +19,6 @@ FK.App.addInitializer (prefetch) ->
     vent: FK.App.vent
     country: FK.CurrentUser.get('country')
 
-  FK.Data.UserMediator = new FK.UserMediator user: FK.CurrentUser, config: FK.Data.EventStore.configModel()
-
   FK.Data.countries = new FK.Collections.CountryList(prefetch.countries)
 
   FK.Data.EventStore.fetchStartupEvents()
