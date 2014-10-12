@@ -41,7 +41,7 @@ FK.App.module "Reminders", (Reminders, App, Backbone, Marionette, $, _) ->
       @region.close()
 
   class Reminders.RemindersView extends Marionette.ItemView
-    template: FK.Template('event_reminders')
+    template: FK.Template('components/reminders')
     className: 'event-reminders-super-container'
 
     triggers:
