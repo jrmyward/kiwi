@@ -33,7 +33,7 @@ FK.App.module "Events.EventForm", (EventForm, App, Backbone, Marionette, $, _) -
       @view.setCountry(@user.lastPostedCountry())
 
   @showBaseView = () =>
-    FK.App.mainRegion.show @view
+    FK.App.chrome.main.show @view
 
   @addFinalizer () =>
     @stopListening()

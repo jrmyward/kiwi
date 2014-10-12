@@ -1,7 +1,6 @@
 FK.App = new Backbone.Marionette.Application()
 FK.App.addRegions({
-  navbarRegion: '#navbar-container-region'
-  mainRegion: '#main-region'
+  'chrome' : '#chrome-container'
 })
 
 FK.App.addInitializer (prefetch) ->
@@ -24,4 +23,3 @@ FK.App.addInitializer (prefetch) ->
   FK.Data.EventStore.fetchStartupEvents()
 
   FK.App.appRouter = new FK.Routers.AppRouter()
-

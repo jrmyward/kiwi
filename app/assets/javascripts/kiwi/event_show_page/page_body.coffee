@@ -38,7 +38,7 @@ FK.App.module "Events.EventPage", (EventPage, App, Backbone, Marionette, $, _) -
 
     Backbone.history.navigate('events/show/' + event.id, trigger : false)
 
-    App.mainRegion.show @view
+    FK.App.chrome.main.show @view
 
   @triggerEditEvent = (args) ->
     event = args.model

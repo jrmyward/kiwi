@@ -37,7 +37,7 @@ FK.App.module "Events.EventList", (EventList, App, Backbone, Marionette, $, _) -
 
     @position = App.request('scrollPosition')
 
-    App.mainRegion.show @view
+    FK.App.chrome.main.show @view
 
     @setUrl()
 

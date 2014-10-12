@@ -48,7 +48,7 @@ FK.App.module "Navbar", (Navbar, App, Backbone, Marionette, $, _) ->
     }
 
   @show = () ->
-    App.navbarRegion.show @layout
+    FK.App.chrome.navbar.show @layout
 
   @goHome = () =>
     App.vent.trigger 'container:all'
