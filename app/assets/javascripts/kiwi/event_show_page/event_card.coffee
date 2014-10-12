@@ -1,7 +1,7 @@
 FK.App.module "Events.EventPage", (EventPage, App, Backbone, Marionette, $, _) ->
 
     class EventPage.EventCard extends Marionette.ItemView
-      template: FK.Template('event_card')
+      template: FK.Template('event_show_page/event_card')
       className: 'event-card row'
 
       templateHelpers: () =>

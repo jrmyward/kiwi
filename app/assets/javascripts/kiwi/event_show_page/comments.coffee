@@ -82,7 +82,7 @@ FK.App.module "Comments", (Comments, App, Backbone, Marionette, $, _) ->
 
   #Pulls together all the things
   class Comments.Layout extends Marionette.Layout
-    template: FK.Template('comments')
+    template: FK.Template('event_show_page/comments')
     regions:
       commentNewRegion: '#comment-new'
       commentListRegion: '#comment-list'
@@ -90,7 +90,7 @@ FK.App.module "Comments", (Comments, App, Backbone, Marionette, $, _) ->
   #Renders the text box to create a new comment
   #Can be used either to create a top level comment or to reply
   class Comments.ReplyBox extends Marionette.ItemView
-    template: FK.Template('comments_reply_box')
+    template: FK.Template('event_show_page/comments_reply_box')
     className: 'reply-box'
 
     templateHelpers: () =>
@@ -133,13 +133,13 @@ FK.App.module "Comments", (Comments, App, Backbone, Marionette, $, _) ->
 
   #Renders all the comment and all its replies
   class Comments.CommentSingleView extends Marionette.Layout
-    template: FK.Template('comment_single')
+    template: FK.Template('event_show_page/comment_single')
     className: 'comment'
 
     getTemplate: () =>
-      return FK.Template('comment_deleted') if @model.get('status') is 'deleted'
-      return FK.Template('comment_muted') if @model.get('status') is 'muted'
-      return FK.Template('comment_single')
+      return FK.Template('event_show_page/comment_deleted') if @model.get('status') is 'deleted'
+      return FK.Template('event_show_page/comment_muted') if @model.get('status') is 'muted'
+      return FK.Template('event_show_page/comment_single')
 
     templateHelpers: () =>
       return {

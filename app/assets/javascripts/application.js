@@ -32,3 +32,7 @@
 //= require_tree ./kiwi/lib
 //= require_tree ./kiwi/event_form_page
 //= require_tree ./kiwi/templates/event_form_page
+//= require_tree ./kiwi/not_found_page
+//= require_tree ./kiwi/templates/not_found_page
+//= require_tree ./kiwi/event_show_page
+//= require_tree ./kiwi/templates/event_show_page

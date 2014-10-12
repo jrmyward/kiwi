@@ -1,7 +1,7 @@
 FK.App.module 'ImageTrimmer', (ImageTrimmer, App, Backbone, Marionette, $, _) ->
   
   class this.ImageChooseView extends Marionette.ItemView
-    template: FK.Template('image_trimmer_choose')
+    template: FK.Template('event_form_page/image_trimmer_choose')
     className: 'image-trimmer-input-container'
 
     events:

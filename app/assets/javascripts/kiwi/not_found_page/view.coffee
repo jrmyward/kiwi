@@ -18,5 +18,5 @@ FK.App.module "Events.NotFound", (NotFound, App, Backbone, Marionette, $, _) ->
     @stopListening()
 
   class NotFoundView extends Marionette.ItemView
-    template: FK.Template('not_found')
+    template: FK.Template('not_found_page/view')
     className: 'container'
