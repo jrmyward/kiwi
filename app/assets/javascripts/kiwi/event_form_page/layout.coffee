@@ -1,7 +1,7 @@
 FK.App.module "Events.EventForm", (EventForm, App, Backbone, Marionette, $, _) ->
   class EventForm.FormLayout extends Backbone.Marionette.Layout
     className: "event-form container"
-    template: FK.Template('event_form')
+    template: FK.Template('event_form_page/form')
 
     regions:
       'saveContainerRegion': '.save-container'
