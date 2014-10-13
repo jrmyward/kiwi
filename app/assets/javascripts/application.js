@@ -23,7 +23,6 @@
 //= require ./kiwi/singletons
 //= require ./kiwi/router
 //= require_tree ./kiwi/templates
-//= require ./kiwi/front_page/event_summary
 //= require_tree ./kiwi/components
 //= require_tree ./kiwi/models
 //= require_tree ./kiwi/chrome

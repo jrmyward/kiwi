@@ -24,8 +24,6 @@ FK.App.module "Navbar", (Navbar, App, Backbone, Marionette, $, _) ->
     @subkastNavView = new Navbar.NavbarSubkastView
       model: @config
 
-    @sidebar = App.Sidebar.create(@buildSubkastConfig())
-
     @listenTo @navbarView, 'click:home', @goHome
     @listenTo @subkastNavView, 'click:subkast', @goToEventList
 
@@ -37,8 +35,6 @@ FK.App.module "Navbar", (Navbar, App, Backbone, Marionette, $, _) ->
     @layout.on 'show', =>
       @layout.navbarSeparatorView.show @navbarSeparator
 
-    @navbarView.on 'show', =>
-      @navbarView.mobileSidebarRegion.show @sidebar.layout
 
   @buildSubkastConfig = () =>
     {

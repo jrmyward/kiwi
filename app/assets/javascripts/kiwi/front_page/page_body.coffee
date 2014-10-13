@@ -24,6 +24,7 @@ FK.App.module "Events.EventList", (EventList, App, Backbone, Marionette, $, _) -
     # binding the events:
     @view.on 'show', =>
       @view.sidebar.show @sidebar.layout
+
       @view.event_block.show @eventBlocksView
       @resumePosition()
 
