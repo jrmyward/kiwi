@@ -46,7 +46,7 @@ FK.App.module "Events", (Events, App, Backbone, Marionette, $, _) ->
     @listenTo App.vent, 'container:show', @startPage
     @listenTo App.vent, 'container:all', @startList
     @listenTo App.vent, 'notfound', @startNotFound
-    
+
 
   @addFinalizer () ->
     @stopListening()
