@@ -8,9 +8,8 @@
     <%= render :partial => 'layouts/head_section' %>
     <%= render :partial => 'layouts/google' %>
   </head>
-<body>
-  <div id="navbar-container-region"></div>
-  <div id="main-region"></div>
+  <body>
+  <div id="chrome-container"></div>
   <script type="text/javascript">
     $(function() {
       FK.App.start({
@@ -18,6 +17,9 @@
         events: [],
         links:
           {
+           about: '<%= about_path %>',
+           faq: '<%= faq_path %>',
+           tos: '<%= termsofservice_path %>',
            logout: '<%= destroy_user_session_path %>',
            login: '<%= new_user_session_path %>',
            user_edit: '<%= edit_user_registration_path %>',
@@ -35,29 +37,6 @@
       });
     });
   </script>
-  <!-- Ensure that font awesome is loaded!! -->
-  <i style="color:white" class="fa fa-spinner"/></i>
-  <div id="footer">
-    <div class="footer-text">
-      <%= link_to 'About', about_path %> &bull;
-      <%= link_to 'FAQ', faq_path %> &bull;
-      <a href="http://blog.forekast.com" target="_blank">Blog</a> &bull;
-      <%= link_to 'Terms', termsofservice_path %> &bull;
-      Follow Us
-      <a href="https://twitter.com/theforekast" target="_blank" ><i class="fa fa-twitter"></i></a>
-      <a href="https://www.facebook.com/TheForekast" target="_blank"><i class="fa fa-facebook"></i></a>
-      <a href="http://blog.forekast.com/" target="_blank"><i class="fa fa-tumblr"></i></a>
-      <a href="https://plus.google.com/+Forekast" target="_blank"><i class="fa fa-google-plus"></i>             </a>&nbsp; &nbsp; &nbsp; Let's talk: <a href="mailto:hello@forekast.com">hello@forekast.com</a>
-    </div>
-  </div>
-
-  <script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
-
+  <%= render :partial => 'layouts/facebook' %>
 </body>
 </html>

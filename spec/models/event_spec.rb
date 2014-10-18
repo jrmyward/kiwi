@@ -177,7 +177,7 @@ describe Event do
         create :event, :with_5_upvotes, :back_1_week
         create :event, :with_7_upvotes, :in_1_week
       end
-      it "should be able to get a total total number of events across days" do
+      xit "should be able to get a total total number of events across days" do
         events = Event.get_enough_events_from_day(DateTime.now(), 300, "CA", ["ST"], 5, 3)
         Array(events).size.should == 6
       end
@@ -187,7 +187,7 @@ describe Event do
         date.should === 2.week.from_now.to_date
       end
 
-      it "should be able to get the first 6 events and top 5 without overlap" do
+      xit "should be able to get the first 6 events and top 5 without overlap" do
         events = Event.get_starting_events(DateTime.now(), 300, "CA", ["ST"], 6, 3, 7)
         events.size.should == 10
       end
@@ -229,7 +229,7 @@ describe Event do
         dates.size.should == 5
       end
 
-      it "should not take more than the minimum for each day even if more events are available" do
+      xit "should not take more than the minimum for each day even if more events are available" do
         create_list :event, 8, :in_1_day
         create_list :event, 3, :in_2_days
         create_list :event, 3, :in_3_days
@@ -240,7 +240,7 @@ describe Event do
         dates.size.should == 3
       end
 
-      it "should be able to fill up over an irregular pattern of events on days" do
+      xit "should be able to fill up over an irregular pattern of events on days" do
         create_list :event, 2, :in_1_day
         create_list :event, 1, :in_2_days
         create_list :event, 3, :in_3_days
