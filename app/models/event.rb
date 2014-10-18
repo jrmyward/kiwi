@@ -243,26 +243,6 @@ class Event
     return events
   end
 
-  def self.get_events_by_range(startDatetime, endDatetime, zone_offset, country, subkasts, howMany=0, skip=0)
-    startDate = (startDatetime - zone_offset.minutes).beginning_of_day
-    endDate = (endDatetime - zone_offset.minutes).beginning_of_day
-
-    events = self.any_of(
-      { is_all_day: false, time_format: '', datetime: ((startDatetime)..(endDatetime)), location_type: 'international' },
-      { is_all_day: false, time_format: '', datetime: (startDatetime..endDatetime), location_type: 'national', country: country },
-      { is_all_day: false, time_format: 'recurring', local_date: (startDate..endDate), location_type: 'international' },
-      { is_all_day: false, time_format: 'recurring', local_date: (startDate..endDate), location_type: 'national', country: country },
-      { is_all_day: false, time_format: 'tv_show', local_date: (startDate..endDate), location_type: 'international' },
-      { is_all_day: false, time_format: 'tv_show', local_date: (startDate..endDate), location_type: 'national', country: country },
-      { is_all_day: true, local_date: (startDate..endDate), location_type: 'international' },
-      { is_all_day: true, local_date: (startDate..endDate), location_type: 'national', country: country }
-    ).any_in({subkast: subkasts }).to_a
-
-    sortedEvents = events.sort_by { |event| - (event.upvote_count.nil? ? 0 : event.upvote_count) }
-    howMany = sortedEvents.size if howMany == 0
-    return sortedEvents.slice(skip, howMany)
-  end
-
   def self.get_last_date
     self.order_by([:local_date, :desc])[0].local_date
   end
