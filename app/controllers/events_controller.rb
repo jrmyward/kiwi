@@ -11,6 +11,9 @@ class EventsController < ApplicationController
   end
 
   def show
+    # Include reminders
+    # Include event comments
+    # Include event image
   end
 
   def edit
@@ -109,22 +112,10 @@ class EventsController < ApplicationController
   end
 
   def startup_events
-    @events = Event.get_starting_events(DateTime.parse(params[:datetime]), params[:zone_offset].to_i, params[:country], params[:subkasts], params[:howManyEventsMinimum].to_i, params[:howManyEventsPerDay].to_i, 0)
-    @reminders = {}
-    event_ids = @events.map { |e| e._id }
-    Reminder.where(user: current_user).in(event_id: event_ids).entries.each do |reminder|
-      @reminders[reminder.event_id.to_s] = [] if @reminders[reminder.event_id.to_s].blank?
-      @reminders[reminder.event_id.to_s] << reminder
-    end
-
-  end
-
-  def events_after_date
-    @events = Event.get_events_after_date(DateTime.parse(params[:datetime]), params[:zone_offset].to_i, params[:country], params[:subkasts], params[:howManyEvents].to_i)
-  end
-
-  def events_by_date
-    @events = Event.get_events_by_date(DateTime.parse(params[:datetime]), params[:zone_offset].to_i, params[:country], params[:subkasts], params[:howManyEvents].to_i, params[:skip].to_i)
+    # Include reminders
+    # Include comment count
+    # Include image
+    @events = EventRepository.new(browser_timezone, params[:country], params[:subkasts]).events_from_date(params[:date], 7)
   end
 
   def comments

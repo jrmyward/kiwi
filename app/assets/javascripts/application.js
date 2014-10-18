@@ -24,3 +24,4 @@
 //= require ./kiwi/router
 //= require_tree ./kiwi/templates
 //= require_tree ./kiwi
+//= require browser_timezone_rails/application.js
