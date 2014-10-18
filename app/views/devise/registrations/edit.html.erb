@@ -1,5 +1,5 @@
 <h3>Profile Settings</h3>
-<div class="well">
+<div class="well profile-settings">
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name),
                        :html => { :method => :put, :class => 'form-horizontal' }) do |f| %>
     <% if resource.errors.present? %>
@@ -69,7 +69,7 @@
     <% end %>
     <div class="form-group">
       <div class="col-md-5">
-        <div class="pull-right">
+        <div>
           <%= link_to 'Change password',  change_password_path, class: 'btn btn-alt' %>
           <%= f.submit "Update", class: 'btn btn-focus' %>
         </div>
