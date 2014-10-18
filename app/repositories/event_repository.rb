@@ -10,8 +10,20 @@ class EventRepository
     get_events_by_range(date, date.end_of_day, how_many, skip)
   end
 
-  def events_after_date(date, how_many = 0, skip = 0)
+  def events_from_date(date, how_many_dates, how_many_events_per_day = 5)
+    count = 0
+    events = []
+    dates_with_events = []
 
+    while dates_with_events.count < how_many_dates
+      new_events = events_on_date(date, how_many_events_per_day).to_a
+      events = events + new_events
+
+      dates_with_events << date unless new_events.empty?
+      date = tomorrow(date)
+    end
+
+    events
   end
 
   def count_events_on_date(date)
@@ -47,5 +59,9 @@ class EventRepository
     how_many = sortedEvents.size if how_many == 0
 
     sortedEvents.slice(skip, how_many)
+  end
+
+  def tomorrow(date)
+    (DateTime.parse(date).tomorrow).to_s
   end
 end

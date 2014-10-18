@@ -47,6 +47,6 @@ describe EventRepository do
   end
 
   it 'should be able to fetch a few events for a given number of upcoming days' do
-
+    expect(repository.events_from_date("Sep 15th", 3)).to eq [e1, e9, e3, e11, e2, e16, e5, e7, e6, e8, e14]
   end
 end
