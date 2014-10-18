@@ -243,10 +243,6 @@ class Event
     return events
   end
 
-  def self.get_last_date
-    self.order_by([:local_date, :desc])[0].local_date
-  end
-
   def comment_count
     Comment.where(event_id: id).count
   end

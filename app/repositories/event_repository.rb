@@ -16,6 +16,7 @@ class EventRepository
     dates_with_events = []
 
     while dates_with_events.count < how_many_dates
+      break if DateTime.parse(date) == get_last_date
       new_events = events_on_date(date, how_many_events_per_day).to_a
       events = events + new_events
 
@@ -59,6 +60,10 @@ class EventRepository
     how_many = sortedEvents.size if how_many == 0
 
     sortedEvents.slice(skip, how_many)
+  end
+
+  def get_last_date
+    Event.order_by([:local_date, :desc])[0].local_date
   end
 
   def tomorrow(date)
