@@ -42,6 +42,6 @@ class EventRepository
     sortedEvents = events.sort_by { |event| - (event.upvote_count.nil? ? 0 : event.upvote_count) }
     how_many = sortedEvents.size if how_many == 0
 
-    return sortedEvents.slice(skip, how_many)
+    sortedEvents.slice(skip, how_many)
   end
 end
