@@ -28,8 +28,10 @@ class Event
   field :country, type: String
   field :location_type, type: String
   field :subkast, type: String
+
   has_many :reminders
   has_many :comments
+
   index({local_date:1})
   index({datetime:1})
 
@@ -88,14 +90,6 @@ class Event
 
   def local_datetime
     Time.parse(local_date.to_s + " " + local_time)
-  end
-
-  def relative_date(zone_offset)
-    if self.is_all_day == true || self.time_format == "recurring" || self.time_format == "tv_show"
-      return self.local_date.to_date
-    else
-      return (self.datetime - zone_offset.minutes).beginning_of_day.to_date
-    end
   end
 
   def reminders_for_user(user)
