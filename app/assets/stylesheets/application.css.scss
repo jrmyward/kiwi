@@ -733,6 +733,10 @@ body.not-found {
 .image-trimmer {
   width: 300px;
 }
+#image-chooser-region {
+  height: 40px;
+  display: block;
+}
 .event-name {
   cursor: pointer;
   &:hover {
@@ -1794,6 +1798,9 @@ body.dark .container {
       }
       .image-trimmer {
         width: initial;
+        #image-chooser-region {
+          height: initial;
+        }
         #image-trimmer-region {
           display: none;
         }
