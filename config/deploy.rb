@@ -21,7 +21,7 @@ end
 set :domain, ENV['host'] || (puts "enter a 'host' to deploy to"; exit )
 set :deploy_to, '/srv/www/forekast'
 set :repository, 'git@github.com:Forekasting/kiwi.git'
-set :branch, 'master'
+set :branch, ENV['branch'] || 'master'
 
 set :pid_file, "#{deploy_to}/shared/tmp/pids/server.pid"
 
