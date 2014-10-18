@@ -90,6 +90,14 @@ class Event
     Time.parse(local_date.to_s + " " + local_time)
   end
 
+  def relative_date(zone_offset)
+    if self.is_all_day == true || self.time_format == "recurring" || self.time_format == "tv_show"
+      return self.local_date.to_date
+    else
+      return (self.datetime - zone_offset.minutes).beginning_of_day.to_date
+    end
+  end
+
   def reminders_for_user(user)
     reminders.where(user: user)
   end
@@ -153,94 +161,6 @@ class Event
     else
       self.upvote_names.include? username
     end
-  end
-
-  def relative_date(zone_offset)
-    if self.is_all_day == true || self.time_format == "recurring" || self.time_format == "tv_show"
-      return self.local_date.to_date
-    else
-      return (self.datetime - zone_offset.minutes).beginning_of_day.to_date
-    end
-  end
-
-  def self.get_starting_events(datetime, zone_offset, country, subkasts, minimum, eventsPerDay, topRanked)
-    listEvents = self.get_starting_events_query(datetime, zone_offset, country, subkasts, minimum, eventsPerDay)
-    topEvents = self.top_ranked(topRanked, datetime, datetime + 7.days, zone_offset, country, subkasts)
-    events = listEvents.concat topEvents
-    events.uniq!
-    events.sort_by! { |event| - (event.upvote_names.nil? ? 0 : event.upvote_names.size) }
-    return events
-  end
-
-  def self.get_events_after_date(datetime, zone_offset, country, subkasts, howMany=0)
-    self.get_enough_events_from_day(datetime, zone_offset, country, subkasts, howMany, 3)
-  end
-
-  def self.get_events_by_date(startDatetime, zone_offset, country, subkasts, howMany=0, skip=0)
-    endDatetime = startDatetime + 1.day - 1.second
-    self.get_events_by_range(startDatetime, endDatetime, zone_offset, country, subkasts, howMany, skip)
-  end
-
-  def self.count_events_by_date(datetime, zone_offset, country, subkasts)
-    Array(self.get_events_by_date(datetime, zone_offset, country, subkasts)).size
-  end
-
-  def self.top_ranked(howMany, startDatetime, endDatetime, zone_offset, country, subkasts)
-    self.get_events_by_range(startDatetime, endDatetime, zone_offset, country, subkasts, howMany)
-  end
-
-  def self.get_enough_events_from_day(datetime, zone_offset, country, subkasts, minimum, eventsPerDay)
-    date = (datetime - zone_offset.minutes).beginning_of_day
-
-    possible_events = self.any_of(
-      { is_all_day: false, time_format: '', :datetime.gte => datetime, location_type: 'national', country: country },
-      { is_all_day: false, time_format: '', :datetime.gte => datetime, location_type: 'international' },
-      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'national', country: country },
-      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'international' },
-      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'national', country: country },
-      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'international' },
-      { is_all_day: true, :local_date.gte => date, location_type: 'national', country: country },
-      { is_all_day: true, :local_date.gte => date, location_type: 'international' }
-    ).any_in({subkast: subkasts}).to_a
-
-    sorted_possible_events = possible_events.sort_by { |event| - (event.upvote_count.nil? ? 0 : event.upvote_count) }
-    massage_events(sorted_possible_events, possible_events, zone_offset, eventsPerDay, minimum)
-  end
-
-  def self.get_starting_events_query(datetime, zone_offset, country, subkasts, minimum, eventsPerDay)
-    date = (datetime - zone_offset.minutes).beginning_of_day
-
-    possible_events = self.any_of(
-      { is_all_day: false, time_format: '', :datetime.gte => datetime, location_type: 'national', country: country, :datetime.lte => datetime + 7.days},
-      { is_all_day: false, time_format: '', :datetime.gte => datetime, location_type: 'international', :datetime.lte => datetime + 7.days},
-      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'national', country: country , :local_date.lte => date + 7.days },
-      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'international', :local_date.lte => date + 7.days },
-      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'national', country: country, :local_date.lte => date + 7.days },
-      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'international', :local_date.lte => date + 7.days },
-      { is_all_day: true, :local_date.gte => date, location_type: 'national', country: country, :local_date.lte => date + 7.days },
-      { is_all_day: true, :local_date.gte => date, location_type: 'international', :local_date.lte => date + 7.days },
-    ).any_in({subkast: subkasts}).to_a
-
-    sorted_possible_events = possible_events.sort_by { |event| - (event.upvote_count.nil? ? 0 : event.upvote_count) }
-    massage_events(sorted_possible_events, possible_events, zone_offset, eventsPerDay, minimum)
-  end
-
-  def self.massage_events(sorted_possible_events, possible_events, zone_offset, eventsPerDay, minimum)
-    events = []
-
-    dates = possible_events.collect { |event| event.relative_date(zone_offset) }
-    dates.sort_by! { |date| date }
-    dates = dates.uniq
-
-    each_day_min_events = 0
-    dates.each do |date|
-      eventsOnDate = sorted_possible_events.select { |event| event.relative_date(zone_offset) == date }
-      events.concat eventsOnDate
-      each_day_min_events += eventsOnDate.take(eventsPerDay).size
-      break if each_day_min_events >= minimum
-    end
-
-    return events
   end
 
   def comment_count
