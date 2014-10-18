@@ -53,10 +53,6 @@ class Event
     end
   end
 
-  def reminders_for_user(user)
-    reminders.where(user: user)
-  end
-
   def get_utc_datetime(timezone)
     if is_all_day == true or time_format == 'recurring' or time_format == 'tv_show'
       tz = TZInfo::Timezone.get(timezone)
@@ -92,6 +88,10 @@ class Event
 
   def local_datetime
     Time.parse(local_date.to_s + " " + local_time)
+  end
+
+  def reminders_for_user(user)
+    reminders.where(user: user)
   end
 
   def image_from_url(url)

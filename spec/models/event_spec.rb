@@ -10,12 +10,6 @@ describe Event do
     Timecop.return
   end
 
-  it "should work" do
-    e = Event.new name: "foobar"
-    e.save!
-    Event.all.size.should == 1
-  end
-
   it 'should get comment count' do
     c = create :comment
     create :comment, :event => c.event
