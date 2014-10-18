@@ -18,6 +18,11 @@ describe EventRepository do
   let!(:e11) { create :event, name: 'E11', local_date: DateTime.parse("Sep 15th, 2014").to_date, local_time: "2:30 PM", time_format: 'recurring', upvote_names: ['v1', 'v2', 'v3'], location_type: 'international', country: '' }
   let!(:e12) { create :event, name: 'E12', datetime: DateTime.parse("Sep 15th, 2014 12:00 PM"), location_type: 'international', country: '' }
 
+  let!(:e13) { create :event, name: 'E13', local_date: DateTime.parse("Sep 22nd, 2014").to_date, is_all_day: true, upvote_names: ['v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7' ] }
+  let!(:e14) { create :event, name: 'E14', local_date: DateTime.parse("Sep 18th, 2014").to_date, local_time: "7:30 PM", time_format: 'tv_show', upvote_names: ['v1', 'v2', 'v3', 'v4', 'v5', 'v6'] }
+  let!(:e15) { create :event, name: 'E15', local_date: DateTime.parse("Sep 19th, 2014").to_date, local_time: "2:30 PM", time_format: 'recurring', upvote_names: ['v1', 'v2', 'v3', 'v4', 'v5'] }
+  let!(:e16) { create :event, name: 'E16', datetime: DateTime.parse("Sep 16th, 2014 12:00 PM"), upvote_names: ['v1', 'v2', 'v3', 'v4', 'v5'] }
+
   describe 'fetching events on a given date' do
 
     it 'should be able to fetch all events on a given date' do
@@ -33,12 +38,12 @@ describe EventRepository do
     end
   end
 
-  it 'should be able to fetch a given number of events on a given date and skip some events' do
-
+  it 'should be able to count the number of events on a given day' do
+    expect(repository.count_events_on_date("Sep 15th, 2014")).to eq 8
   end
 
-  it 'should be able to count the number of events on a given day' do
-
+  it 'should be able to fetch a given number of top ranked events over a given range of days' do
+    expect(repository.top_ranked_events("Sep 15th, 2014", "Sep 22nd, 2014", 10)).to eq [e13, e14, e15, e16, e9, e1, e5, e7, e3, e11]
   end
 
   it 'should be able to fetch a few events for a given number of upcoming days' do

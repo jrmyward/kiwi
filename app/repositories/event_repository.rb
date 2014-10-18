@@ -7,7 +7,7 @@ class EventRepository
 
   def events_on_date(date, how_many = 0, skip = 0)
     date = DateTime.parse(date)
-    get_events_by_range(date, date + 1.day - 1.second, how_many, skip)
+    get_events_by_range(date, date.end_of_day, how_many, skip)
   end
 
   def events_after_date(date, how_many = 0, skip = 0)
@@ -15,11 +15,15 @@ class EventRepository
   end
 
   def count_events_on_date(date)
-
+    date = DateTime.parse(date)
+    get_events_by_range(date, date.end_of_day).size
   end
 
-  def top_ranked_events(from_date, how_many_days, how_many_events_per_day)
+  def top_ranked_events(from_date, to_date, how_many_events)
+    from_date = DateTime.parse(from_date)
+    to_date = DateTime.parse(to_date)
 
+    get_events_by_range(from_date, to_date, how_many_events)
   end
 
   private
