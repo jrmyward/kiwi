@@ -53,7 +53,6 @@ end
 group :development, :test do
   gem 'mina'
   gem 'timecop'
-  gem 'debugger', '1.6.6'
   gem 'guard'
   gem 'guard-spork'
   gem 'spork-rails', :github => 'sporkrb/spork-rails'

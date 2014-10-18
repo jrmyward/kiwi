@@ -31,11 +31,11 @@
 </div>
 <div class="col-sm-9">
   <div class="date_picker_special_time_group all_day_toggle">
-    <h5 class="time_group_title" >Special Time Format:</h5>
+    <h5 class="time_group_title" >Special time format:</h5>
     <label class="control-label">
       <input type="radio" name="time_format" <% if @time_format == '': %> checked="checked" <% end %>id="" value="" checked="checked"></input> None
     </label>
-    <label class="control-label" style="display: block;">
+    <label class="control-label">
       <input type="radio" name="time_format" <% if @time_format == 'tv_show': %> checked="checked" <% end %> id="" value="tv_show"></input> TV show in US & Canada Only (Not Live)
       <div class="date_picker_time_format_description">
         A television show in the format 9/8c

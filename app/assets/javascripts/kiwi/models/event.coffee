@@ -122,7 +122,7 @@ class FK.Models.Event extends Backbone.GSModel
 
       if @get('time_format') is 'tv_show'
         date_parsed = moment(@get('local_date'))
-        eastern_time = moment("#{@get('local_time')} #{date_parsed.format('YYYY-MM-DD')}", 'h:mm A YYYY-MM-DD')
+        eastern_time = moment("#{@get('local_time')} #{date_parsed.format('YYYY-MM-DD')}", 'h:mma YYYY-MM-DD')
         central_time = parseInt(eastern_time.format('h')) - 1
         central_time = 12 if central_time is 0
 
@@ -133,7 +133,7 @@ class FK.Models.Event extends Backbone.GSModel
 
     dateAsString: () ->
       return "" unless @get('datetime')
-      return @get('fk_datetime').format('dddd, MMM Do, YYYY')
+      return @get('fk_datetime').format('dddd, MMM Do YYYY')
 
     datetimeAsString: () ->
       return "#{@.get('dateAsString')}, #{@.get('timeAsString')}"
@@ -180,7 +180,7 @@ class FK.Models.Event extends Backbone.GSModel
     moment(moment(@get('local_date')).format('YYYY-MM-DD'))
 
   time_from_moment: (datetime) =>
-    @in_my_timezone(datetime).format('h:mm A')
+    @in_my_timezone(datetime).format('h:mma')
 
   in_my_timezone: (datetime) ->
     # account for when viewing a date that is outside of our current DST
@@ -219,7 +219,7 @@ class FK.Models.Event extends Backbone.GSModel
       return unless moment_val
       moment_val = moment(moment_val)
       if @get('time_format') is 'tv_show'
-        moment_val = moment(moment_val.format('YYYY-MM-DD') + ' ' + moment_val.format('h:mm A') + ' EST')
+        moment_val = moment(moment_val.format('YYYY-MM-DD') + ' ' + moment_val.format('h:mma') + ' EST')
 
       # set the input time to UTC:
       adjustedMoment = moment(moment_val).zone(0)
