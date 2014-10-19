@@ -29,5 +29,5 @@ Kiwi::Application.routes.draw do
   get '/api/events/eventsByDate', :to => 'events#events_by_date', :as => 'events_by_date'
   get '/api/events/:id/comments', :to => 'events#comments', :as => 'events_comments'
   get '*path', :to => 'home#index', :as => 'subkasts'
-  root :to => 'home#index'
+  root :to => 'events#index'
 end

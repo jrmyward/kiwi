@@ -3,11 +3,13 @@ class EventsController < ApplicationController
   authorize_resource :only => [:destroy, :create]
 
   def index
-    @events = Event.where(:datetime.ne => nil)
-    respond_to do |format|
-      format.html { redirect_to root_url }
-      format.json
-    end
+    # Include reminders
+    # Include comment count
+    # Include image
+    country = params[:country] || 'CA'
+    subkasts = params[:subkasts] || Subkast.all.map(&:code)
+    date = params[:date] || DateTime.now.beginning_of_day.to_s
+    @events = EventRepository.new(browser_timezone, country, subkasts).events_from_date(date, 7)
   end
 
   def show
@@ -112,10 +114,6 @@ class EventsController < ApplicationController
   end
 
   def startup_events
-    # Include reminders
-    # Include comment count
-    # Include image
-    @events = EventRepository.new(browser_timezone, params[:country], params[:subkasts]).events_from_date(params[:date], 7)
   end
 
   def comments

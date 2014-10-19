@@ -17,11 +17,13 @@ class EventRepository
 
     while dates_with_events.count < how_many_dates
       break if DateTime.parse(date) == get_last_date
+      break if count > 30
       new_events = events_on_date(date, how_many_events_per_day).to_a
       events = events + new_events
 
       dates_with_events << date unless new_events.empty?
       date = tomorrow(date)
+      count = count + 1
     end
 
     events
