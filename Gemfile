@@ -47,6 +47,8 @@ gem 'mongoid-paperclip', :require => 'mongoid_paperclip'
 
 gem 'tzinfo'
 
+gem 'rocket_pants'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
