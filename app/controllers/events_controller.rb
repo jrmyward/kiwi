@@ -11,6 +11,7 @@ class EventsController < ApplicationController
     date = params[:date] || DateTime.now.beginning_of_day.to_s
     @events = EventRepository.new(browser_timezone, country, subkasts).events_from_date(date, 7)
     @subkasts = Subkast.by_user(current_user)
+    @countries = Country.all.sort_by(&:en_name)
   end
 
   def show
