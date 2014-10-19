@@ -21,7 +21,7 @@ end
 set :domain, ENV['host'] || (puts "enter a 'host' to deploy to"; exit )
 set :deploy_to, '/srv/www/forekast'
 set :repository, 'git@github.com:Forekasting/kiwi.git'
-set :branch, 'master'
+set :branch, ENV['branch'] || 'master'
 
 set :pid_file, "#{deploy_to}/shared/tmp/pids/server.pid"
 
@@ -48,7 +48,7 @@ task :environment do
   # invoke :'rbenv:load'
 
   # For those using RVM, use this to load an RVM version@gemset.
-  invoke :'rvm:use[ruby-2.1.1@kiwi]'
+  invoke :'rvm:use[ruby-2.1.2@kiwi]'
 
 end
 
@@ -99,6 +99,7 @@ task :deploy => :environment do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
+    invoke :'rails:assets_precompile'
     invoke :'rails:db_migrate'
   end
 end
@@ -108,6 +109,7 @@ task :deploy_assets => :environment do
     notify("#{ENV['host']} - deploying assets! ", 'green')
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
+    invoke :'bundle:install'
     invoke :'rails:assets_precompile'
   end
 end

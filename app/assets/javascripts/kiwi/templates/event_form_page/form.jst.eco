@@ -9,6 +9,7 @@
       <input class="form-control" type="text" name="name" id="name" maxlength="100"></input>
       <span class="counter-label"><span>100</span> characters remaining</span>
     </div>
+    <div class="clear" />
   </div>
   <div class="form-group event_form_subkast">
     <div class="col-sm-3">
@@ -20,6 +21,7 @@
         <option value="-">Please select...</option>
       </select>
     </div>
+    <div class="clear" />
   </div>
   <div class="form-group event_form_location">
     <div class="col-sm-3">
@@ -38,6 +40,7 @@
       </label>
       <select class="form-control" name="country"></select>
     </div>
+    <div class="clear" />
   </div>
   <div class="form-group event_form_date">
     <div class="col-sm-3">
@@ -47,6 +50,7 @@
     <div class="col-sm-9">
       <div id="datetime-region"></div>
     </div>
+    <div class="clear" />
   </div>
   <div class="form-group event_form_image">
     <div class="col-sm-3">
@@ -57,6 +61,7 @@
     <div class="col-sm-9">
       <div id="image-region"></div>
     </div>
+    <div class="clear" />
   </div>
   <div class="form-group event_form_description">
     <div class="col-sm-3">
@@ -64,7 +69,8 @@
     </div>
     <div class="col-sm-9">
       <textarea class="form-control" name="description" rows="3"></textarea>
-      </div>
+    </div>
+    <div class="clear" />
   </div>
   <center>
     <div class="save-container">
