@@ -5,5 +5,12 @@
         <%= render partial: 'day_summary', locals: { events: events, date: date } %>
       <% end %>
     </div>
+    <div id="sidebar-region" class="col-sm-4">
+      <div class="sidebar">
+        <div id="subkast-filter">
+          <%= render partial: 'subkast_list' %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

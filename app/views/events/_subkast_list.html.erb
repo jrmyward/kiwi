@@ -1,0 +1,13 @@
+<div class="sidebar">
+  <h5 class="filter-title">Your Subkasts:</h5>
+  <div class="subkasts-container">
+    <div class="subkast-list">
+      <% @subkasts.each do |subkast| %>
+        <div>
+          <%= link_to subkast.name, "#{events_path}?subkast=#{subkast.code}" %>
+        </div>
+      <% end %>
+    </div>
+    <div class="subkast-edit">+ <a href="/users/edit" class="subkast-edit-link">Edit Your Subkasts</a></div>
+  </div>
+</div>
