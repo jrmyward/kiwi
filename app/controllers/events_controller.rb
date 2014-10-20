@@ -9,9 +9,11 @@ class EventsController < ApplicationController
     country = params[:country] || 'CA'
     subkasts = params[:subkasts] || Subkast.all.map(&:code)
     date = params[:date] || DateTime.now.beginning_of_day.to_s
-    @events = EventRepository.new(browser_timezone, country, subkasts).events_from_date(date, 7)
+    repository = EventRepository.new(browser_timezone, country, subkasts)
+    @events = repository.events_from_date(date, 7)
     @subkasts = Subkast.by_user(current_user)
     @countries = Country.all.sort_by(&:en_name)
+    @top_events = repository.top_ranked_events(date, (DateTime.parse(date) + 7.days).to_s, 10)
   end
 
   def show
