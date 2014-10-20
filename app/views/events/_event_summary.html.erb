@@ -7,7 +7,7 @@
     <a class='event-image' href=""><img src='<%=event.image.url(:thumb)%>' /></a>
   </div>
   <div class='meta-container pull-left'>
-    <a class='event-name' href="<%=events_path(event)%>"><%=event.name%></a><span class="event-info"> - <%=event.get_local_datetime('America/New_York')%></span><br />
+    <a class='event-name' href="<%=event_path(event)%>"><%=event.name%></a><span class="event-info"> - <%=event.get_local_datetime('America/New_York')%></span><br />
     <span class='event-meta'>Added by <%=event.user%> - <%=event.subkast%> - <%= event.comment_count %> <%=event.location_type %>
     </span>
   </div>

@@ -92,6 +92,10 @@ class Event
     Time.parse(local_date.to_s + " " + local_time)
   end
 
+  def pretty_datetime
+    get_local_datetime('America/New_York').strftime('%-d %B, %Y - %A')
+  end
+
   def reminders_for_user(user)
     reminders.where(user: user)
   end

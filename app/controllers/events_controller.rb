@@ -20,6 +20,7 @@ class EventsController < ApplicationController
     # Include reminders
     # Include event comments
     # Include event image
+    @event = Event.find(params[:id])
   end
 
   def edit
