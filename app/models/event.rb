@@ -268,7 +268,8 @@ class Event
   end
 
   def comment_count
-    Comment.where(event_id: id).count
+    return 0
+    #Comment.where(event_id: id).count
   end
 
   def root_comments
