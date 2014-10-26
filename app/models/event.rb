@@ -211,14 +211,14 @@ class Event
     date = (datetime - zone_offset.minutes).beginning_of_day
 
     possible_events = self.any_of(
-      { is_all_day: false, time_format: '', :datetime.gte => datetime, location_type: 'national', country: country, :datetime.lte => datetime + 7.days},
-      { is_all_day: false, time_format: '', :datetime.gte => datetime, location_type: 'international', :datetime.lte => datetime + 7.days},
-      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'national', country: country , :local_date.lte => date + 7.days },
-      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'international', :local_date.lte => date + 7.days },
-      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'national', country: country, :local_date.lte => date + 7.days },
-      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'international', :local_date.lte => date + 7.days },
-      { is_all_day: true, :local_date.gte => date, location_type: 'national', country: country, :local_date.lte => date + 7.days },
-      { is_all_day: true, :local_date.gte => date, location_type: 'international', :local_date.lte => date + 7.days },
+      { is_all_day: false, time_format: '', :datetime.gte => datetime, location_type: 'national', country: country},
+      { is_all_day: false, time_format: '', :datetime.gte => datetime, location_type: 'international'},
+      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'national', country: country } ,
+      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'international'},
+      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'national', country: country },
+      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'international'},
+      { is_all_day: true, :local_date.gte => date, location_type: 'national', country: country},
+      { is_all_day: true, :local_date.gte => date, location_type: 'international'},
     ).any_in({subkast: subkasts}).to_a
 
     sorted_possible_events = possible_events.sort_by { |event| - (event.upvote_count.nil? ? 0 : event.upvote_count) }
@@ -268,8 +268,7 @@ class Event
   end
 
   def comment_count
-    return 0
-    #Comment.where(event_id: id).count
+    Comment.where(event_id: id).count
   end
 
   def root_comments
