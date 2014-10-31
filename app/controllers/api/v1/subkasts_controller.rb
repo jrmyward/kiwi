@@ -2,9 +2,7 @@ module Api
   module V1
     class SubkastsController < BaseController
       def index
-        collection = Subkast.paginate(page: params[:page])
-
-        expose(collection, only: [:code, :name, :url])
+        expose(Subkast.paginate(page: params[:page]))
       end
     end
   end

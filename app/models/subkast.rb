@@ -10,11 +10,11 @@ class Subkast
     self.in(code: user.my_subkasts)
   end
 
-  def as_json(option={})
+  def serializable_hash(opts)
     {
-      :code => code,
-      :name => name,
-      :url => url
+      name: name,
+      code: code,
+      slug: url
     }
   end
 end

@@ -16,15 +16,15 @@ describe 'Subkasts Requests' do
 
       expect(resp[0]['code']).to eq 'EDU'
       expect(resp[0]['name']).to eq 'Education'
-      expect(resp[0]['url']).to eq 'education'
+      expect(resp[0]['slug']).to eq 'education'
 
       expect(resp[1]['code']).to eq 'SE'
       expect(resp[1]['name']).to eq 'Sports'
-      expect(resp[1]['url']).to eq 'sports'
+      expect(resp[1]['slug']).to eq 'sports'
 
       expect(resp[2]['code']).to eq 'TVM'
       expect(resp[2]['name']).to eq 'Movies'
-      expect(resp[2]['url']).to eq 'movies'
+      expect(resp[2]['slug']).to eq 'movies'
 
       expect(pagination['previous']).to be_nil
       expect(pagination['next']).to be_nil
