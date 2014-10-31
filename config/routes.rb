@@ -16,10 +16,15 @@ Kiwi::Application.routes.draw do
 
   namespace :api do
     api version: 1, module: 'v1' do
-      resources :events do
-        resources :comments, only: [:index, :create, :delete]
-        resources :reminders, only: [:index, :create, :delete]
+      resources :events, only: [:index, :create, :update, :destroy] do
+        resources :upvote, only: [:index, :create]
+        delete 'upvote', to: 'upvote#destroy'
+        resources :comments, only: [:index, :create]
+        resources :reminders, only: [:index, :create, :destroy]
       end
+      resources :subkasts, only: [:index]
+      resources :comments, only: [:destroy]
+      resources :reminder_types, only: [:index]
     end
   end
 
@@ -28,6 +33,5 @@ Kiwi::Application.routes.draw do
   get '/api/events/eventsAfterDate', :to => 'events#events_after_date', :as => 'events_after_date'
   get '/api/events/eventsByDate', :to => 'events#events_by_date', :as => 'events_by_date'
   get '/api/events/:id/comments', :to => 'events#comments', :as => 'events_comments'
-  get '*path', :to => 'home#index', :as => 'subkasts'
   root :to => 'events#index'
 end

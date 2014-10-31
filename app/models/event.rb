@@ -130,18 +130,18 @@ class Event
     File.open("#{Rails.root}/public/images/thumb/missing.png")
   end
 
-  def add_upvote(username)
+  def add_upvote(user)
     if self.upvote_names.nil?
       self.upvote_names = Array.new
     end
-    if ! self.upvote_names.include? username
-      self.upvote_names.push username
+    if ! self.upvote_names.include? user.username
+      self.upvote_names.push user.username
     end
   end
 
-  def remove_upvote(username)
+  def remove_upvote(user)
     if not self.upvote_names.nil?
-      self.upvote_names.delete username
+      self.upvote_names.delete user.username
     end
   end
 
@@ -153,11 +153,11 @@ class Event
     end
   end
 
-  def have_i_upvoted(username)
+  def upvoted?(user)
     if self.upvote_names.nil?
       return false
     else
-      self.upvote_names.include? username
+      self.upvote_names.include? user.username
     end
   end
 
