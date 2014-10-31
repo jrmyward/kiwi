@@ -12,7 +12,6 @@ class Subkast
 
   def as_json(option={})
     {
-      '_id' => _id.to_s,
       :code => code,
       :name => name,
       :url => url

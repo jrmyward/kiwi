@@ -48,6 +48,7 @@ gem 'mongoid-paperclip', :require => 'mongoid_paperclip'
 gem 'tzinfo'
 
 gem 'rocket_pants'
+gem 'will_paginate_mongoid'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

@@ -19,6 +19,7 @@ Kiwi::Application.routes.draw do
       resources :events, only: [:index, :create, :update, :destroy] do
         resources :upvote, only: [:index, :create]
         delete 'upvote', to: 'upvote#destroy'
+
         resources :comments, only: [:index, :create]
         resources :reminders, only: [:index, :create, :destroy]
       end

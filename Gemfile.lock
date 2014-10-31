@@ -375,6 +375,9 @@ GEM
       activesupport (>= 2.3.4)
       chronic (>= 0.6.3)
     will_paginate (3.0.7)
+    will_paginate_mongoid (2.0.1)
+      mongoid
+      will_paginate (~> 3.0)
 
 PLATFORMS
   ruby
@@ -430,3 +433,4 @@ DEPENDENCIES
   tzinfo
   uglifier (>= 1.0.3)
   whenever
+  will_paginate_mongoid
