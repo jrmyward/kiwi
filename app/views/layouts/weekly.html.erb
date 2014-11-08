@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Weekly Forekast – The Best Upcoming Events Straight To Your Inbox">
+    <meta name="author" content="Forekast.com">
+
+    <link rel="icon" href=<%= asset_path("favicon.ico") %> type="image/x-icon"/>
+    <link rel="shortcut icon" href=<%= asset_path("favicon.ico") %> type="image/x-icon"/>
+    <title>The Weekly Forekast</title>
+
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic|Raleway:400,300,700|Montserrat:400,700' rel='stylesheet' type='text/css'>
+  <%= stylesheet_link_tag    "weekly.css", media: "all" %>
+  <%= csrf_meta_tags %>
+
+
+  </head>
+  <body data-spy="scroll" data-offset="0" data-target="#navigation">
+<%= yield %>
+  <%= javascript_include_tag "weekly.js" %>
+  <script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));</script>
+  </body>
+</html>

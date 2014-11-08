@@ -1,3 +1,3 @@
 class WeeklyController < ApplicationController
-  layout "nolayout"
+  layout "weekly"
 end
