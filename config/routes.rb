@@ -25,7 +25,7 @@ Kiwi::Application.routes.draw do
       end
       resources :subkasts, only: [:index]
       resources :comments, only: [:destroy]
-      resources :reminder_types, only: [:index]
+      resources :reminder_intervals, only: [:index]
     end
   end
 
