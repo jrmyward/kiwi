@@ -9,6 +9,7 @@ Kiwi::Application.routes.draw do
   resources :reminders
 
 
+  get '/weekly', :to => 'weekly#index', :as => 'weekly'
   get '/about', :to => 'static#about', :as => 'about'
   get '/faq', :to => 'static#faq', :as => 'faq'
   get '/termsofservice', :to => 'static#termsofservice', :as => 'termsofservice'
