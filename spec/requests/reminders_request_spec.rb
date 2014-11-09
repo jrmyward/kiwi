@@ -116,7 +116,7 @@ describe 'Reminders Requests' do
     end
 
     it 'should return a 401 status code and error message if the user is not logged in' do
-      post "/api/1/events/#{e2.id}/reminders", { interval: '4h' }.to_json
+      post "/api/1/events/#{e2.id}/reminders", { interval: '4h' }
 
       expect(response.code).to eq '401'
 
@@ -128,6 +128,66 @@ describe 'Reminders Requests' do
   end
 
   describe 'DELETE /api/1/events/{id}/reminders/{id}' do
+    context 'signed in' do
+      before(:each) do
+        sign_in(u1)
+      end
 
+      it 'removes the reminder' do
+        delete "/api/1/events/#{e1.id}/reminders/1h"
+
+        expect(response.code).to eq '200'
+
+        reminder_intervals = e1.reminders_for_user(u1).map(&:time_to_event)
+
+        expect(reminder_intervals).not_to include('1h')
+      end
+
+      it 'returns a 422 status code and an error message when the event could not be found' do
+        delete '/api/1/events/ZZZ/reminders/1h'
+
+        expect(response.code).to eq '422'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'event_not_found'
+        expect(resp['error_description']).to eq 'Could not find the event.'
+      end
+
+      it 'returns a 404 status code and error message when the reminder is not set on the event' do
+        delete "/api/1/events/#{e2.id}/reminders/1d"
+
+        expect(response.code).to eq '404'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'missing_reminder'
+        expect(resp['error_description']).to eq 'Event does not have this reminder interval set.'
+      end
+
+      it 'returns a 404 status code and error message when the reminder is not a valid interval' do
+        delete "/api/1/events/#{e1.id}/reminders/2d"
+
+        expect(response.code).to eq '404'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'missing_reminder'
+        expect(resp['error_description']).to eq 'Event does not have this reminder interval set.'
+      end
+    end
+
+    context 'not signed in' do
+      it 'responds with a 401 status code and error message if the user is not logged in' do
+        delete "/api/1/events/#{e2.id}/reminders/4h"
+
+        expect(response.code).to eq '401'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'unauthenticated'
+        expect(resp['error_description']).to eq 'This action requires authentication to continue.'
+      end
+    end
   end
 end

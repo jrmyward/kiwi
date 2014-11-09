@@ -104,6 +104,10 @@ class Event
     Reminder.create(event_id: id, user_id: user.id, time_to_event: interval)
   end
 
+  def remove_reminder(user, interval)
+    Reminder.where(event_id: id, user_id: user.id, time_to_event: interval).delete
+  end
+
   def image_from_url(url)
     if url
       if url.start_with?('data:image/jpeg;base64')

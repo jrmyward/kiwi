@@ -27,6 +27,21 @@ module Api
         exposes intervals_on_event_for_user(event, user)
       end
 
+      def destroy
+        interval = params['id']
+        user = api_current_user
+        event = Event.where(id: params[:event_id]).first
+
+        error! :unauthenticated if user.nil?
+        error! :event_not_found, metadata: event_not_found if event.nil?
+
+        reminders = event.reminders_for_user(user).map(&:time_to_event)
+
+        error! :not_found, metadata: missing_reminder unless reminders.include?(interval)
+
+        event.remove_reminder(user, interval)
+      end
+
       private
 
       def event_not_found
@@ -47,6 +62,13 @@ module Api
         {
           error: 'reminder_already_set',
           error_description: 'A reminder at this interval is already set for this event.'
+        }
+      end
+
+      def missing_reminder
+        {
+          error: 'missing_reminder',
+          error_description: 'Event does not have this reminder interval set.'
         }
       end
 
