@@ -15,6 +15,7 @@ module Api
         event = Event.where(id: params[:event_id]).first
 
         error! :event_not_found, metadata: event_not_found if event.nil?
+        error! :unauthenticated if api_current_user.nil?
 
         if params['reply_to'].present?
           comment = Comment.where(id: params['reply_to']).first

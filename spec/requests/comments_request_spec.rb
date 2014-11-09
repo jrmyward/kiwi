@@ -235,7 +235,27 @@ describe 'Comments Requests' do
     end
 
     context 'not signed in' do
+      it 'responds with a 401 status code and and error message when tyring to post a comment without signing in' do
+        post "/api/1/events/#{event.id}/comments", { message: 'Something great is happening!' }
 
+        expect(response.code).to eq '401'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'unauthenticated'
+        expect(resp['error_description']).to eq 'This action requires authentication to continue.'
+      end
+
+      it 'responds with a 401 status code and and error message when tyring to post a reply without signing in' do
+        post "/api/1/events/#{event.id}/comments", { message: 'Something great is happening!', reply_to: c1.id }
+
+        expect(response.code).to eq '401'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'unauthenticated'
+        expect(resp['error_description']).to eq 'This action requires authentication to continue.'
+      end
     end
   end
 
