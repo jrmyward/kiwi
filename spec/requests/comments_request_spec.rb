@@ -28,7 +28,6 @@ describe 'Comments Requests' do
     end
 
     context 'not signed in' do
-
       it 'responds with a list of comments for an event' do
         get "/api/1/events/#{event.id}/comments"
 
@@ -66,7 +65,14 @@ describe 'Comments Requests' do
       end
 
       it 'responds with a 422 status code and an error message when the requested event is missing' do
+        get '/api/1/events/ZZZ/comments'
 
+        expect(response.code).to eq '422'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'event_not_found'
+        expect(resp['error_description']).to eq 'Could not find the event.'
       end
     end
 
@@ -109,7 +115,6 @@ describe 'Comments Requests' do
         expect(resp[1]['upvoted']).not_to be
         expect(resp[1]['downvote_count']).to eq 1
         expect(resp[1]['downvoted']).to be
-
       end
     end
   end

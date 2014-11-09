@@ -5,6 +5,8 @@ module Api
         event = Event.where(id: params[:event_id]).first
         @user = api_current_user
 
+        error! :event_not_found, metadata: event_not_found if event.nil?
+
         comments = decorate(event.root_comments)
 
         expose(comments)

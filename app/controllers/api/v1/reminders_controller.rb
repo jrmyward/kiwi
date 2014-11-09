@@ -44,13 +44,6 @@ module Api
 
       private
 
-      def event_not_found
-        {
-          error: 'event_not_found',
-          error_description: 'Could not find the event.'
-        }
-      end
-
       def invalid_reminder_interval
         {
           error: 'invalid_reminder_interval',
