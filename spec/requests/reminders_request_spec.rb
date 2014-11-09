@@ -5,23 +5,22 @@ def sign_in(user)
 end
 
 describe 'Reminders Requests' do
+  let!(:e1) { create :event }
+  let!(:e2) { create :event }
+
+  let!(:u1) { create :user }
+  let!(:u2) { create :user }
+
+  let!(:r2) { create :reminder, :one_h_before, event: e1, user: u1 }
+  let!(:r3) { create :reminder, :four_h_before, event: e1, user: u1 }
+  let!(:r4) { create :reminder, :one_d_before, event: e1, user: u1 }
+  let!(:r1) { create :reminder, :fifteen_m_before, event: e1, user: u1 }
+
+  let!(:r5) { create :reminder, :fifteen_m_before, event: e1, user: u2 }
+  let!(:r6) { create :reminder, :fifteen_m_before, event: e2, user: u1 }
+
   describe 'GET /api/1/events/{id}/reminders' do
-    let!(:e1) { create :event }
-    let!(:e2) { create :event }
-
-    let!(:u1) { create :user }
-    let!(:u2) { create :user }
-
-    let!(:r2) { create :reminder, :one_h_before, event: e1, user: u1 }
-    let!(:r3) { create :reminder, :four_h_before, event: e1, user: u1 }
-    let!(:r4) { create :reminder, :one_d_before, event: e1, user: u1 }
-    let!(:r1) { create :reminder, :fifteen_m_before, event: e1, user: u1 }
-
-    let!(:r5) { create :reminder, :fifteen_m_before, event: e1, user: u2 }
-    let!(:r6) { create :reminder, :fifteen_m_before, event: e2, user: u1 }
-
     context 'signed in' do
-
       before(:each) do
         sign_in(u1)
       end
@@ -47,7 +46,7 @@ describe 'Reminders Requests' do
         resp = JSON.parse(response.body)
 
         expect(resp['error']).to eq 'event_not_found'
-        expect(resp['error_description']).to eq 'Could not find the event to lookup reminders.'
+        expect(resp['error_description']).to eq 'Could not find the event.'
       end
     end
 
@@ -66,12 +65,65 @@ describe 'Reminders Requests' do
   end
 
   describe 'POST /api/1/events/{id}/reminders' do
-    it 'should be able to create a reminder for a user on an event' do
+    context 'signed in' do
+      before(:each) do
+        sign_in(u1)
+      end
 
+      it 'should be able to create a reminder for a user on an event' do
+        post "/api/1/events/#{e2.id}/reminders", { interval: '4h' }
+
+        expect(response.code).to eq '200'
+
+        resp = JSON.parse(response.body)['response']
+
+        expect(resp[0]['interval']).to eq '15m'
+        expect(resp[1]['interval']).to eq '4h'
+      end
+
+      it 'should return a 422 status code and error message if an invalid reminder type is provided' do
+        post "/api/1/events/#{e1.id}/reminders", { interval: '16m' }
+
+        expect(response.code).to eq '422'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'invalid_reminder_interval'
+        expect(resp['error_description']).to eq 'Provided reminder interval does not exist.'
+      end
+
+      it 'should return a 422 status code and error message if this reminder is already created' do
+        post "/api/1/events/#{e1.id}/reminders", { interval: '15m' }
+
+        expect(response.code).to eq '422'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'reminder_already_set'
+        expect(resp['error_description']).to eq 'A reminder at this interval is already set for this event.'
+      end
+
+      it 'should return a 422 status code and error message if a non existant event is provided' do
+        post "/api/1/events/ZZZ/reminders", { interval: '15m' }.to_json
+
+        expect(response.code).to eq '422'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'event_not_found'
+        expect(resp['error_description']).to eq 'Could not find the event.'
+      end
     end
 
-    it 'should return a 422 status code and error message if an invalid reminder type is provided' do
+    it 'should return a 401 status code and error message if the user is not logged in' do
+      post "/api/1/events/#{e2.id}/reminders", { interval: '4h' }.to_json
 
+      expect(response.code).to eq '401'
+
+      resp = JSON.parse(response.body)
+
+      expect(resp['error']).to eq 'unauthenticated'
+      expect(resp['error_description']).to eq 'This action requires authentication to continue.'
     end
   end
 
