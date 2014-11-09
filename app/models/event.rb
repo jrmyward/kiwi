@@ -169,6 +169,10 @@ class Event
     end
   end
 
+  def comment(message, user)
+    Comment.create(event: self, message: message, authored_by: user)
+  end
+
   def comment_count
     Comment.where(event_id: id).count
   end

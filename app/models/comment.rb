@@ -47,6 +47,10 @@ class Comment
     comment.parent = self
   end
 
+  def reply(message, user)
+    Comment.create(event: event, message: message, authored_by: user, parent: self)
+  end
+
   def parent_author
     parent.authored_by
   end
@@ -65,15 +69,17 @@ class Comment
     self.event_id = params[:event_id]
   end
 
-  def have_i_upvoted(username)
+  def have_i_upvoted(user)
+    username = user.username
     if self.upvote_names.nil?
       return false
     else
       self.upvote_names.include? username
     end
-  end  
+  end
 
-  def have_i_downvoted(username)
+  def have_i_downvoted(user)
+    username = user.username
     if self.downvote_names.nil?
       return false
     else
@@ -81,40 +87,60 @@ class Comment
     end
   end
 
-  def add_upvote(username)
+  def upvote_count
+    upvote_names.present? ? upvote_names.size : 0
+  end
+
+  def add_upvote(user)
+    username = user.username
     if self.upvote_names.nil?
       self.upvote_names = Array.new
     end
     if ! self.upvote_names.include? username
       self.upvote_names.push username
     end
-  end  
 
-  def remove_upvote(username)
+    save
+  end
+
+  def remove_upvote(user)
+    username = user.username
     if not self.upvote_names.nil?
       self.upvote_names.delete username
     end
+
+    save
   end
 
-  def add_downvote(username)
+  def downvote_count
+    downvote_names.present? ? downvote_names.size : 0
+  end
+
+  def add_downvote(user)
+    username = user.username
     if self.downvote_names.nil?
       self.downvote_names = Array.new
     end
     if ! self.downvote_names.include? username
       self.downvote_names.push username
     end
-  end  
 
-  def remove_downvote(username)
+    save
+  end
+
+  def remove_downvote(user)
+    username = user.username
     if not self.downvote_names.nil?
       self.downvote_names.delete username
     end
+
+    save
   end
-  
+
   def vote(upvoted, downvoted, username)
     if ( upvoted )
         self.remove_downvote(username)
-        self.add_upvote(username)      
+        self.add_upvote(username)
     elsif ( downvoted )
         self.remove_upvote(username)
         self.add_downvote(username)
@@ -125,7 +151,7 @@ class Comment
   end
 
   def comment_text
-    parent_id.present? ? "replied to one of your comments" : "commented on one of your events" 
+    parent_id.present? ? "replied to one of your comments" : "commented on one of your events"
   end
 
 end
