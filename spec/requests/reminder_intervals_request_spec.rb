@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Reminder Intervals Request' do
   describe 'GET /reminder_intervals' do
-    it 'should be able to get a list of request intervals' do
+    it 'gets a list of request intervals' do
       get '/api/1/reminder_intervals'
 
       resp = JSON.parse(response.body)['response']

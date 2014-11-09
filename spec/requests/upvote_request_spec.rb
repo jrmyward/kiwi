@@ -21,7 +21,7 @@ describe 'Upvote Request' do
   end
 
   describe 'GET /api/1/events/{id}/upvote' do
-    it 'should be able to get a count of all upvotes on an event' do
+    it 'gets a count of all upvotes on an event' do
       get "/api/1/events/#{event.id}/upvote"
 
       resp = JSON.parse(response.body)['response']
@@ -29,7 +29,7 @@ describe 'Upvote Request' do
       expect(resp['upvote_count']).to eq 3
     end
 
-    it 'it should indicate that the user has upvoted on this event' do
+    it 'indicates that the user has upvoted on this event' do
       post "/api/1/events/#{event.id}/upvote"
       get "/api/1/events/#{event.id}/upvote"
 
@@ -38,7 +38,7 @@ describe 'Upvote Request' do
       expect(resp['upvoted']).to be
     end
 
-    it 'should indicate that the user has not upvoted on this event' do
+    it 'indicates that the user has not upvoted on this event' do
       get "/api/1/events/#{event.id}/upvote"
 
       resp = JSON.parse(response.body)['response']
@@ -48,7 +48,7 @@ describe 'Upvote Request' do
   end
 
   describe 'POST /api/1/events/{id}/upvote' do
-    it 'should be able to mark the event as upvoted for a user' do
+    it 'marks the event as upvoted for a user' do
       post "/api/1/events/#{event.id}/upvote"
 
       resp = JSON.parse(response.body)['response']
@@ -57,7 +57,7 @@ describe 'Upvote Request' do
       expect(resp['upvoted']).to be
     end
 
-    it 'should not double upvote the event and should reply with a 422 status code' do
+    it 'replies with a 422 status code and prevents the upvote when the event has already been upvoted' do
       post "/api/1/events/#{event.id}/upvote"
       post "/api/1/events/#{event.id}/upvote"
 
@@ -71,7 +71,7 @@ describe 'Upvote Request' do
   end
 
   describe 'DELETE /api/1/events/{id}/upvote' do
-    it 'should be able to downvote the event for a user that has previously been upvoted' do
+    it 'downvotes the event for a user that has previously been upvoted' do
       post "/api/1/events/#{event.id}/upvote"
       delete "/api/1/events/#{event.id}/upvote"
       
@@ -83,7 +83,7 @@ describe 'Upvote Request' do
       expect(resp['upvoted']).not_to be
     end
 
-    it 'should reply with a 422 status code and not downvote an event when it has not been upvoted' do
+    it 'replies with a 422 status code and does not downvote an event when it has not been upvoted' do
       delete "/api/1/events/#{event.id}/upvote"
       
       expect(response.status).to eq 422

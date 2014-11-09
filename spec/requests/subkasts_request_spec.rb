@@ -8,7 +8,7 @@ describe 'Subkasts Requests' do
       create :movies_subkast
     end
 
-    it 'should be able to return a list of subkasts' do
+    it 'responds with a list of subkasts' do
       get '/api/1/subkasts'
 
       pagination = JSON.parse(response.body)['pagination']
