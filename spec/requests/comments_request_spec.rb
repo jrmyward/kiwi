@@ -310,17 +310,61 @@ describe 'Comments Requests' do
 
   describe 'DELETE /api/1/comments/{id}/upvote' do
     context 'signed in' do
-      it 'removes an upvote from an upvoted event' do
+      before(:each) do
+        sign_in(u1)
+      end
 
+      it 'removes an upvote from an upvoted event' do
+        c1.add_upvote(u1)
+
+        delete "/api/1/comments/#{c1.id}/upvote"
+
+        expect(response.code).to eq '200'
+
+        resp = JSON.parse(response.body)['response']
+
+        expect(resp['message']).to eq 'Event looking good!'
+        expect(resp['by']).to eq u1.username
+        expect(resp['upvote_count']).to eq 2
+        expect(resp['upvoted']).not_to be
+        expect(resp['downvote_count']).to eq 1
+        expect(resp['downvoted']).not_to be
       end
 
       it 'responds with a 422 status code and error message on a comment that has not been upvoted' do
+        delete "/api/1/comments/#{c1.id}/upvote"
 
+        expect(response.code).to eq '422'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'comment_not_upvoted'
+        expect(resp['error_description']).to eq 'User has not upvoted this comment so the downvote can\'t be removed.'
+      end
+
+      it 'responds with a 422 status code and error message when the comment to upvote does not exist' do
+        delete '/api/1/comments/ZZZ/upvote'
+
+        expect(response.code).to eq '422'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'comment_not_found'
+        expect(resp['error_description']).to eq 'Could not find the comment to upvote.'
       end
     end
 
     context 'not signed in' do
+      it 'responds with a 401 status code and error message when trying to upvote a comment' do
+        delete "/api/1/comments/#{c1.id}/upvote"
 
+        expect(response.code).to eq '401'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'unauthenticated'
+        expect(resp['error_description']).to eq 'This action requires authentication to continue.'
+      end
     end
   end
 
@@ -363,7 +407,7 @@ describe 'Comments Requests' do
 
     end
 
-    it 'provides a 404 when the subject comment was not found' do
+    it 'provides a 404 when the comment was not found' do
 
     end
   end
