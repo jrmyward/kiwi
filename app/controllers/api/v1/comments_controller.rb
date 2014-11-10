@@ -17,15 +17,7 @@ module Api
         error! :event_not_found, metadata: event_not_found if event.nil?
         error! :unauthenticated if api_current_user.nil?
 
-        if params['reply_to'].present?
-          comment = Comment.where(id: params['reply_to']).first
-
-          error! :comment_not_found, metadata: comment_not_found if comment.nil?
-
-          comment.reply(params['message'], api_current_user)
-        else
-          event.comment(params['message'], api_current_user)
-        end
+        event.comment(params['message'], api_current_user)
 
         comments = decorate(event.root_comments)
 
@@ -36,31 +28,28 @@ module Api
 
       end
 
-      private
+      protected
 
       def decorate(comments)
         comments.map do |comment|
-          json = {
-            id: comment.id,
-            message: comment.message,
-            by: comment.authored_by.username,
-            upvote_count: comment.upvote_count,
-            downvote_count: comment.downvote_count
-          }
-
-          json[:upvoted] = comment.have_i_upvoted(api_current_user) if api_current_user.present?
-          json[:downvoted] = comment.have_i_downvoted(api_current_user) if api_current_user.present?
-          json[:replies] = decorate(Comment.where(parent_id: comment.id))
-
-          json
+          decorate_one(comment)
         end
       end
 
-      def comment_not_found
-        {
-          error: 'comment_not_found',
-          error_description: 'Could not find the comment to reply to.'
+      def decorate_one(comment)
+        json = {
+          id: comment.id,
+          message: comment.message,
+          by: comment.authored_by.username,
+          upvote_count: comment.upvote_count,
+          downvote_count: comment.downvote_count
         }
+
+        json[:upvoted] = comment.have_i_upvoted(api_current_user) if api_current_user.present?
+        json[:downvoted] = comment.have_i_downvoted(api_current_user) if api_current_user.present?
+        json[:replies] = decorate(Comment.where(parent_id: comment.id))
+
+        json
       end
     end
   end

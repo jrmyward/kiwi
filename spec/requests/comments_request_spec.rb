@@ -180,52 +180,24 @@ describe 'Comments Requests' do
       end
 
       it 'creates a reply (comment on a comment)' do
-        post "/api/1/events/#{event.id}/comments", { message: 'That reply was pretty cool.', reply_to: c2.id }
+        post "/api/1/comments/#{c2.id}/replies", { message: 'That reply was pretty cool.' }
 
         expect(response.code).to eq '200'
 
         resp = JSON.parse(response.body)['response']
 
-        expect(resp[0]['message']).to eq 'Event looking good!'
-        expect(resp[0]['by']).to eq u1.username
-        expect(resp[0]['upvote_count']).to eq 2
-        expect(resp[0]['upvoted']).to be
-        expect(resp[0]['downvote_count']).to eq 1
-        expect(resp[0]['downvoted']).not_to be
-
-        expect(resp[0]['replies'][0]['message']).to eq 'Comment looking good!'
-        expect(resp[0]['replies'][0]['by']).to eq u1.username
-        expect(resp[0]['replies'][0]['upvote_count']).to eq 0
-        expect(resp[0]['replies'][0]['upvoted']).not_to be
-        expect(resp[0]['replies'][0]['downvote_count']).to eq 0
-        expect(resp[0]['replies'][0]['downvoted']).not_to be
-
-        expect(resp[0]['replies'][0]['replies'][0]['message']).to eq 'Reply looking good!'
-        expect(resp[0]['replies'][0]['replies'][0]['by']).to eq u2.username
-        expect(resp[0]['replies'][0]['replies'][0]['upvote_count']).to eq 1
-        expect(resp[0]['replies'][0]['replies'][0]['upvoted']).to be
-        expect(resp[0]['replies'][0]['replies'][0]['downvote_count']).to eq 0
-        expect(resp[0]['replies'][0]['replies'][0]['downvoted']).not_to be
-
-        expect(resp[1]['message']).to eq 'Event looking great!'
-        expect(resp[1]['by']).to eq u1.username
-        expect(resp[1]['upvote_count']).to eq 0
-        expect(resp[1]['upvoted']).not_to be
-        expect(resp[1]['downvote_count']).to eq 1
-        expect(resp[1]['downvoted']).to be
-
-        expect(resp[1]['replies'][0]['message']).to eq 'That reply was pretty cool.'
-        expect(resp[1]['replies'][0]['by']).to eq u2.username
-        expect(resp[1]['replies'][0]['upvote_count']).to eq 0
-        expect(resp[1]['replies'][0]['upvoted']).not_to be
-        expect(resp[1]['replies'][0]['downvote_count']).to eq 0
-        expect(resp[1]['replies'][0]['downvoted']).not_to be
+        expect(resp['message']).to eq 'That reply was pretty cool.'
+        expect(resp['by']).to eq u2.username
+        expect(resp['upvote_count']).to eq 0
+        expect(resp['upvoted']).not_to be
+        expect(resp['downvote_count']).to eq 0
+        expect(resp['downvoted']).not_to be
       end
 
-      it 'responds with a 422 status code and an error message when trying to comment on a comment that does not exist' do
-        post "/api/1/events/#{event.id}/comments", { message: 'Something great is happening!', reply_to: 'ZZZ' }
+      it 'responds with a 401 status code and an error message when trying to comment on a comment that does not exist' do
+        post "/api/1/comments/ZZZ/replies", { message: 'Something great is happening!' }
 
-        expect(response.code).to eq '422'
+        expect(response.code).to eq '404'
 
         resp = JSON.parse(response.body)
 
@@ -247,7 +219,7 @@ describe 'Comments Requests' do
       end
 
       it 'responds with a 401 status code and and error message when tyring to post a reply without signing in' do
-        post "/api/1/events/#{event.id}/comments", { message: 'Something great is happening!', reply_to: c1.id }
+        post "/api/1/comments/#{c1.id}/replies", { message: 'Something great is happening!' }
 
         expect(response.code).to eq '401'
 
@@ -261,15 +233,15 @@ describe 'Comments Requests' do
 
   describe 'POST /api/1/comments/{id}/upvote' do
     context 'signed in' do
-      it 'upvotes a no voted comment' do
+      it 'upvotes a no voted comment or reply' do
 
       end
 
-      it 'removes a downvote from a downvoted comment' do
+      it 'removes a downvote from a downvoted comment or reply' do
 
       end
 
-      it 'responds with a 422 status code and error message on an upvoted comment' do
+      it 'responds with a 422 status code and error message on an upvoted comment or reply' do
 
       end
     end
