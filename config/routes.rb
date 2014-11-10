@@ -26,6 +26,11 @@ Kiwi::Application.routes.draw do
       resources :subkasts, only: [:index]
       resources :comments, only: [:destroy] do
         resources :replies, only: [:create]
+        resources :upvote, controller: :comment_upvote, only: [:index, :create]
+        delete 'upvote', to: 'comment_upvote#destroy'
+
+        resources :downvote, controller: :comment_downvote, only: [:index, :create]
+        delete 'downvote', to: 'comment_downvote#destroy'
       end
       resources :reminder_intervals, only: [:index]
     end

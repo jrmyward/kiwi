@@ -45,8 +45,8 @@ module Api
           downvote_count: comment.downvote_count
         }
 
-        json[:upvoted] = comment.have_i_upvoted(api_current_user) if api_current_user.present?
-        json[:downvoted] = comment.have_i_downvoted(api_current_user) if api_current_user.present?
+        json[:upvoted] = comment.upvoted?(api_current_user) if api_current_user.present?
+        json[:downvoted] = comment.downvoted?(api_current_user) if api_current_user.present?
         json[:replies] = decorate(Comment.where(parent_id: comment.id))
 
         json
