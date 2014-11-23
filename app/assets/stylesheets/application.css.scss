@@ -1,15 +1,7 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the top of the
- * compiled file, but it's generally better to create a new file per style scope.
- *
  *= require_self
- *= require_tree .
+ *= require home
+ *= require scaffolds
  *= require font-awesome
  */
 
@@ -216,16 +208,16 @@ body.not-found {
   display: none;
   text-align: center;
 }
-.navbar-container { 
+.navbar-container {
   .navbar-collapse {
     padding: 0 !important;
-    .tagline { 
+    .tagline {
       color: #FFF;
       font-size: 16px;
       padding: 0 20px 0 0;
       line-height: 56px;
     }
-    .nav .what-is-global > a { 
+    .nav .what-is-global > a {
       color: #FFF;
       display: block;
       padding: 17px 0 0 5px;
@@ -233,7 +225,7 @@ body.not-found {
       width: 80px;
       line-height: 11px;
     }
-    .nav .what-is-global > a:hover { 
+    .nav .what-is-global > a:hover {
       background: none;
     }
     .nav .newsletter {
@@ -1418,7 +1410,7 @@ body.dark .container {
   .paradem {
     height: 100px;
   }
-  .paradem { 
+  .paradem {
     background: url(asset-path('paradem.png')) no-repeat 50% %50;
     background-size: 100%;
   }

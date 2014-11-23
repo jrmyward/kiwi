@@ -42,6 +42,7 @@ gem 'therubyracer', platforms: :ruby
 gem 'less-rails'
 
 gem 'jbuilder', '~> 1.2'
+gem 'oj'
 gem 'paperclip', '~> 3.0'
 gem 'mongoid-paperclip', :require => 'mongoid_paperclip'
 
