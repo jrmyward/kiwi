@@ -3,19 +3,19 @@ sinon.useFakeTimers(1389891600000, "Date")
 
 # EVENTS
 
-FK.SpecHelpers =
+SpecHelpers =
   Events:
     SimpleEvents: [
-      new FK.Models.Event { _id: 1, upvotes: 2, datetime: moment(), country: 'CA', subkast: 'ST'}
-      new FK.Models.Event { _id: 2, upvotes: 5, datetime: moment().add('minutes', 3), country: 'CA', subkast: 'ST' }
-      new FK.Models.Event { _id: 3, upvotes: 3, datetime: moment().add('minutes', 7), country: 'CA', subkast: 'ST' }
-      new FK.Models.Event { _id: 4, upvotes: 1, datetime: moment().add('days', 3), country: 'CA', subkast: 'ST' }
+      #new FK.Models.Event { _id: 1, upvotes: 2, datetime: moment(), country: 'CA', subkast: 'ST'}
+      #new FK.Models.Event { _id: 2, upvotes: 5, datetime: moment().add('minutes', 3), country: 'CA', subkast: 'ST' }
+      #new FK.Models.Event { _id: 3, upvotes: 3, datetime: moment().add('minutes', 7), country: 'CA', subkast: 'ST' }
+      #new FK.Models.Event { _id: 4, upvotes: 1, datetime: moment().add('days', 3), country: 'CA', subkast: 'ST' }
     ]
     TodayEvents: [
-      new FK.Models.Event { _id: 1, datetime: moment().add('seconds', 2) }
-      new FK.Models.Event { _id: 2, datetime: moment().add('minutes', 3) }
-      new FK.Models.Event { _id: 3, datetime: moment().add('minutes', 7) }
-      new FK.Models.Event { _id: 4, datetime: moment().add('hours', 3) }
+      #new FK.Models.Event { _id: 1, datetime: moment().add('seconds', 2) }
+      #new FK.Models.Event { _id: 2, datetime: moment().add('minutes', 3) }
+      #new FK.Models.Event { _id: 3, datetime: moment().add('minutes', 7) }
+      #new FK.Models.Event { _id: 4, datetime: moment().add('hours', 3) }
     ]
     BlockEvents: [
       { _id: 1, upvotes: 2, datetime: moment(), country: 'CA', subkast: 'OTH' }
@@ -95,5 +95,5 @@ FK.SpecHelpers =
 
 # STARTUP
 
-FK.Data.Subkasts = new FK.Collections.SubkastList(FK.SpecHelpers.Subkasts.SimpleSubkasts)
-FK.Data.MySubkasts = new FK.Collections.SubkastList(FK.SpecHelpers.Subkasts.SimpleSubkasts)
+#FK.Data.Subkasts = new FK.Collections.SubkastList(FK.SpecHelpers.Subkasts.SimpleSubkasts)
+#FK.Data.MySubkasts = new FK.Collections.SubkastList(FK.SpecHelpers.Subkasts.SimpleSubkasts)
