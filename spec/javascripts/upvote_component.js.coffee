@@ -1,8 +1,7 @@
 describe 'Upvote', ->
   beforeEach ->
     $('body').append $('<div id="testbed"></div>')
-    @event = new FK.Models.Event()
-    @component = new FK.UpvoteCounterComponent(4, true, @event)
+    @component = new FK.UpvoteCounterComponent(4, true, 'aa11bb22')
 
   it 'renders in place', () ->
     @component.render_in('#testbed')
