@@ -5,7 +5,7 @@ describe "Event", ->
     v = new FK.Models.Event()
     expect(v.get('country')).toEqual('US')
 
-  describe "date and time", ->
+  xdescribe "date and time", ->
     beforeEach ->
       @event = new FK.Models.Event()
 

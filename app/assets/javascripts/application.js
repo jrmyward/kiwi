@@ -3,6 +3,9 @@
 //= require underscore
 //= require bootstrap/tooltip
 //= require bootstrap/popover
+//= require bootstrap/modal
+//= require bootstrap/dropdown
+//= require bootstrap/collapse
 //= require backbone
 //= require marionette
 //= require moment.min
@@ -13,4 +16,12 @@
 //= require backbone.getters.setters
 //= require serialize
 //= require bootstrap-datepicker
+//= require kiwi
+//= require_tree ./utils
+//= require_tree ./config
+//= require ./kiwi/init
+//= require ./kiwi/singletons
+//= require ./kiwi/router
+//= require_tree ./kiwi/templates
+//= require_tree ./kiwi
 //= require browser_timezone_rails/application.js
