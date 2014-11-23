@@ -1,10 +1,10 @@
 class FK.UpvoteCounterComponent extends Marionette.Controller
-  initialize: (upvote_count, upvoted, event) =>
-    @model = new FK.UpvoteCounter()
+  initialize: (opts) =>
+    @model = new FK.UpvoteCounter(opts)
     @view = new FK.UpvoteCounterView(model: @model)
     @regions = new Marionette.RegionManager()
 
-  render_in: (selector) =>
+  renderIn: (selector) =>
     @regions.addRegion('spot', selector)
     @regions.get('spot').show(@view)
 
