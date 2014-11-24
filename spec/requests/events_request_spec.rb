@@ -6,7 +6,7 @@ describe 'Events Requests' do
   end
 
   # Paginated collection
-  describe 'GET /events' do
+  describe 'GET /api/1/events' do
     it 'should be able to fetch events on a given date' do
       get '/api/1/events', { on_date: '2014-10-22', time_zone: 'America/New_York' }
 

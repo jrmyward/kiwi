@@ -6,6 +6,9 @@
     <% end %>
   </div>
   <div class="button-container">
-    <button class='btn btn-more'>Show More</button>
+    <%= form_tag('/api/1/events', method: 'GET', remote: true) do %>
+      <input type="hidden" name="skip" value="5" />
+      <%= submit_tag('Show More', class: 'btn btn-more') %>
+    <% end %>
   </div>
 </div>
