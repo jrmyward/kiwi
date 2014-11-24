@@ -145,12 +145,16 @@ class Event
     if ! self.upvote_names.include? user.username
       self.upvote_names.push user.username
     end
+
+    save
   end
 
   def remove_upvote(user)
     if not self.upvote_names.nil?
       self.upvote_names.delete user.username
     end
+
+    save
   end
 
   def how_many_upvotes

@@ -10,6 +10,43 @@ describe Event do
     Timecop.return
   end
 
+  describe 'upvoting' do
+    let(:event) { create :event }
+    let(:user) { create :user }
+
+    it 'add an upvote to the event' do
+      event.add_upvote(user)
+
+      expect(event).to be_upvoted(user)
+      expect(event.upvote_count).to eq 1
+    end
+
+    it 'removes the upvote on the event' do
+      event.add_upvote(user)
+      event.remove_upvote(user)
+
+      expect(event).not_to be_upvoted(user)
+      expect(event.upvote_count).to eq 0
+    end
+
+    it 'does not double add upvote' do
+      event.add_upvote(user)
+      event.add_upvote(user)
+
+      expect(event).to be_upvoted(user)
+      expect(event.upvote_count).to eq 1
+    end
+
+    it 'does not double remove upvote' do
+      event.add_upvote(user)
+      event.remove_upvote(user)
+      event.remove_upvote(user)
+
+      expect(event).not_to be_upvoted(user)
+      expect(event.upvote_count).to eq 0
+    end
+  end
+
   describe 'datetime getters' do
     let(:all_day_event) { create :event, local_date: Time.local(2014, 1, 24).to_date, is_all_day: true }
     let(:relative_time_event) { create :event, datetime: Time.utc(2014, 1, 24, 3, 0, 0) }
