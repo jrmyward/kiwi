@@ -12,6 +12,19 @@ class FK.UpvoteCounterComponent extends Marionette.Controller
 class FK.UpvoteCounterView extends Marionette.ItemView
   template: FK.Template('components/upvote')
 
+  events:
+    'click .glyphicon-chevron-up': 'upvote'
+    'click .glyphicon-ok': 'downvote'
+
+  modelEvents:
+    'change:upvote_count': 'render'
+    'change:upvoted': 'render'
+
+  upvote: =>
+    @model.upvote()
+
+  downvote: =>
+    @model.downvote()
 
 class FK.UpvoteCounter extends Backbone.Model
   defaults: () =>
@@ -20,3 +33,13 @@ class FK.UpvoteCounter extends Backbone.Model
       upvote_count: 0,
       event_id: null
     }
+
+  upvote: () =>
+    @set('upvote_count', @get('upvote_count') + 1)
+    @set('upvoted', true)
+    $.post("/api/1/events/#{@get('event_id')}/upvote")
+
+  downvote: () =>
+    @set('upvote_count', @get('upvote_count') - 1)
+    @set('upvoted', false)
+    $.ajax(url: "/api/1/events/#{@get('event_id')}/upvote", method: 'DELETE')
