@@ -1,5 +1,5 @@
 <div class="event">
-  <div class='upvote-container pull-left'>
+  <div class='upvote-container pull-left' data-upvote-component data-upvote-count=<%= event.upvote_count %> data-upvoted=<%= event.upvoted?(current_user) %> data-event-id="<%=event.id%>">
   </div>
   <div class='image-container pull-left'>
     <a class='event-image' href=""><img src='<%=event.image.url(:thumb)%>' /></a>

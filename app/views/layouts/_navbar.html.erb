@@ -28,8 +28,8 @@
           <li>
             <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><%= current_user.username %> <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="/users/edit">Profile Settings</a></li>
-                <li><a href="<%= FK.Links.logout %>">Logout</a></li>
+                <li><a href=<%= edit_user_registration_path %>>Profile Settings</a></li>
+                <li><a href=<%= destroy_user_session_path %>>Logout</a></li>
               </ul>
           </li>
         <% else %>
