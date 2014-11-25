@@ -22,11 +22,13 @@ class EventsController < ApplicationController
   def on_date
     country = params[:country] || 'CA'
     subkasts = params[:subkasts] || Subkast.all.map(&:code)
+    date = params[:date]
+    skip = params[:skip]
 
     repo = EventRepository.new(browser_timezone, country, subkasts)
 
     @time_zone = browser_timezone
-    @events = repo.events_on_date('November 26th, 2014')
+    @events = repo.events_on_date(date)
 
     render :list_events, layout: false
   end
