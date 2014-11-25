@@ -101,3 +101,24 @@ describe 'Upvote Counter', ->
       it 'sends to the api\'s upvote url for the provided event', ->
         expect(@requests[0].url).toBe('/api/1/events/aa11bb22/upvote')
 
+    describe 'when the user is not logged in', ->
+      beforeEach ->
+        @component = new FK.UpvoteCounterComponent(upvote_count: 4, upvoted: false, event_id: 'aa11bb22', logged_in: false)
+        @component.renderIn('#testbed')
+
+        @xhr = sinon.useFakeXMLHttpRequest()
+        @requests = []
+
+        @xhr.onCreate = (xhr) =>
+          @requests.push(xhr)
+
+        $('.glyphicon-chevron-up').click()
+
+      it 'does not change the upvote count', ->
+        expect($('.upvote-counter').text()).toEqual('4')
+
+      it 'does not change to a checbox', ->
+        expect($('.glyphicon-ok').length).toEqual(0)
+
+      it 'does not send any requests to the server', ->
+        expect(@requests.length).toBe(0)

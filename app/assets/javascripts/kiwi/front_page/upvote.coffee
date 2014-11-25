@@ -30,15 +30,24 @@ class FK.UpvoteCounterView extends Marionette.ItemView
   downvote: =>
     @model.downvote()
 
+  tooltip: () =>
+    return if @model.get('logged_in')
+    @$el.tooltip(title: 'Login to upvote.')
+
+  onShow: () =>
+    @tooltip()
+
 class FK.UpvoteCounter extends Backbone.Model
   defaults: () =>
     {
       upvoted: false,
       upvote_count: 0,
-      event_id: null
+      event_id: null,
+      logged_in: true
     }
 
   upvote: () =>
+    return unless @get('logged_in')
     @set('upvote_count', @get('upvote_count') + 1)
     @set('upvoted', true)
     $.post("/api/1/events/#{@get('event_id')}/upvote")
