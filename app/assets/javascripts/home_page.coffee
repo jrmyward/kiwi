@@ -10,7 +10,7 @@ renderUpvotes = () ->
   )
 
 renderReminders = () ->
-  $('[data-reminder-component]').each((id, container) ->
+  $('[data-reminder-component]:not([data-rendered])').each((id, container) ->
     times = $(container).data('times')
     event_id = $(container).data('event-id')
 
