@@ -4,6 +4,9 @@ class FK.UpvoteCounterComponent extends Marionette.Controller
     @view = new FK.UpvoteCounterView(model: @model)
     @regions = new Marionette.RegionManager()
 
+    @view.on 'hide', () =>
+      @regions.close()
+
   renderIn: (selector) =>
     $(selector).attr('data-rendered', 'true')
     @regions.addRegion('spot', selector)
