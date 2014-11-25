@@ -6,22 +6,22 @@ class EventsController < ApplicationController
     # Include reminders
     # Include comment count
     # Include image
-    country = params[:country] || 'CA'
-    subkasts = params[:subkasts] || Subkast.all.map(&:code)
+    @country = params[:country] || "CA"
+    @subkasts = params[:subkasts] || Subkast.by_user(current_user).map(&:code)
     date = params[:date] || DateTime.now.beginning_of_day.to_s
-    @repository = EventRepository.new(browser_timezone, country, subkasts)
+    @repository = EventRepository.new(browser_timezone, @country, @subkasts)
     @time_zone = browser_timezone
     @events = @repository.events_from_date(date, 7)
-    @subkasts = Subkast.by_user(current_user)
-    @countries = Country.all.sort_by(&:en_name)
+    @all_subkasts = Subkast.by_user(current_user)
+    @all_countries = Country.all.sort_by(&:en_name)
     @top_events = @repository.top_ranked_events(date, (DateTime.parse(date) + 7.days).to_s, 10)
 
     render :index
   end
 
   def on_date
-    country = params[:country] || 'CA'
-    subkasts = params[:subkasts] || Subkast.all.map(&:code)
+    country = params[:country]
+    subkasts = params[:subkasts]
     date = params[:date]
     skip = params[:skip].to_i
 

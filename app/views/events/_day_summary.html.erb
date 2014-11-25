@@ -10,6 +10,10 @@
       <%= form_tag('/events/on_date', class: 'more-form', method: 'GET', remote: true) do %>
         <input type="hidden" name="date" value="<%= date.strftime('%B %-d, %Y') %>" />
         <input type="hidden" name="skip" value="<%= events.size %>" />
+        <% subkasts.each do |subkast| %>
+          <input type="hidden" name="subkasts[]" value="<%= subkast %>" />
+        <% end %>
+        <input type="hidden" name="country" value="<%= country %>" />
         <%= submit_tag('Show More', class: 'btn btn-more') %>
       <% end %>
     </div>
