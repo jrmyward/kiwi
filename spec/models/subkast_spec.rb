@@ -16,4 +16,8 @@ describe Subkast do
     u.my_subkasts = ["TVM", "SE"]
     Subkast.by_user(u).size.should == 2
   end
+
+  it 'should be able to get a subkast code by slug' do
+    expect(Subkast.by_slug('education').code).to eq 'EDU'
+  end
 end

@@ -3,7 +3,11 @@ Kiwi::Application.routes.draw do
     :registrations      => "registrations",
     :omniauth_callbacks => "omniauth_callbacks"
   }
+
+  root :to => 'events#index'
+
   resources :users
+
   get '/events/on_date', to: 'events#on_date', as: 'events_on_date'
   resources :events, :except => [:new]
   resources :comments
@@ -43,5 +47,6 @@ Kiwi::Application.routes.draw do
   get '/api/events/eventsAfterDate', :to => 'events#events_after_date', :as => 'events_after_date'
   get '/api/events/eventsByDate', :to => 'events#events_by_date', :as => 'events_by_date'
   get '/api/events/:id/comments', :to => 'events#comments', :as => 'events_comments'
-  root :to => 'events#index'
+
+  get '/:subkast_slug', to: 'events#index', as: :events_by_subkast
 end

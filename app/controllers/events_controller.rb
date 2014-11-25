@@ -6,8 +6,11 @@ class EventsController < ApplicationController
     # Include reminders
     # Include comment count
     # Include image
+
+    url_subkast = [Subkast.by_slug(params[:subkast_slug]).code] if params[:subkast_slug]
+
     @country = params[:country] || "CA"
-    @subkasts = params[:subkasts] || Subkast.by_user(current_user).map(&:code)
+    @subkasts = params[:subkasts] || url_subkast || Subkast.by_user(current_user).map(&:code)
     date = params[:date] || DateTime.now.beginning_of_day.to_s
     @repository = EventRepository.new(browser_timezone, @country, @subkasts)
     @time_zone = browser_timezone

@@ -4,7 +4,7 @@
     <div class="subkast-list">
       <% @all_subkasts.each do |subkast| %>
         <div>
-          <%= link_to subkast.name, "#{events_path}?subkast=#{subkast.url}" %>
+          <%= link_to subkast.name, events_by_subkast_path(subkast_slug: subkast.slug) %>
         </div>
       <% end %>
     </div>
