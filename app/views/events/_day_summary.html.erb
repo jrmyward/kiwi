@@ -5,11 +5,13 @@
       <%= render partial: 'event_summary', locals: { event: event } %>
     <% end %>
   </div>
-  <div class="button-container">
-    <%= form_tag('/events/on_date', class: 'more-form', method: 'GET', remote: true) do %>
-      <input type="hidden" name="date" value="<%= date.strftime('%B %-d, %Y') %>" />
-      <input type="hidden" name="skip" value="5" />
-      <%= submit_tag('Show More', class: 'btn btn-more') %>
-    <% end %>
-  </div>
+  <% if events.size < repository.count_events_on_date(date.strftime('%B %-d, %Y')) %>
+    <div class="button-container">
+      <%= form_tag('/events/on_date', class: 'more-form', method: 'GET', remote: true) do %>
+        <input type="hidden" name="date" value="<%= date.strftime('%B %-d, %Y') %>" />
+        <input type="hidden" name="skip" value="<%= events.size %>" />
+        <%= submit_tag('Show More', class: 'btn btn-more') %>
+      <% end %>
+    </div>
+  <% end %>
 </div>

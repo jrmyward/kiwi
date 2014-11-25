@@ -26,15 +26,23 @@ describe EventRepository do
   describe 'fetching events on a given date' do
 
     it 'should be able to fetch all events on a given date' do
-      expect(repository.events_on_date("Sep 15th, 2014")).to eq [e1, e9, e3, e11, e2, e10, e4, e12]
+      expect(repository.events_on_date("Sep 15th, 2014")).to eq [e1, e9, e3, e11, e2]
     end
 
     it 'should be able to fetch a given number of events on a given date' do
-      expect(repository.events_on_date("Sep 15th, 2014", 6)).to eq [e1, e9, e3, e11, e2, e10]
+      expect(repository.events_on_date("Sep 15th, 2014", 0, 6)).to eq [e1, e9, e3, e11, e2, e10]
     end
 
     it 'should be able to skip a given number of events' do
-      expect(repository.events_on_date("Sep 15th, 2014", 5, 2)).to eq [e3, e11, e2, e10, e4]
+      expect(repository.events_on_date("Sep 15th, 2014", 2, 5)).to eq [e3, e11, e2, e10, e4]
+    end
+
+    it 'should be able to fetch all events on a given date' do
+      expect(repository.events_on_date("Sep 15th, 2014", 0, 10)).to eq [e1, e9, e3, e11, e2, e10, e4, e12]
+    end
+
+    it 'should return an empty array when skipping over all the events' do
+      expect(repository.events_on_date("Sep 15th, 2014", 20)).to eq []
     end
   end
 

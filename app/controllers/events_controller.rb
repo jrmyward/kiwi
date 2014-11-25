@@ -9,12 +9,12 @@ class EventsController < ApplicationController
     country = params[:country] || 'CA'
     subkasts = params[:subkasts] || Subkast.all.map(&:code)
     date = params[:date] || DateTime.now.beginning_of_day.to_s
-    repository = EventRepository.new(browser_timezone, country, subkasts)
+    @repository = EventRepository.new(browser_timezone, country, subkasts)
     @time_zone = browser_timezone
-    @events = repository.events_from_date(date, 7)
+    @events = @repository.events_from_date(date, 7)
     @subkasts = Subkast.by_user(current_user)
     @countries = Country.all.sort_by(&:en_name)
-    @top_events = repository.top_ranked_events(date, (DateTime.parse(date) + 7.days).to_s, 10)
+    @top_events = @repository.top_ranked_events(date, (DateTime.parse(date) + 7.days).to_s, 10)
 
     render :index
   end
@@ -23,12 +23,12 @@ class EventsController < ApplicationController
     country = params[:country] || 'CA'
     subkasts = params[:subkasts] || Subkast.all.map(&:code)
     date = params[:date]
-    skip = params[:skip]
+    skip = params[:skip].to_i
 
     repo = EventRepository.new(browser_timezone, country, subkasts)
 
     @time_zone = browser_timezone
-    @events = repo.events_on_date(date)
+    @events = repo.events_on_date(date, skip)
 
     render :list_events, layout: false
   end

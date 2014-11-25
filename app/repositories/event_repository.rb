@@ -5,12 +5,12 @@ class EventRepository
     @subkasts = subkasts
   end
 
-  def events_on_date(date, how_many = 0, skip = 0)
+  def events_on_date(date, skip = 0, how_many = 5)
     date = DateTime.parse(date)
     events_by_range(date, date.end_of_day, how_many, skip)
   end
 
-  def events_from_date(date, how_many_dates, how_many_events_per_day = 5)
+  def events_from_date(date, how_many_dates, how_many_events_per_day = 3)
     count = 0
     events = []
     dates_with_events = []
@@ -18,7 +18,7 @@ class EventRepository
     while dates_with_events.count < how_many_dates
       break if DateTime.parse(date) == get_last_date
       break if count > 30
-      new_events = events_on_date(date, how_many_events_per_day).to_a
+      new_events = events_on_date(date, 0, how_many_events_per_day).to_a
       events = events + new_events
 
       dates_with_events << date unless new_events.empty?
@@ -58,8 +58,11 @@ class EventRepository
       { is_all_day: true, local_date: (start_date..end_date), location_type: 'national', country: @country }
     ).any_in({ subkast: @subkasts }).to_a
 
+
     sortedEvents = events.sort_by { |event| - (event.upvote_count.nil? ? 0 : event.upvote_count) }
     how_many = sortedEvents.size if how_many == 0
+
+    return [] if skip > sortedEvents.size
 
     sortedEvents.slice(skip, how_many)
   end
