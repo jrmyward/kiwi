@@ -25,6 +25,7 @@ class EventsController < ApplicationController
 
     repo = EventRepository.new(browser_timezone, country, subkasts)
 
+    @time_zone = browser_timezone
     @events = repo.events_on_date('November 26th, 2014')
 
     render :list_events, layout: false

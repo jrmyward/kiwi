@@ -1,0 +1,17 @@
+//= require jquery
+//= require jquery_ujs
+//= require underscore
+//= require bootstrap/tooltip
+//= require bootstrap/popover
+//= require backbone
+//= require marionette
+//= require moment.min
+//= require jstz.min
+//= require moment-timezone.min
+//= require moment-timezone-data.min
+//= require_tree ./config
+//= require kiwi
+//= require_tree ./utils
+//= require_tree ./kiwi/templates/components
+//= require_tree ./kiwi/front_page
+//= require home_page
