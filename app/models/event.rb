@@ -166,6 +166,8 @@ class Event
   end
 
   def upvoted?(user)
+    return false if user.nil?
+
     if self.upvote_names.nil?
       return false
     else

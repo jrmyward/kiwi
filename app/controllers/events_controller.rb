@@ -14,6 +14,19 @@ class EventsController < ApplicationController
     @subkasts = Subkast.by_user(current_user)
     @countries = Country.all.sort_by(&:en_name)
     @top_events = repository.top_ranked_events(date, (DateTime.parse(date) + 7.days).to_s, 10)
+
+    render :index
+  end
+
+  def on_date
+    country = params[:country] || 'CA'
+    subkasts = params[:subkasts] || Subkast.all.map(&:code)
+
+    repo = EventRepository.new(browser_timezone, country, subkasts)
+
+    @events = repo.events_on_date('November 26th, 2014')
+
+    render :list_events, layout: false
   end
 
   def show

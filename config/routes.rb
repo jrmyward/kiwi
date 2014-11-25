@@ -4,6 +4,7 @@ Kiwi::Application.routes.draw do
     :omniauth_callbacks => "omniauth_callbacks"
   }
   resources :users
+  get '/events/on_date', to: 'events#on_date', as: 'events_on_date'
   resources :events, :except => [:new]
   resources :comments
   resources :reminders

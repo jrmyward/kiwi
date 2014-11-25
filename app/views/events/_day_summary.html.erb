@@ -6,7 +6,7 @@
     <% end %>
   </div>
   <div class="button-container">
-    <%= form_tag('/api/1/events', method: 'GET', remote: true) do %>
+    <%= form_tag('/events/on_date', class: 'more-form', method: 'GET', remote: true) do %>
       <input type="hidden" name="skip" value="5" />
       <%= submit_tag('Show More', class: 'btn btn-more') %>
     <% end %>

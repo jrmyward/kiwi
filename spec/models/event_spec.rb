@@ -45,6 +45,10 @@ describe Event do
       expect(event).not_to be_upvoted(user)
       expect(event.upvote_count).to eq 0
     end
+
+    it 'handles a nil user gracefully' do
+      expect(event).not_to be_upvoted(nil)
+    end
   end
 
   describe 'datetime getters' do
