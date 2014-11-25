@@ -16,6 +16,15 @@ describe "Reminder", ->
     it 'flags that it has been rendered', ->
       expect($('[data-rendered]').length).toBe(1)
 
+    describe 'not logged in', ->
+      beforeEach ->
+        @component = new FK.RemindersDropdownController(times_to_event: [], event_id: 'aa11bb22', logged_in: false)
+        @component.renderIn('#testbed')
+
+      it 'should have a message inviting a user to sign up', ->
+        $('.glyphicon-bell').click()
+        expect($('.please-log-in').length).toBe(1)
+
     describe 'clicking on the bell', ->
       beforeEach ->
         $('.glyphicon-bell').click()

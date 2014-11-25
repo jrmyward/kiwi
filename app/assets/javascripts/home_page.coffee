@@ -13,8 +13,9 @@ renderReminders = () ->
   $('[data-reminder-component]:not([data-rendered])').each((id, container) ->
     times = $(container).data('times')
     event_id = $(container).data('event-id')
+    logged_in = $(container).data('logged-in')
 
-    component = new FK.RemindersDropdownController(times_to_event: times, event_id: event_id)
+    component = new FK.RemindersDropdownController(times_to_event: times, event_id: event_id, logged_in: logged_in)
 
     component.renderIn('[data-reminder-component][data-event-id="' + event_id + '"]')
   )

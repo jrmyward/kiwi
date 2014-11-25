@@ -4,6 +4,7 @@ class FK.Models.Reminder extends Backbone.Model
   defaults:
     times_to_event: []
     event_id: null
+    logged_in: true
 
   noTimesSet: =>
     @get('times_to_event').length == 0
