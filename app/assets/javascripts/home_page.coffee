@@ -16,7 +16,7 @@ $ ->
     eventBlock = $(origin.target).closest('.event-block').children('.events').first()
     eventBlock.append(resp)
 
-    eventBlock.children('.event').each((i, eventBlock) ->
-      renderUpvotes('[data-upvote-component][data-event-id=' + $(eventBlock).find('[data-upvote-component]').data('event-id') + ']')
+    $('[data-upvote-component]:not([data-rendered])').each((i, container) ->
+      renderUpvotes(container)
     )
   )

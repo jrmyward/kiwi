@@ -24,6 +24,9 @@ describe 'Upvote Counter', ->
       it 'does not have a chevron', ->
         expect($('.glyphicon-chevron-up').length).toBe(0)
 
+      it 'flags that it has been rendered', ->
+        expect($('[data-rendered]').length).toBe(1)
+
     describe 'when the upvote has not already happened', ->
       beforeEach ->
         @component = new FK.UpvoteCounterComponent(upvote_count: 4, upvoted: false, event_id: 'aa11bb22')
