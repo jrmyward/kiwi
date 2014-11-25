@@ -1,4 +1,4 @@
-class FK.Models.Reminder extends Backbone.GSModel
+class FK.Models.Reminder extends Backbone.Model
   idAttribute: "_id"
 
   defaults:

@@ -8,8 +8,19 @@ renderUpvotes = () ->
 
     component.renderIn('[data-upvote-component][data-event-id="' + event_id + '"]')
   )
+
+renderReminders = () ->
+  $('[data-reminder-component]').each((id, container) ->
+    times = $(container).data('times')
+    event_id = $(container).data('event-id')
+
+    component = new FK.RemindersDropdownController(times_to_event: times, event_id: event_id)
+
+    component.renderIn('[data-reminder-component][data-event-id="' + event_id + '"]')
+  )
 $ ->
   renderUpvotes()
+  renderReminders()
 
   $('.more-form').on('ajax:success', (origin, resp) ->
     form = origin.target
