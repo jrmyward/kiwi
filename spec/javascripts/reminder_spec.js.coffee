@@ -54,9 +54,12 @@ describe "Reminder", ->
       beforeEach ->
         @component = new FK.RemindersDropdownController(times_to_event: ['15m', '1h'], event_id: 'aa11bb22')
         @component.renderIn('#testbed')
-        $('.glyphicon-bell').click()
+
+      it 'has a higlight', ->
+        expect($('.glyphicon-bell.highlight').length).toBe(1)
 
       it 'renders with each provided reminder checked', ->
+        $('.glyphicon-bell').click()
         expect($('[data-time="15m"]').is(':checked')).toBe(true)
         expect($('[data-time="1h"]').is(':checked')).toBe(true)
 
@@ -71,6 +74,20 @@ describe "Reminder", ->
 
       @xhr.onCreate = (xhr) =>
         @requests.push(xhr)
+
+    describe 'with no existing reminders', ->
+      beforeEach ->
+        @component = new FK.RemindersDropdownController(times_to_event: [], event_id: 'aa11bb22')
+        @component.renderIn('#testbed')
+        $('.glyphicon-bell').click()
+
+        $('[data-time="4h"]').click()
+        $('[data-time="1d"]').click()
+
+        $('[data-action="set-reminder"]').click()
+
+      it 'highlights the bell', ->
+        expect($('.glyphicon-bell.highlight').length).toBe(1)
 
     describe 'adding two more reminders', ->
       beforeEach ->
@@ -131,3 +148,6 @@ describe "Reminder", ->
       it 'only has the 1h reminder left because that is the default for no reminders', ->
         $('.glyphicon-bell').click()
         expect($('[data-time="1h"]').is(':checked')).toBe(true)
+
+      it 'removes the highlight', ->
+        expect($('.glyphicon-bell.highlight').length).toBe(0)

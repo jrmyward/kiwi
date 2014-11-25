@@ -1,7 +1,7 @@
 class FK.RemindersDropdownController extends Marionette.Controller
   initialize: (opts) =>
     @model = new FK.Models.Reminder(opts)
-    @view = new FK.RemindersView()
+    @view = new FK.RemindersView(model: @model)
     @regions = new Marionette.RegionManager()
 
     @view.on 'openPopover', () =>
@@ -21,6 +21,22 @@ class FK.RemindersView extends Marionette.Layout
 
   triggers:
     'click .glyphicon-bell': 'openPopover'
+
+  modelEvents:
+    'change:times_to_event': 'rehighlight'
+
+  rehighlight: =>
+    @highlight()
+    @unhighlight()
+
+  highlight: () =>
+    @$('.glyphicon-bell').addClass('highlight') unless @model.noTimesSet()
+
+  unhighlight: () =>
+    @$('.glyphicon-bell').removeClass('highlight') if @model.noTimesSet()
+
+  onRender: () =>
+    @highlight()
 
 class FK.RemindersPopoverView extends Marionette.ItemView
   template: FK.Template('components/reminders_popover')
