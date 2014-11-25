@@ -20,6 +20,17 @@ renderReminders = () ->
 
     component.renderIn('[data-reminder-component][data-event-id="' + event_id + '"]')
   )
+
+fetchMore = _.throttle(() ->
+  $.get('/events/from_date', {
+    country: 'CA',
+    subkasts: ['TV', 'TVM', 'SE', 'TE', 'ST', 'HAW', 'PRP', 'HA', 'EDU', 'MA', 'ART', 'GM', 'OTH'],
+    date: '2 December 2014'
+  }, (resp) ->
+    $('#home-list').append(resp)
+  )
+, 300)
+
 $ ->
   renderUpvotes()
   renderReminders()
@@ -35,4 +46,14 @@ $ ->
     $(form).remove() if (newCount >= $(form).attr('total'))
 
     renderUpvotes()
+    renderReminders()
+  )
+
+  $(document).scroll( (e) ->
+    $doc = $(e.target)
+    $window = $(window)
+
+    percentage = $doc.scrollTop() / ($doc.height() - $window.height())
+
+    fetchMore() if percentage > 0.8
   )

@@ -9,6 +9,7 @@ Kiwi::Application.routes.draw do
   resources :users
 
   get '/events/on_date', to: 'events#on_date', as: 'events_on_date'
+  get '/events/from_date', to: 'events#from_date', as: 'events_from_date'
   resources :events, :except => [:new]
   resources :comments
   resources :reminders

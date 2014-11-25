@@ -36,6 +36,19 @@ class EventsController < ApplicationController
     render :list_events, layout: false
   end
 
+  def from_date
+    country = params[:country]
+    subkasts = params[:subkasts]
+    date = params[:date]
+
+    @repository = EventRepository.new(browser_timezone, country, subkasts)
+
+    @time_zone = browser_timezone
+    @events = @repository.events_from_date(date, 4)
+
+    render :list_days, layout: false
+  end
+
   def show
     # Include reminders
     # Include event comments
