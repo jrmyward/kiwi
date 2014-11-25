@@ -1,74 +1,39 @@
-FK.App.module "Reminders", (Reminders, App, Backbone, Marionette, $, _) ->
+class FK.RemindersDropdownController extends Marionette.Controller
+  initialize: (opts) =>
+    @model = new FK.Models.Reminder(opts)
+    @view = new FK.RemindersView(model: @model)
+    @regions = new Marionette.RegionManager()
 
-  @instance = null
+  renderIn: (selector) =>
+    $(selector).attr('data-rendered', 'true')
+    @regions.addRegion('spot', selector)
+    @regions.get('spot').show(@view)
 
-  @create = (options) =>
-    @instance.close() if @instance
-    @instance = new Reminders.DropdownController options
-    @instance
+class FK.RemindersView extends Marionette.ItemView
+  template: FK.Template('components/reminders')
+  className: 'event-reminders-super-container'
 
-  class Reminders.DropdownController extends Marionette.Controller
-    initialize: (options) =>
-      @event = options.event
-      @user = App.request('currentUser')
+  triggers:
+    'click [data-action="set-reminder"]': 'click:set-reminder'
+    'click [data-action="cancel"]': 'click:cancel'
 
-      @reminders = @event.remindersCollection()
+  events:
+    'click': 'stopPropagate'
 
-      @region = new Marionette.Region
-        el: options.container
+  stopPropagate: (e) =>
+    e.stopPropagation()
 
-      @view = new Reminders.RemindersView
+  getTimes: () =>
+    $.map($('input:checked'), (box, i) =>
+      $(box).data('time')
+    )
 
-      @listenTo @view, 'click:set-reminder', @setReminder
-      @listenTo @view, 'click:cancel', @close
-      @listenTo App.vent, 'app:click', @close
+  setTimes: () =>
+    _.each(@model.get('times_to_event'), (time) =>
+      $('[data-time="' + time + '"]').prop('checked', true)
+    )
 
-      @show()
+    $('[data-time="1h"]').prop('checked', true) if @model.noTimesSet()
 
-    setReminder: () =>
-      times = @view.getTimes()
-
-      @reminders.addReminders(@user, @event, times)
-      @reminders.removeReminders(@user, @event, _.difference(['15m', '1h', '4h', '1d' ], times))
-
-      @region.close()
-
-    show: () =>
-      @region.show @view
-      @view.setTimes(@reminders.times())
-
-    onClose: () =>
-      @region.close()
-
-  class Reminders.RemindersView extends Marionette.ItemView
-    template: FK.Template('components/reminders')
-    className: 'event-reminders-super-container'
-
-    triggers:
-      'click [data-action="set-reminder"]': 'click:set-reminder'
-      'click [data-action="cancel"]': 'click:cancel'
-
-    templateHelpers: {
-      loggedIn: () =>
-        user = App.request('currentUser')
-        user.get('logged_in')
-    }
-
-    events:
-      'click': 'stopPropagate'
-
-    stopPropagate: (e) =>
-      e.stopPropagation()
-
-    getTimes: () =>
-      $.map($('input:checked'), (box, i) =>
-        $(box).data('time')
-      )
-
-    setTimes: (times) =>
-      if times.length > 0
-        _.each(times, (time) =>
-          $('[data-time="' + time + '"]').prop('checked', true)
-        )
-      else
-        $('[data-time="1h"]').prop('checked', true)
+  onShow: =>
+    @setTimes()

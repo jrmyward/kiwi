@@ -1,13 +1,29 @@
 describe "Reminder", ->
+  beforeEach ->
+    $('body').append $('<div id="testbed"></div>')
 
-  it 'should be able to remove a reminder by event, time and user', ->
-    eventId = 'abc123'
-    @reminders = new FK.Collections.Reminders()
-    event = new FK.Models.Event _id: eventId
-    user = new FK.Models.User username: 'grayden', _id: { "$oid": 'asdf' }
+  afterEach ->
+    $('#testbed').remove()
 
-    @reminders.addReminders(user, event, ['15m', '1h', '6h'])
+  describe 'rendering', ->
+    beforeEach ->
+      @component = new FK.RemindersDropdownController(times_to_event: [], event_id: 'aa11bb22')
+      @component.renderIn('#testbed')
 
-    @reminders.removeReminders(user, event, ['15m'])
-    expect(@reminders.length).toBe(2)
-    expect(@reminders.times()).not.toContain('15m')
+    it 'renders in place', ->
+      expect($('.event-reminders-super-container').length).toBe(1)
+
+    it 'flags that it has been rendered', ->
+      expect($('[data-rendered]').length).toBe(1)
+
+    it 'renders with the 1h reminder selected by default', ->
+      expect($('[data-time="1h"]').is(':checked')).toBe(true)
+
+    describe 'with provided reminders', ->
+      beforeEach ->
+        @component = new FK.RemindersDropdownController(times_to_event: ['15m', '1h'], event_id: 'aa11bb22')
+        @component.renderIn('#testbed')
+
+      it 'renders with each provided reminder checked', ->
+        expect($('[data-time="15m"]').is(':checked')).toBe(true)
+        expect($('[data-time="1h"]').is(':checked')).toBe(true)
