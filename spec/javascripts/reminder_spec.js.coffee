@@ -26,6 +26,30 @@ describe "Reminder", ->
       it 'renders with the 1h reminder selected by default', ->
         expect($('[data-time="1h"]').is(':checked')).toBe(true)
 
+      describe 'then clicking cancel', ->
+        beforeEach ->
+          $('[data-time="4h"]').click()
+          $('[data-action="cancel"]').click()
+
+          @xhr = sinon.useFakeXMLHttpRequest()
+          @requests = []
+
+          @xhr.onCreate = (xhr) =>
+            @requests.push(xhr)
+
+        it 'closes the popover', ->
+          expect($('.event-reminders-super-container').length).toBe(0)
+
+        it 'does not send any server requests', ->
+          expect(@requests.length).toBe(0)
+
+        it 'does not change when the popover opens again', ->
+          $('.glyphicon-bell').click()
+          expect($('[data-time="15m"]').is(':checked')).toBe(false)
+          expect($('[data-time="1h"]').is(':checked')).toBe(true)
+          expect($('[data-time="4h"]').is(':checked')).toBe(false)
+          expect($('[data-time="1d"]').is(':checked')).toBe(false)
+
     describe 'with provided reminders', ->
       beforeEach ->
         @component = new FK.RemindersDropdownController(times_to_event: ['15m', '1h'], event_id: 'aa11bb22')

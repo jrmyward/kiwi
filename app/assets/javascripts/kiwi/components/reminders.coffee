@@ -29,6 +29,7 @@ class FK.RemindersPopoverView extends Marionette.ItemView
   events:
     'click': 'stopPropagate'
     'click [data-action="set-reminder"]': 'updateTimes'
+    'click [data-action="cancel"]': 'close'
 
   stopPropagate: (e) =>
     e.stopPropagation()
