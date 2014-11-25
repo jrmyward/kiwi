@@ -3,6 +3,8 @@
 //= require underscore
 //= require bootstrap/tooltip
 //= require bootstrap/popover
+//= require bootstrap/dropdown
+//= require bootstrap/collapse
 //= require backbone
 //= require marionette
 //= require moment.min
