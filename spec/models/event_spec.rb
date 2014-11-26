@@ -92,6 +92,24 @@ describe Event do
         recurring_time_event.get_local_datetime('America/New_York').should == Time.local(2014, 1, 24, 18, 0, 0)
       end
     end
+
+    describe 'friendly print' do
+      it 'looks nice for all day events' do
+        expect(all_day_event.formatted_time('America/New_York')).to eq 'All Day'
+      end
+
+      it 'looks nice for tv show events' do
+        expect(tv_show_event.formatted_time('America/New_York')).to eq '6:00/5:00c'
+      end
+
+      it 'looks nice for relative time events' do
+        expect(relative_time_event.formatted_time('America/New_York')).to eq '10:00 PM'
+      end
+
+      it 'looks nice for recurring time events' do
+        expect(recurring_time_event.formatted_time('America/New_York')).to eq '6:00 PM'
+      end
+    end
   end
 
   context 'getting reminders' do

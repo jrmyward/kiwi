@@ -101,6 +101,12 @@ class Event
     get_local_datetime('America/New_York').strftime('%-d %B, %Y - %A')
   end
 
+  def formatted_time(timezone)
+    return 'All Day' if is_all_day
+    return get_local_datetime(timezone).strftime('%l:%M%P').strip if time_format == 'recurring' || time_format == ''
+    return "#{get_local_datetime(timezone).strftime('%l:%M').strip}/#{(get_local_datetime(timezone) - 1.hour).strftime('%l:%M').strip}c"
+  end
+
   def reminders_for_user(user)
     reminders.where(user: user)
   end
