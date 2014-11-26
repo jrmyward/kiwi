@@ -1,22 +1,11 @@
 namespace :db do
-  task :empty_seed => [:environment, :seed_subkasts] do
-    Country.delete_all
-    Event.create! time_format: '', datetime: 2.weeks.ago, local_date: 2.weeks.ago, name: "The once loved", description:"lorem ipsum", user: "rails", upvote_names: ['rails', 'jasmine', 'github', 'backbone', 'marionette', 'ruby'], country: 'CA', location_type: 'national', is_all_day: false, subkast: 'ST'
-    Event.delete_all
-
-    IO.readlines('db/countries.csv').each_with_index do |line, index|
-      l_split = line.split(',')
-      Country.create! code: l_split[0] , en_name: l_split[1], order: index
-    end
+  task :seed do
+    Rake::Task['db:seed_subkasts'].invoke
+    Rake::Task['db:seed_countries'].invoke
+    Rake::Task['db:seed_events'].invoke
   end
 
-  task :seed do
-    Country.delete_all
-
-    IO.readlines('db/countries.csv').each_with_index do |line, index|
-      l_split = line.split(',')
-      Country.create! code: l_split[0] , en_name: l_split[1], order: index
-    end
+  task :seed_events => :environment do
     Event.delete_all
     Event.create! time_format: '', datetime: 2.weeks.ago, local_date: 2.weeks.ago, name: "The once loved", description:"lorem ipsum", user: "rails", upvote_names: ['rails', 'jasmine', 'github', 'backbone', 'marionette', 'ruby'], country: 'CA', location_type: 'national', is_all_day: false, subkast: 'ST'
     Event.create! time_format: '', datetime: 8.hours.ago, local_date: Date.today(), name: "Geese Day", description:"lorem ipsum", user: "rails", upvote_names: ['rails', 'github', 'backbone'], country: 'CA', location_type: 'national', is_all_day: false, subkast: 'ST'
@@ -44,40 +33,11 @@ namespace :db do
     Event.create! time_format: '', datetime: 9.days.from_now, local_date: 9.days.from_now, name: "Magical event", description:"lorem ipsum", user: "rails", upvote_names: ['rails', 'ruby', 'php', 'jasmine'], country: 'CA', location_type: 'national', is_all_day: false, subkast: 'ST'
     Event.create! time_format: '', datetime: 9.days.from_now, local_date: 9.days.from_now, name: "Predictable hurricane", description:"lorem ipsum", user: "rails", upvote_names: ['rails', 'jasmine'], country: 'CA', location_type: 'national', is_all_day: false, subkast: 'ST'
 j
-    Event.create! time_format: '', datetime: 10.days.from_now, local_date: 10.days.from_now, name: "Magical event", description:"lorem ipsum", user: "rails", upvote_names: ['rails', 'ruby', 'php', 'jasmine'], country: 'CA', location_type: 'national', is_all_day: false, subkast: 'ST'
-    Event.create! time_format: '', datetime: 10.days.from_now, local_date: 10.days.from_now, name: "Predictable hurricane", description:"lorem ipsum", user: "rails", upvote_names: ['rails', 'jasmine'], country: 'CA', location_type: 'national', is_all_day: false, subkast: 'ST'
+    Event.create! time_format: '', datetime: 10.days.from_now, local_date: 10.days.from_now, name: "The hunger games", description:"lorem ipsum", user: "rails", upvote_names: ['rails', 'ruby', 'php', 'jasmine'], country: 'CA', location_type: 'national', is_all_day: false, subkast: 'ST'
+    Event.create! time_format: '', datetime: 10.days.from_now, local_date: 10.days.from_now, name: "The tri-wizard tournament", description:"lorem ipsum", user: "rails", upvote_names: ['rails', 'jasmine'], country: 'CA', location_type: 'national', is_all_day: false, subkast: 'ST'
 
-    Event.create! time_format: '', datetime: 11.days.from_now, local_date: 11.days.from_now, name: "Magical event", description:"lorem ipsum", user: "rails", upvote_names: ['rails', 'ruby', 'php', 'jasmine'], country: 'CA', location_type: 'national', is_all_day: false, subkast: 'ST'
-    Event.create! time_format: '', datetime: 12.days.from_now, local_date: 12.days.from_now, name: "Predictable hurricane", description:"lorem ipsum", user: "rails", upvote_names: ['rails', 'jasmine'], country: 'CA', location_type: 'national', is_all_day: false, subkast: 'ST'
-  end
-
-  task :resave => :environment do
-    Event.all.each { |event| event.save }
-  end
-
-  task :cleanup_all_day => :environment do
-    Event.all.each { |event|
-      if event.is_all_day == "1" or event.is_all_day == "true" or event.is_all_day == true
-        event.is_all_day = true;
-      else
-        event.is_all_day = false;
-      end
-      event.save
-    }
-  end
-
-  task :move_date_to_local_date => :environment do
-    Event.all.each{ |event|
-      event.local_date = event.date
-      event.save
-    }
-  end
-
-  task :give_event_other_subkast => :environment do
-    Event.all.each { |event|
-      event.subkast = "OTH" if event.subkast.to_s == ''
-      event.save
-    }
+    Event.create! time_format: '', datetime: 11.days.from_now, local_date: 11.days.from_now, name: "Couch day", description:"lorem ipsum", user: "rails", upvote_names: ['rails', 'ruby', 'php', 'jasmine'], country: 'CA', location_type: 'national', is_all_day: false, subkast: 'ST'
+    Event.create! time_format: '', datetime: 12.days.from_now, local_date: 12.days.from_now, name: "Sleeeeeeeeep", description:"lorem ipsum", user: "rails", upvote_names: ['rails', 'jasmine'], country: 'CA', location_type: 'national', is_all_day: false, subkast: 'ST'
   end
 
   task :seed_subkasts => :environment do
@@ -97,10 +57,12 @@ j
     Subkast.create! name: "Other", code: "OTH", url: "other"
   end
 
-  task :all_users_to_default => :environment do
-    User.all.each do |user|
-      user.defaults
-      user.save
+  task :seed_countries => :environment do
+    Country.delete_all
+
+    IO.readlines('db/countries.csv').each_with_index do |line, index|
+      l_split = line.split(',')
+      Country.create! code: l_split[0] , en_name: l_split[1], order: index
     end
   end
 end

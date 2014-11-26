@@ -67,6 +67,7 @@ class EventRepository
   end
 
   def get_last_date
+    return Time.utc(1969) if Event.count == 0
     Event.order_by([:local_date, :desc])[0].local_date
   end
 
