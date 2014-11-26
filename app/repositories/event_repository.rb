@@ -58,12 +58,14 @@ class EventRepository
     ).any_in({ subkast: @subkasts }).to_a
 
 
-    sortedEvents = events.sort_by { |event| - (event.upvote_count.nil? ? 0 : event.upvote_count) }
+    sortedEvents = events.sort_by { |event| event.id }.sort_by { |event| - (event.upvote_count.nil? ? 0 : event.upvote_count) }
     how_many = sortedEvents.size if how_many == 0
 
     return [] if skip > sortedEvents.size
 
-    sortedEvents.slice(skip, how_many)
+    out = sortedEvents.slice(skip, how_many)
+
+    out
   end
 
   def get_last_date
