@@ -56,6 +56,10 @@ class Event
     end
   end
 
+  def full_subkast
+    Subkast.by_code(subkast).name
+  end
+
   def get_utc_datetime(timezone)
     if is_all_day == true or time_format == 'recurring' or time_format == 'tv_show'
       tz = TZInfo::Timezone.get(timezone)

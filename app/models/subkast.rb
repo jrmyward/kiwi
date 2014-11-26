@@ -18,6 +18,10 @@ class Subkast
     Subkast.where(url: slug).first
   end
 
+  def self.by_code(code)
+    Subkast.where(code: code).first
+  end
+
   def serializable_hash(opts)
     {
       name: name,

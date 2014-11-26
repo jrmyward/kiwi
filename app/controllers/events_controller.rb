@@ -9,7 +9,17 @@ class EventsController < ApplicationController
 
     url_subkast = [Subkast.by_slug(params[:subkast_slug]).code] if params[:subkast_slug]
 
-    @country = params[:country] || "CA"
+    if params[:country] && current_user
+      current_user.country = params[:country]
+      current_user.save
+    end
+
+    if current_user
+      @country = current_user.country
+    else
+      @country = params[:country] || 'CA'
+    end
+
     @subkasts = params[:subkasts] || url_subkast || Subkast.by_user(current_user).map(&:code)
     date = params[:date] || DateTime.now.beginning_of_day.to_s
     @repository = EventRepository.new(browser_timezone, @country, @subkasts)

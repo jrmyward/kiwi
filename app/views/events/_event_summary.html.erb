@@ -6,7 +6,7 @@
   </div>
   <div class='meta-container pull-left'>
     <a class='event-name' href="<%=event_path(event)%>"><%=event.name%></a><span class="event-info"> - <%=event.get_local_datetime(@time_zone)%></span><br />
-    <span class='event-meta'>Added by <%=event.user%> - <%=event.subkast%> - <%= event.comment_count %> <%=event.location_type %>
+    <span class='event-meta'>Added by <%=event.user%> - <%=event.full_subkast%> - <%= event.comment_count %> <%=event.location_type %>
     </span>
   </div>
   <div data-reminder-component data-event-id="<%= event.id %>" data-times="<%= event.reminders_for_user(current_user).map(&:time_to_event).to_json %>" data-logged-in="<%= current_user.present? %>" class="reminder-container">
