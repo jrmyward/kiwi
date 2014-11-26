@@ -67,6 +67,8 @@ $ ->
 
   $('select[name="country"]').on('change', (e) =>
     country = $(e.target).val()
+    
+    noCountryLocation = window.location.href.substring(0, window.location.href.indexOf('?'))
 
-    window.location.href = "#{window.location.href}?country=#{country}"
+    window.location.href = "#{noCountryLocation}?country=#{country}"
   )
