@@ -64,3 +64,9 @@ $ ->
 
     fetchMore() if percentage > 0.8
   )
+
+  $('select[name="country"]').on('change', (e) =>
+    country = $(e.target).val()
+
+    window.location.href = "#{window.location.href}?country=#{country}"
+  )
