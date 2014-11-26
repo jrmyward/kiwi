@@ -1,5 +1,5 @@
 <% count = repository.count_events_on_date(date.strftime('%B %-d, %Y')) %>
-<div class="event-block">
+<div class="event-block" data-tomorrow='<%= (date + 1.day).strftime('%b %-d, %Y') %>'>
   <h3><%= date.strftime('%-d %B, %Y - %A') %></h3>
   <div class="events">
     <% events.each do |event| %>

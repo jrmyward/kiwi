@@ -23,15 +23,15 @@ renderReminders = () ->
 
 fetchMore = _.throttle(() ->
   $.get('/events/from_date', {
-    country: 'CA',
-    subkasts: ['TV', 'TVM', 'SE', 'TE', 'ST', 'HAW', 'PRP', 'HA', 'EDU', 'MA', 'ART', 'GM', 'OTH'],
-    date: '2 December 2014'
+    country: $('#home-list').data('country'),
+    subkasts: $('#home-list').data('subkasts'),
+    date: $('[data-tomorrow]').last().data('tomorrow')
   }, (resp) ->
     $('#home-list').append(resp)
     renderUpvotes()
     renderReminders()
   )
-, 300)
+, 600)
 
 $ ->
   renderUpvotes()

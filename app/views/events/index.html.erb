@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div id="home-list" class="col-sm-8">
+    <div id="home-list" class="col-sm-8" data-country="<%= @country %>" data-subkasts="<%= @subkasts %>" >
       <% @events.group_by { |event| event.get_local_datetime(@time_zone).beginning_of_day }.each do |date, events| %>
         <%= render partial: 'day_summary', locals: { events: events, date: date, repository: @repository, subkasts: @subkasts, country: @country } %>
       <% end %>
