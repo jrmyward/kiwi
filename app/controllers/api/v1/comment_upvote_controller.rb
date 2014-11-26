@@ -7,7 +7,7 @@ module Api
         comment = Comment.where(id: params[:comment_id]).first
 
         error! :comment_not_found, metadata: comment_not_found if comment.nil?
-        error! :comment_already_upvoted, metadata: comment_already_upvoted if comment.upvoted?(api_current_user)
+        error! :comment_already_upvoted, metadata: comment_already_upvoted if comment.upvoted_by?(api_current_user)
 
         comment.add_upvote(api_current_user)
 
@@ -20,7 +20,7 @@ module Api
         comment = Comment.where(id: params[:comment_id]).first
 
         error! :comment_not_found, metadata: comment_not_found if comment.nil?
-        error! :comment_not_upvoted, metadata: comment_not_upvoted unless comment.upvoted?(api_current_user)
+        error! :comment_not_upvoted, metadata: comment_not_upvoted unless comment.upvoted_by?(api_current_user)
 
         comment.remove_upvote(api_current_user)
 

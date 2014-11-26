@@ -69,7 +69,7 @@ class Comment
     self.event_id = params[:event_id]
   end
 
-  def upvoted?(user)
+  def upvoted_by?(user)
     username = user.username
     if self.upvote_names.nil?
       return false
@@ -78,7 +78,7 @@ class Comment
     end
   end
 
-  def downvoted?(user)
+  def downvoted_by?(user)
     username = user.username
     if self.downvote_names.nil?
       return false
