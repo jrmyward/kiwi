@@ -103,11 +103,11 @@ describe Event do
       end
 
       it 'looks nice for relative time events' do
-        expect(relative_time_event.formatted_time('America/New_York')).to eq '10:00 PM'
+        expect(relative_time_event.formatted_time('America/New_York')).to eq '10:00pm'
       end
 
       it 'looks nice for recurring time events' do
-        expect(recurring_time_event.formatted_time('America/New_York')).to eq '6:00 PM'
+        expect(recurring_time_event.formatted_time('America/New_York')).to eq '6:00pm'
       end
     end
   end

@@ -22,6 +22,8 @@ FactoryGirl.define do
     time_format ''
     user "mr. x"
 
+    description 'This should be exciting!'
+
     trait :with_2_upvotes do
       upvote_names ["eventlover1", "eventlover2"]
     end

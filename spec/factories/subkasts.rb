@@ -1,6 +1,12 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
+  factory :subkast do
+    code '??'
+    name 'Mystery'
+    url 'mystery'
+  end
+
   factory :education_subkast, class: Subkast do
     code "EDU"
     name "Education"

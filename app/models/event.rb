@@ -56,6 +56,26 @@ class Event
     end
   end
 
+  def national?
+    location_type == 'national'
+  end
+
+  def all_day?
+    is_all_day
+  end
+
+  def recurring?
+    time_format == 'recurring'
+  end
+
+  def tv_show?
+    time_format == 'tv_show'
+  end
+
+  def relative?
+    time_format == ''
+  end
+
   def full_subkast
     Subkast.by_code(subkast).name
   end
@@ -74,6 +94,12 @@ class Event
     else
       return datetime
     end
+  end
+
+  def get_assumed_time
+    return datetime if relative?
+    return TZInfo::Timezone.get('America/New_York').local_to_utc(local_datetime) if tv_show?
+    return local_datetime if recurring?
   end
 
   def get_local_datetime(timezone)

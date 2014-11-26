@@ -1,8 +1,8 @@
 class EventRepository
-  def initialize(time_zone, country, subkasts)
+  def initialize(time_zone, country, subkasts = nil)
     @time_zone = ActiveSupport::TimeZone.new(time_zone)
     @country = country
-    @subkasts = subkasts
+    @subkasts = subkasts || Subkast.all.map(&:code)
   end
 
   def events_on_date(date, skip = 0, how_many = 5)
