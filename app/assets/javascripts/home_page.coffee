@@ -28,6 +28,8 @@ fetchMore = _.throttle(() ->
     date: '2 December 2014'
   }, (resp) ->
     $('#home-list').append(resp)
+    renderUpvotes()
+    renderReminders()
   )
 , 300)
 
