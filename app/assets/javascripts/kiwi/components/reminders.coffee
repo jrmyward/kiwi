@@ -4,6 +4,10 @@ class FK.RemindersDropdownController extends Marionette.Controller
     @view = new FK.RemindersView(model: @model)
     @regions = new Marionette.RegionManager()
 
+    $(document).click(() =>
+      @view.remindersPopover.close()
+    )
+
     @view.on 'openPopover', () =>
       @popoverView = new FK.RemindersPopoverView(model: @model)
       @view.remindersPopover.show(@popoverView)
