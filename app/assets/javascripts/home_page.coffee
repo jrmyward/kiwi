@@ -1,3 +1,5 @@
+fetching = false
+
 renderUpvotes = () ->
   $('[data-upvote-component]:not([data-rendered])').each((i, container) ->
     upvote_count = $(container).data('upvote-count')
@@ -22,6 +24,8 @@ renderReminders = () ->
   )
 
 fetchMore = _.throttle(() ->
+  return if fetching
+  fetching = true
   $.get('/events/from_date', {
     country: $('#home-list').data('country'),
     subkasts: $('#home-list').data('subkasts'),
@@ -30,8 +34,9 @@ fetchMore = _.throttle(() ->
     $('#home-list').append(resp)
     renderUpvotes()
     renderReminders()
+    fetching = false
   )
-, 600)
+, 700)
 
 $ ->
   renderUpvotes()
