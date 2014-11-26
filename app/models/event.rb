@@ -50,6 +50,7 @@ class Event
   end
 
   before_save do |event|
+    event.upvote_count = 0
     if not event.upvote_names.nil?
       event.upvote_count = event.upvote_names.size
     end
