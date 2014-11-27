@@ -1,4 +1,4 @@
-class FK.Models.Event extends Backbone.GSModel
+class FK.Models.Event extends Backbone.Model
   idAttribute: "_id"
   defaults: () =>
     return {

@@ -20,7 +20,6 @@
 //= require_tree ./utils
 //= require_tree ./config
 //= require ./kiwi/init
-//= require ./kiwi/singletons
 //= require ./kiwi/router
 //= require_tree ./kiwi/templates
 //= require_tree ./kiwi
