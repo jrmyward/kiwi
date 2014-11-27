@@ -66,6 +66,10 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
   end
 
+  def new
+
+  end
+
   def edit
   end
 
