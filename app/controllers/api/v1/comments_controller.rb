@@ -30,6 +30,7 @@ module Api
         comment = Comment.where(id: params[:id]).first
 
         error! :not_found if comment.nil?
+        error! :forbidden unless Ability.new(api_current_user).can? :destroy, comment
 
         comment.delete(api_current_user)
       end

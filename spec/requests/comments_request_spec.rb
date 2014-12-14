@@ -541,6 +541,24 @@ describe 'Comments Requests' do
       end
     end
 
+    context 'signed in as another guy' do
+      let(:otherguy) { create :user }
+      before(:each) do
+        sign_in otherguy
+      end
+
+      it 'replies with a 403 status code and an unauthenticated message' do
+        delete "/api/1/comments/#{c1.id}"
+
+        expect(response.code).to eq '403'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'forbidden'
+        expect(resp['error_description']).to eq 'The action you requested was forbidden.'
+      end
+    end
+
     context 'not signed in' do
       it 'responds with a 401 status code and error message' do
         delete "/api/1/comments/#{c1.id}"
