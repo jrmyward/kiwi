@@ -128,6 +128,8 @@ class Comment
     end
 
     save
+
+    remove_upvote(user)
   end
 
   def remove_downvote(user)

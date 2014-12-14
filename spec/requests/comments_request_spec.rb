@@ -9,6 +9,7 @@ describe 'Comments Requests' do
   let(:u2) { create :user }
   let(:u3) { create :user }
   let(:u4) { create :user }
+  let(:u5) { create :user }
 
   let(:event) { create :event }
 
@@ -339,7 +340,7 @@ describe 'Comments Requests' do
         resp = JSON.parse(response.body)
 
         expect(resp['error']).to eq 'comment_not_upvoted'
-        expect(resp['error_description']).to eq 'User has not upvoted this comment so the downvote can\'t be removed.'
+        expect(resp['error_description']).to eq 'User has not upvoted this comment so the upvote can\'t be removed.'
       end
 
       it 'responds with a 422 status code and error message when the comment to upvote does not exist' do
@@ -370,31 +371,138 @@ describe 'Comments Requests' do
 
   describe 'POST /api/1/comments/{id}/downvote' do
     context 'signed in' do
-      it 'downvotes a no voted comment' do
+      before(:each) do
+        sign_in(u5)
+      end
 
+      it 'downvotes a no voted comment' do
+        post "/api/1/comments/#{c1.id}/downvote"
+
+        expect(response.code).to eq '200'
+
+        resp = JSON.parse(response.body)['response']
+
+        expect(resp['message']).to eq 'Event looking good!'
+        expect(resp['by']).to eq u1.username
+        expect(resp['upvote_count']).to eq 2
+        expect(resp['upvoted']).not_to be
+        expect(resp['downvote_count']).to eq 2
+        expect(resp['downvoted']).to be
       end
 
       it 'removes an upvote from an upvoted event' do
+        c1.add_upvote(u5)
 
+        post "/api/1/comments/#{c1.id}/downvote"
+
+        expect(response.code).to eq '200'
+
+        resp = JSON.parse(response.body)['response']
+
+        expect(resp['message']).to eq 'Event looking good!'
+        expect(resp['by']).to eq u1.username
+        expect(resp['upvote_count']).to eq 2
+        expect(resp['upvoted']).not_to be
+        expect(resp['downvote_count']).to eq 2
+        expect(resp['downvoted']).to be
       end
 
-      it 'responds with a 422 status code and error message on a downvote comment' do
+      it 'responds with a 422 status code and error message on an already downvoted comment' do
+        c1.add_downvote(u5)
 
+        post "/api/1/comments/#{c1.id}/downvote"
+
+        expect(response.code).to eq '422'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'comment_already_downvoted'
+        expect(resp['error_description']).to eq 'User has already downvoted on this comment and cannot downvote twice.'
+      end
+
+      it 'responds with a 422 status code and error message when the comment to downvote does not exist' do
+        post '/api/1/comments/ZZZ/downvote'
+
+        expect(response.code).to eq '422'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'comment_not_found'
+        expect(resp['error_description']).to eq 'Could not find the comment to upvote.'
       end
     end
 
     context 'not signed in' do
+      it 'responds with a 401 status code and error message when trying to upvote a comment' do
+        post "/api/1/comments/#{c1.id}/downvote"
 
+        expect(response.code).to eq '401'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'unauthenticated'
+        expect(resp['error_description']).to eq 'This action requires authentication to continue.'
+      end
     end
   end
 
   describe 'DELETE /api/1/comments/{id}/downvote' do
-    it 'removes a downvote from a downvoted event' do
+    context 'signed in' do
+      before(:each) do
+        sign_in(u5)
+      end
 
+      it 'removes a downvote from a downvoted event' do
+        c1.add_downvote(u5)
+
+        delete "/api/1/comments/#{c1.id}/downvote"
+
+        expect(response.code).to eq '200'
+
+        resp = JSON.parse(response.body)['response']
+
+        expect(resp['message']).to eq 'Event looking good!'
+        expect(resp['by']).to eq u1.username
+        expect(resp['upvote_count']).to eq 2
+        expect(resp['upvoted']).not_to be
+        expect(resp['downvote_count']).to eq 1
+        expect(resp['downvoted']).not_to be
+      end
+
+      it 'responds with a 422 status code and error message on a comment that has not been downvoted' do
+        delete "/api/1/comments/#{c1.id}/downvote"
+
+        expect(response.code).to eq '422'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'comment_not_downvoted'
+        expect(resp['error_description']).to eq 'User has not downvoted this comment so the downvote can\'t be removed.'
+      end
+
+      it 'responds with a 422 status code and error message when the comment to remove the downvote on does not exist' do
+        delete '/api/1/comments/ZZZ/downvote'
+
+        expect(response.code).to eq '422'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'comment_not_found'
+        expect(resp['error_description']).to eq 'Could not find the comment to upvote.'
+      end
     end
 
-    it 'replies with a 422 status code and error message on a comment that has not been downvote' do
+    context 'not signed in' do
+      it 'responds with a 401 status code and error message when trying to remove a downvote from a comment' do
+        delete "/api/1/comments/#{c1.id}/downvote"
 
+        expect(response.code).to eq '401'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'unauthenticated'
+        expect(resp['error_description']).to eq 'This action requires authentication to continue.'
+      end
     end
   end
 

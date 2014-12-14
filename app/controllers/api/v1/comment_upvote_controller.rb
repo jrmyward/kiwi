@@ -44,7 +44,7 @@ module Api
       def comment_not_upvoted
         {
           error: 'comment_not_upvoted',
-          error_description: 'User has not upvoted this comment so the downvote can\'t be removed.'
+          error_description: 'User has not upvoted this comment so the upvote can\'t be removed.'
         }
       end
     end
