@@ -23,7 +23,6 @@ class FK.Models.Event extends Backbone.Model
     '/events'
 
   initialize: () =>
-    @comments = new FK.Collections.Comments([], {event_id: @get('_id')})
     #Backbone thing: when collection fetches from another url, models are
     #forced to have that url, undo that here
     #TODO: Report backbone bug?
@@ -104,56 +103,55 @@ class FK.Models.Event extends Backbone.Model
   isNational: () =>
     @get('location_type') is 'national'
 
-  getters:
-    fk_datetime: () ->
-      return @datetimeRecurring() if @get('time_format') is 'recurring'
-      return @datetimeTV() if @get('time_format') is 'tv_show'
-      return @datetimeAllDay() if @isAllDay()
-      return @datetimeNormal()
+  fk_datetime: () ->
+    return @datetimeRecurring() if @get('time_format') is 'recurring'
+    return @datetimeTV() if @get('time_format') is 'tv_show'
+    return @datetimeAllDay() if @isAllDay()
+    return @datetimeNormal()
 
-    time: () ->
-      @get('timeAsString')
+  time: () ->
+    @get('timeAsString')
 
-    timeAsString: () ->
-      return '' unless @get('datetime')
-      return 'All Day' if @isAllDay()
+  timeAsString: () ->
+    return '' unless @get('datetime')
+    return 'All Day' if @isAllDay()
 
-      datetime = @get('fk_datetime')
+    datetime = @get('fk_datetime')
 
-      if @get('time_format') is 'tv_show'
-        date_parsed = moment(@get('local_date'))
-        eastern_time = moment("#{@get('local_time')} #{date_parsed.format('YYYY-MM-DD')}", 'h:mma YYYY-MM-DD')
-        central_time = parseInt(eastern_time.format('h')) - 1
-        central_time = 12 if central_time is 0
+    if @get('time_format') is 'tv_show'
+      date_parsed = moment(@get('local_date'))
+      eastern_time = moment("#{@get('local_time')} #{date_parsed.format('YYYY-MM-DD')}", 'h:mma YYYY-MM-DD')
+      central_time = parseInt(eastern_time.format('h')) - 1
+      central_time = 12 if central_time is 0
 
-        minutes = eastern_time.format('mm')
-        return "#{eastern_time.format('h')}:#{minutes}/#{central_time}:#{minutes}c"
-      else
-        return @time_from_moment(datetime)
+      minutes = eastern_time.format('mm')
+      return "#{eastern_time.format('h')}:#{minutes}/#{central_time}:#{minutes}c"
+    else
+      return @time_from_moment(datetime)
 
-    dateAsString: () ->
-      return "" unless @get('datetime')
-      return @get('fk_datetime').format('dddd, MMM Do YYYY')
+  dateAsString: () ->
+    return "" unless @get('datetime')
+    return @get('fk_datetime').format('dddd, MMM Do YYYY')
 
-    datetimeAsString: () ->
-      return "#{@.get('dateAsString')}, #{@.get('timeAsString')}"
+  datetimeAsString: () ->
+    return "#{@.get('dateAsString')}, #{@.get('timeAsString')}"
 
-    local_hour: ->
-      return "" unless @get('local_time')
-      return "" if @get('local_time').indexOf(':') is  -1
-      local_hour = @get('local_time').split(':')[0]
-      local_hour = local_hour - 12 + "" if local_hour > 12
-      local_hour
+  local_hour: ->
+    return "" unless @get('local_time')
+    return "" if @get('local_time').indexOf(':') is  -1
+    local_hour = @get('local_time').split(':')[0]
+    local_hour = local_hour - 12 + "" if local_hour > 12
+    local_hour
 
-    local_minute: ->
-      return "" unless @get('local_time')
-      return "" if @get('local_time').indexOf(':') is  -1
-      @get('local_time').split(':')[1].split(' ')[0]
+  local_minute: ->
+    return "" unless @get('local_time')
+    return "" if @get('local_time').indexOf(':') is  -1
+    @get('local_time').split(':')[1].split(' ')[0]
 
-    local_ampm: ->
-      return "" unless @get('local_time')
-      return "" if @get('local_time').indexOf(':') is  -1
-      @get('local_time').split(':')[1].split(' ')[1]
+  local_ampm: ->
+    return "" unless @get('local_time')
+    return "" if @get('local_time').indexOf(':') is  -1
+    @get('local_time').split(':')[1].split(' ')[1]
 
   datetimeNormal: () ->
     return moment() unless @get('datetime')

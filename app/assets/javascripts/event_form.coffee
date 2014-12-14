@@ -5,18 +5,22 @@ $ ->
   refreshRemaningCount()
   refreshLocationType()
 
+  renderDateTimePicker()
   renderImageTrimmer()
 
 refreshRemaningCount = ->
   val = $('input[name="name"]').val()
-  remaining_count = 100 - val.length
-  $('[data-role="counter"]').text(remaining_count)
+  remainingCount = 100 - val.length
+  $('[data-role="counter"]').text(remainingCount)
 
 refreshLocationType = ->
   location_type = $('[type="radio"][name="location_type"]:checked').val()
   $('select[name="country"]').prop('disabled', location_type == 'international')
 
 renderImageTrimmer = ->
-  console.log(FK)
   trimmer = new FK.ImageTrimmer.ImageTrimmerController
   trimmer.renderIn('#image-region')
+
+renderDateTimePicker = ->
+  dateTimePicker = new FK.DatePicker.DatePickerController
+  dateTimePicker.renderIn('#datetime-region')

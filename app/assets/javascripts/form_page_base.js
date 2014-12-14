@@ -8,12 +8,14 @@
 //= require backbone
 //= require marionette
 //= require moment.min
+//= require bootstrap-datepicker
 //= require jstz.min
 //= require moment-timezone.min
 //= require moment-timezone-data.min
 //= require_tree ./config
 //= require kiwi
 //= require_tree ./utils
+//= require ./kiwi/models/event
 //= require_tree ./kiwi/templates/event_form_page
 //= require_tree ./kiwi/front_page
 //= require_tree ./kiwi/event_form_page

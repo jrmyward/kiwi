@@ -8,6 +8,7 @@ window.FK = {
   Routers: {}
   Utils: {}
   ImageTrimmer: {}
+  DatePicker: {}
 }
 
 FK.App = new Backbone.Marionette.Application()
