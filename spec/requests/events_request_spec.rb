@@ -1,11 +1,7 @@
 require 'spec_helper'
 
 describe 'Events Requests' do
-  before(:each) do
-    # setup token and authentication
-  end
-
-  # Paginated collection
+  #TODO: Paginated collection
   describe 'GET /api/1/events' do
     let!(:subkasts) do
       create :subkast, code: 'TV'
@@ -36,7 +32,6 @@ describe 'Events Requests' do
 
       expect(resp[0]['name']).to eq 'E1'
       expect(resp[0]['subkast']).to eq 'ST'
-      expect(resp[0]['location_type']).to eq 'national'
       expect(resp[0]['country']).to eq 'CA'
       expect(resp[0]['date']).to eq '2014-09-15'
       expect(resp[0]['all_day']).to eq true
@@ -48,7 +43,7 @@ describe 'Events Requests' do
 
       expect(resp[1]['name']).to eq 'E3'
       expect(resp[1]['subkast']).to eq 'ST'
-      expect(resp[1]['location_type']).to eq 'international'
+      expect(resp[1]['international']).to be
       expect(resp[1]['datetime']).to eq '2014-09-15T14:30:00'
       expect(resp[1]['recurring']).to eq true
       expect(resp[1]['added_by']).to eq 'mr. x'
@@ -59,10 +54,9 @@ describe 'Events Requests' do
 
       expect(resp[2]['name']).to eq 'E2'
       expect(resp[2]['subkast']).to eq 'TV'
-      expect(resp[2]['location_type']).to eq 'national'
       expect(resp[2]['country']).to eq 'CA'
       expect(resp[2]['datetime']).to eq '2014-09-15T23:30:00'
-      expect(resp[2]['tv_show']).to eq true
+      expect(resp[2]['eastern_tv_show']).to eq true
       expect(resp[2]['added_by']).to eq 'mr. x'
       expect(resp[2]['description']).to eq 'This should be interesting.'
       expect(resp[2]['upvotes_url']).to eq "/api/1/events/#{e2.id}/upvote"
@@ -71,7 +65,6 @@ describe 'Events Requests' do
 
       expect(resp[3]['name']).to eq 'E4'
       expect(resp[3]['subkast']).to eq 'ST'
-      expect(resp[3]['location_type']).to eq 'national'
       expect(resp[3]['country']).to eq 'CA'
       expect(resp[3]['datetime']).to eq '2014-09-15T12:00:00'
       expect(resp[3]['relative']).to eq true
@@ -91,7 +84,6 @@ describe 'Events Requests' do
 
       expect(resp[0]['name']).to eq 'E6'
       expect(resp[0]['subkast']).to eq 'ST'
-      expect(resp[0]['location_type']).to eq 'national'
       expect(resp[0]['country']).to eq 'CA'
       expect(resp[0]['date']).to eq '2014-09-23'
       expect(resp[0]['all_day']).to eq true
@@ -103,7 +95,6 @@ describe 'Events Requests' do
 
       expect(resp[1]['name']).to eq 'E10'
       expect(resp[1]['subkast']).to eq 'ST'
-      expect(resp[1]['location_type']).to eq 'national'
       expect(resp[1]['country']).to eq 'CA'
       expect(resp[1]['date']).to eq '2014-09-23'
       expect(resp[1]['all_day']).to eq true
@@ -115,10 +106,9 @@ describe 'Events Requests' do
 
       expect(resp[2]['name']).to eq 'E7'
       expect(resp[2]['subkast']).to eq 'TV'
-      expect(resp[2]['location_type']).to eq 'national'
       expect(resp[2]['country']).to eq 'CA'
       expect(resp[2]['datetime']).to eq '2014-09-24T23:30:00'
-      expect(resp[2]['tv_show']).to eq true
+      expect(resp[2]['eastern_tv_show']).to eq true
       expect(resp[2]['added_by']).to eq 'mr. x'
       expect(resp[2]['description']).to eq 'This should be interesting.'
       expect(resp[2]['upvotes_url']).to eq "/api/1/events/#{e7.id}/upvote"
@@ -127,7 +117,7 @@ describe 'Events Requests' do
 
       expect(resp[3]['name']).to eq 'E8'
       expect(resp[3]['subkast']).to eq 'ST'
-      expect(resp[3]['location_type']).to eq 'international'
+      expect(resp[3]['international']).to be
       expect(resp[3]['datetime']).to eq '2014-09-25T14:30:00'
       expect(resp[3]['recurring']).to eq true
       expect(resp[3]['added_by']).to eq 'mr. x'
@@ -138,7 +128,6 @@ describe 'Events Requests' do
 
       expect(resp[4]['name']).to eq 'E9'
       expect(resp[4]['subkast']).to eq 'ST'
-      expect(resp[4]['location_type']).to eq 'national'
       expect(resp[4]['country']).to eq 'CA'
       expect(resp[4]['datetime']).to eq '2014-09-26T12:00:00'
       expect(resp[4]['relative']).to eq true
@@ -151,88 +140,169 @@ describe 'Events Requests' do
   end
 
   describe 'POST /events' do
-    xit 'should be able to create an all day event' do
-      event = {
-        name: 'Canada Day',
-        subkast: 'HA',
-        international: false,
-        country: 'CA',
-        date: '2014-07-01',
-        all_day: true,
-        description: 'Celebration of Canada\'s birthday!'
-      }
-      post '/api/1/events', event 
+
+    context 'signed in' do
+      let(:u1) { create :user }
+
+      before(:each) do
+        sign_in(u1)
+      end
+
+      it 'should be able to create an all day event' do
+        event = {
+          name: 'Canada Day',
+          subkast: 'HA',
+          country: 'CA',
+          date: '2014-07-01',
+          all_day: true,
+          description: 'Celebration of Canada\'s birthday!'
+        }
+
+        post '/api/1/events', event
+
+        expect(response.code).to eq '200'
+
+        resp = JSON.parse(response.body)['response']
+
+        expect(resp['name']).to eq 'Canada Day'
+        expect(resp['subkast']).to eq 'HA'
+        expect(resp['all_day']).to be
+        expect(resp['country']).to eq 'CA'
+        expect(resp['date']).to eq '2014-07-01'
+        expect(resp['description']).to eq 'Celebration of Canada\'s birthday!'
+      end
+
+      it 'should be able to create a relative time event' do
+       event = {
+          name: 'Hangout with Harper',
+          subkast: 'EDU',
+          country: 'CA',
+          date: '2014-07-01',
+          time: '19:00',
+          time_zone: 'America/New_York',
+          description: 'Celebration of Canada\'s birthday!'
+        }
+        post '/api/1/events', event
+
+        expect(response.code).to eq '200'
+
+        resp = JSON.parse(response.body)['response']
+
+        expect(resp['name']).to eq 'Hangout with Harper'
+        expect(resp['subkast']).to eq 'EDU'
+        expect(resp['country']).to eq 'CA'
+        expect(resp['datetime']).to eq '2014-07-01T23:00:00'
+        expect(resp['description']).to eq 'Celebration of Canada\'s birthday!'
+      end
+
+      it 'should be able to create a recurring time event' do
+        event = {
+          name: 'School Starts',
+          subkast: 'EDU',
+          country: 'CA',
+          date: '2014-08-01',
+          time: '8:30',
+          recurring: true,
+          description: 'First day of classes'
+        }
+        post '/api/1/events', event
+
+        expect(response.code).to eq '200'
+
+        resp = JSON.parse(response.body)['response']
+
+        expect(resp['name']).to eq 'School Starts'
+        expect(resp['subkast']).to eq 'EDU'
+        expect(resp['country']).to eq 'CA'
+        expect(resp['datetime']).to eq '2014-08-01T08:30:00'
+        expect(resp['recurring']).to be
+        expect(resp['description']).to eq 'First day of classes'
+      end
+
+      it 'should be able to create tv show event' do
+        event = {
+          name: 'Hockey Night in Canada',
+          subkast: 'SP',
+          country: 'CA',
+          date: '2014-07-01',
+          time: '19:00',
+          eastern_tv_show: true,
+          description: 'With George Strombolo...'
+        }
+        post '/api/1/events', event
+
+        expect(response.code).to eq '200'
+
+        resp = JSON.parse(response.body)['response']
+
+        expect(resp['name']).to eq 'Hockey Night in Canada'
+        expect(resp['subkast']).to eq 'SP'
+        expect(resp['country']).to eq 'CA'
+        expect(resp['datetime']).to eq '2014-07-01T23:00:00'
+        expect(resp['eastern_tv_show']).to be
+        expect(resp['description']).to eq 'With George Strombolo...'
+      end
+
+      it 'should be able to create international events' do
+        event = {
+          name: 'World Day',
+          subkast: 'HA',
+          international: true,
+          date: '2014-09-01',
+          all_day: true,
+          description: 'Celebration of world day!'
+        }
+        post '/api/1/events', event
+
+        expect(response.code).to eq '200'
+
+        resp = JSON.parse(response.body)['response']
+
+        expect(resp['name']).to eq 'World Day'
+        expect(resp['subkast']).to eq 'HA'
+        expect(resp['international']).to be
+        expect(resp['all_day']).to be
+        expect(resp['date']).to eq '2014-09-01'
+        expect(resp['description']).to eq 'Celebration of world day!'
+      end
+
+      it 'should be able to create events with an image' do
+        event = {
+          name: 'Canada Day',
+          subkast: 'HA',
+          international: true,
+          date: '2014-07-01',
+          all_day: true,
+          description: 'Celebration of Canada\'s birthday!',
+          image_url: 'http://somewhere.com/image.png',
+          crop_x: 20,
+          crop_y: 50,
+          width: 100,
+          height: 150
+        }
+        post '/api/1/events', event
+      end
     end
 
-    xit 'should be able to create a relative time event' do
-     event = {
-        name: 'Hangout with Harper',
-        subkast: 'EDU',
-        international: false,
-        country: 'CA',
-        date: '2014-07-01',
-        time: '19:00',
-        time_zone: 'America/New_York',
-        description: 'Celebration of Canada\'s birthday!'
-      }
-      post '/api/1/events', event 
-    end
+    context 'not signed in' do
+      it 'replies with a 401 status code and unauthorized error message' do
+        event = {
+          name: 'World Day',
+          subkast: 'HA',
+          international: true,
+          date: '2014-09-01',
+          all_day: true,
+          description: 'Celebration of world day!'
+        }
+        post '/api/1/events', event
 
-    # Time zone doesn't matter
-    xit 'should be able to create a recurring time event' do
-      event = {
-        name: 'School Starts',
-        subkast: 'EDU',
-        international: false,
-        country: 'CA',
-        date: '2014-08-01',
-        time: '8:30',
-        description: 'First day of classes'
-      }
-      post '/api/1/events', event 
-    end
+        expect(response.code).to eq '401'
 
-    # Time is assumed to be in eastern time
-    xit 'should be able to create tv show event' do
-      event = {
-        name: 'Hocket Night in Canada',
-        subkast: 'SP',
-        international: false,
-        country: 'CA',
-        date: '2014-07-01',
-        time: '19:00',
-        description: 'With George Strombolo...'
-      }
-      post '/api/1/events', event 
-    end
+        resp = JSON.parse(response.body)
 
-    it 'should be able to create international events' do
-      event = {
-        name: 'Canada Day',
-        subkast: 'HA',
-        international: true,
-        date: '2014-07-01',
-        all_day: true,
-        description: 'Celebration of Canada\'s birthday!'
-      }
-      post '/api/1/events', event 
-    end
-
-    it 'should be able to create events with an image' do
-      event = {
-        name: 'Canada Day',
-        subkast: 'HA',
-        international: true,
-        date: '2014-07-01',
-        all_day: true,
-        description: 'Celebration of Canada\'s birthday!',
-        image_url: 'http://somewhere.com/image.png',
-        crop_x: 20,
-        crop_y: 50,
-        width: 100,
-        height: 150
-      }
-      post '/api/1/events', event 
+        expect(resp['error']).to eq 'unauthenticated'
+        expect(resp['error_description']).to eq 'This action requires authentication to continue.'
+      end
     end
   end
 

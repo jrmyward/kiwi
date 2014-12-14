@@ -1,9 +1,5 @@
 require 'spec_helper'
 
-def sign_in(user)
-  post_via_redirect user_session_path, 'user[login]' => user.email, 'user[password]' => user.password
-end
-
 describe 'Comments Requests' do
   let(:u1) { create :moderator }
   let(:u2) { create :user }

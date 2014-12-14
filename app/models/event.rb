@@ -60,6 +60,10 @@ class Event
     location_type == 'national'
   end
 
+  def international?
+    location_type == 'international'
+  end
+
   def all_day?
     is_all_day
   end
@@ -73,7 +77,7 @@ class Event
   end
 
   def relative?
-    time_format == ''
+    time_format.blank?
   end
 
   def full_subkast
