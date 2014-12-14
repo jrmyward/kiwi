@@ -24,11 +24,27 @@ module Api
       end
 
       def update
+        authenticate!
 
+        event = Event.where(id: params[:id]).first
+
+        error! :not_found if event.nil?
+        error! :forbidden unless Ability.new(api_current_user).can? :update, event
+
+        event.update(event_params)
+
+        exposes(decorate_one(event))
       end
 
       def destroy
+        authenticate!
 
+        event = Event.where(id: params[:id]).first
+
+        error! :not_found if event.nil?
+        error! :forbidden unless Ability.new(api_current_user).can? :destroy, event
+
+        event.destroy
       end
 
       private

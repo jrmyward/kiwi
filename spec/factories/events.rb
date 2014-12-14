@@ -20,7 +20,7 @@ FactoryGirl.define do
     subkast "ST"
     is_all_day false
     time_format ''
-    user "mr. x"
+    user "mrx"
 
     description 'This should be exciting!'
 

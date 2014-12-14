@@ -35,7 +35,7 @@ describe 'Events Requests' do
       expect(resp[0]['country']).to eq 'CA'
       expect(resp[0]['date']).to eq '2014-09-15'
       expect(resp[0]['all_day']).to eq true
-      expect(resp[0]['added_by']).to eq 'mr. x'
+      expect(resp[0]['added_by']).to eq 'mrx'
       expect(resp[0]['description']).to eq 'This should be exciting!'
       expect(resp[0]['upvotes_url']).to eq "/api/1/events/#{e1.id}/upvote"
       expect(resp[0]['comments_url']).to eq "/api/1/events/#{e1.id}/comments"
@@ -46,7 +46,7 @@ describe 'Events Requests' do
       expect(resp[1]['international']).to be
       expect(resp[1]['datetime']).to eq '2014-09-15T14:30:00'
       expect(resp[1]['recurring']).to eq true
-      expect(resp[1]['added_by']).to eq 'mr. x'
+      expect(resp[1]['added_by']).to eq 'mrx'
       expect(resp[1]['description']).to eq 'This should be exciting!'
       expect(resp[1]['upvotes_url']).to eq "/api/1/events/#{e3.id}/upvote"
       expect(resp[1]['comments_url']).to eq "/api/1/events/#{e3.id}/comments"
@@ -57,7 +57,7 @@ describe 'Events Requests' do
       expect(resp[2]['country']).to eq 'CA'
       expect(resp[2]['datetime']).to eq '2014-09-15T23:30:00'
       expect(resp[2]['eastern_tv_show']).to eq true
-      expect(resp[2]['added_by']).to eq 'mr. x'
+      expect(resp[2]['added_by']).to eq 'mrx'
       expect(resp[2]['description']).to eq 'This should be interesting.'
       expect(resp[2]['upvotes_url']).to eq "/api/1/events/#{e2.id}/upvote"
       expect(resp[2]['comments_url']).to eq "/api/1/events/#{e2.id}/comments"
@@ -68,7 +68,7 @@ describe 'Events Requests' do
       expect(resp[3]['country']).to eq 'CA'
       expect(resp[3]['datetime']).to eq '2014-09-15T12:00:00'
       expect(resp[3]['relative']).to eq true
-      expect(resp[3]['added_by']).to eq 'mr. x'
+      expect(resp[3]['added_by']).to eq 'mrx'
       expect(resp[3]['description']).to eq 'This should be exciting!'
       expect(resp[3]['upvotes_url']).to eq "/api/1/events/#{e4.id}/upvote"
       expect(resp[3]['comments_url']).to eq "/api/1/events/#{e4.id}/comments"
@@ -87,7 +87,7 @@ describe 'Events Requests' do
       expect(resp[0]['country']).to eq 'CA'
       expect(resp[0]['date']).to eq '2014-09-23'
       expect(resp[0]['all_day']).to eq true
-      expect(resp[0]['added_by']).to eq 'mr. x'
+      expect(resp[0]['added_by']).to eq 'mrx'
       expect(resp[0]['description']).to eq 'This should be exciting!'
       expect(resp[0]['upvotes_url']).to eq "/api/1/events/#{e6.id}/upvote"
       expect(resp[0]['comments_url']).to eq "/api/1/events/#{e6.id}/comments"
@@ -98,7 +98,7 @@ describe 'Events Requests' do
       expect(resp[1]['country']).to eq 'CA'
       expect(resp[1]['date']).to eq '2014-09-23'
       expect(resp[1]['all_day']).to eq true
-      expect(resp[1]['added_by']).to eq 'mr. x'
+      expect(resp[1]['added_by']).to eq 'mrx'
       expect(resp[1]['description']).to eq 'This should be exciting!'
       expect(resp[1]['upvotes_url']).to eq "/api/1/events/#{e10.id}/upvote"
       expect(resp[1]['comments_url']).to eq "/api/1/events/#{e10.id}/comments"
@@ -109,7 +109,7 @@ describe 'Events Requests' do
       expect(resp[2]['country']).to eq 'CA'
       expect(resp[2]['datetime']).to eq '2014-09-24T23:30:00'
       expect(resp[2]['eastern_tv_show']).to eq true
-      expect(resp[2]['added_by']).to eq 'mr. x'
+      expect(resp[2]['added_by']).to eq 'mrx'
       expect(resp[2]['description']).to eq 'This should be interesting.'
       expect(resp[2]['upvotes_url']).to eq "/api/1/events/#{e7.id}/upvote"
       expect(resp[2]['comments_url']).to eq "/api/1/events/#{e7.id}/comments"
@@ -120,7 +120,7 @@ describe 'Events Requests' do
       expect(resp[3]['international']).to be
       expect(resp[3]['datetime']).to eq '2014-09-25T14:30:00'
       expect(resp[3]['recurring']).to eq true
-      expect(resp[3]['added_by']).to eq 'mr. x'
+      expect(resp[3]['added_by']).to eq 'mrx'
       expect(resp[3]['description']).to eq 'This should be exciting!'
       expect(resp[3]['upvotes_url']).to eq "/api/1/events/#{e8.id}/upvote"
       expect(resp[3]['comments_url']).to eq "/api/1/events/#{e8.id}/comments"
@@ -131,7 +131,7 @@ describe 'Events Requests' do
       expect(resp[4]['country']).to eq 'CA'
       expect(resp[4]['datetime']).to eq '2014-09-26T12:00:00'
       expect(resp[4]['relative']).to eq true
-      expect(resp[4]['added_by']).to eq 'mr. x'
+      expect(resp[4]['added_by']).to eq 'mrx'
       expect(resp[4]['description']).to eq 'This should be exciting!'
       expect(resp[4]['upvotes_url']).to eq "/api/1/events/#{e9.id}/upvote"
       expect(resp[4]['comments_url']).to eq "/api/1/events/#{e9.id}/comments"
@@ -306,15 +306,197 @@ describe 'Events Requests' do
     end
   end
 
-  describe 'PUT /events' do
-    xit 'should be able to update an event' do
+  describe 'PUT /api/1/events/{id}' do
+    let(:mrx) { create :user, username: 'mrx' }
+    let(:mod) { create :moderator }
+    let(:otherguy) { create :user }
 
+    let!(:e) { create :event }
+
+    context 'signed in' do
+      it 'as the event owner, can update the event' do
+        sign_in mrx
+
+        event_update = {
+          name: 'World Day',
+          subkast: 'HA',
+          international: true,
+          date: '2014-09-01',
+          all_day: true,
+          description: 'Celebration of world day!'
+        }
+
+        put "/api/1/events/#{e.id}", event_update
+
+        expect(response.code).to eq '200'
+
+        resp = JSON.parse(response.body)['response']
+
+        expect(resp['name']).to eq 'World Day'
+        expect(resp['subkast']).to eq 'HA'
+        expect(resp['international']).to be
+        expect(resp['all_day']).to be
+        expect(resp['date']).to eq '2014-09-01'
+        expect(resp['description']).to eq 'Celebration of world day!'
+      end
+
+      it 'gets a 404 status code and an error message when the event could not be found' do
+        sign_in mrx
+
+        event_update = {
+          name: 'World Day',
+          subkast: 'HA',
+          international: true,
+          date: '2014-09-01',
+          all_day: true,
+          description: 'Celebration of world day!'
+        }
+
+        put '/api/1/events/ZZZ', event_update
+
+        expect(response.code).to eq '404'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'not_found'
+        expect(resp['error_description']).to eq 'The requested resource could not be found.'
+      end
+
+      it 'as a moderator, can update the event' do
+        sign_in mod
+
+        event_update = {
+          name: 'World Day',
+          subkast: 'HA',
+          international: true,
+          date: '2014-09-01',
+          all_day: true,
+          description: 'Celebration of world day!'
+        }
+
+        put "/api/1/events/#{e.id}", event_update
+
+        expect(response.code).to eq '200'
+
+        resp = JSON.parse(response.body)['response']
+
+        expect(resp['name']).to eq 'World Day'
+        expect(resp['subkast']).to eq 'HA'
+        expect(resp['international']).to be
+        expect(resp['all_day']).to be
+        expect(resp['date']).to eq '2014-09-01'
+        expect(resp['description']).to eq 'Celebration of world day!'
+      end
+
+      it 'as the other guy, reply with a 401 status code and unauthorized error message' do
+        sign_in otherguy
+
+        event_update = {
+          name: 'World Day',
+          subkast: 'HA',
+          international: true,
+          date: '2014-09-01',
+          all_day: true,
+          description: 'Celebration of world day!'
+        }
+
+        put "/api/1/events/#{e.id}", event_update
+
+        expect(response.code).to eq '403'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'forbidden'
+        expect(resp['error_description']).to eq 'The action you requested was forbidden.'
+      end
+    end
+
+    context 'not signed in' do
+      it 'returns with a 401 error code and an unauthorized message' do
+        event_update = {
+          name: 'World Day',
+          subkast: 'HA',
+          international: true,
+          date: '2014-09-01',
+          all_day: true,
+          description: 'Celebration of world day!'
+        }
+
+        put "/api/1/events/#{e.id}", event_update
+
+        expect(response.code).to eq '401'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'unauthenticated'
+        expect(resp['error_description']).to eq 'This action requires authentication to continue.'
+      end
     end
   end
 
   describe 'DELETE /events/{id}' do
-    xit 'should be able to delete an event' do
+    let!(:e) { create :event }
 
+    let(:mrx) { create :user, username: 'mrx' }
+    let(:mod) { create :moderator }
+    let(:otherguy) { create :user }
+
+    it 'signed in as the event owner deleted the event' do
+      sign_in mrx
+      delete "/api/1/events/#{e.id}"
+
+      expect(response.code).to eq '200'
+
+      expect(Event.where(id: e.id).first).to be_nil
+    end
+
+    it 'replies with a 404 status code and error message when the event could not be found' do
+      sign_in mrx
+
+      delete '/api/1/events/ZZZ'
+
+      expect(response.code).to eq '404'
+
+      resp = JSON.parse(response.body)
+
+      expect(resp['error']).to eq 'not_found'
+      expect(resp['error_description']).to eq 'The requested resource could not be found.'
+    end
+
+    it 'signed in as a moderator deletes the event' do
+      sign_in mod
+      delete "/api/1/events/#{e.id}"
+
+      expect(response.code).to eq '200'
+
+      expect(Event.where(id: e.id).first).to be_nil
+    end
+
+    it 'signed in as the other guy responds with a 401 status code and unauthorized message' do
+      sign_in otherguy
+      delete "/api/1/events/#{e.id}"
+
+      expect(response.code).to eq '403'
+
+      resp = JSON.parse(response.body)
+
+      expect(resp['error']).to eq 'forbidden'
+      expect(resp['error_description']).to eq 'The action you requested was forbidden.'
+
+      expect(Event.where(id: e.id).first).to be
+    end
+
+    it 'not signed in replies with a 401 and unauthorized message' do
+      delete "/api/1/events/#{e.id}"
+
+      expect(response.code).to eq '401'
+
+      resp = JSON.parse(response.body)
+
+      expect(resp['error']).to eq 'unauthenticated'
+      expect(resp['error_description']).to eq 'This action requires authentication to continue.'
+
+      expect(Event.where(id: e.id).first).to be
     end
   end
 end
