@@ -14,8 +14,7 @@
 //= require_tree ./config
 //= require kiwi
 //= require_tree ./utils
-//= require_tree ./kiwi/templates/components
+//= require_tree ./kiwi/templates/event_form_page
 //= require_tree ./kiwi/front_page
-//= require_tree ./kiwi/models
-//= require_tree ./kiwi/components
+//= require_tree ./kiwi/event_form_page
 //= require event_form

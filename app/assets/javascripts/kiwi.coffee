@@ -7,4 +7,7 @@ window.FK = {
   Controllers: {}
   Routers: {}
   Utils: {}
+  ImageTrimmer: {}
 }
+
+FK.App = new Backbone.Marionette.Application()
