@@ -6,6 +6,8 @@ module Api
 
         if params[:on_date]
           events = repo.events_on_date(params[:on_date])
+        elsif params[:after_date]
+          events = repo.events_from_date(params[:after_date], 7)
         end
 
         resp = events.map do |event|
