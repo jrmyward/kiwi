@@ -1,19 +1,12 @@
 describe 'Image Trimmer', () ->
 
   beforeEach () ->
-    FK.App.ImageTrimmer.start()
     $('body').append $('<div id="testbed"></div>')
-    @imageTrimmer = FK.App.ImageTrimmer.create("#testbed", new FK.Models.Event)
+    @imageTrimmer = new FK.ImageTrimmer.ImageTrimmerController
+    @imageTrimmer.renderIn('#testbed')
 
   afterEach () ->
-    $('body #testbed').remove()
-    FK.App.ImageTrimmer.stop()
-
-  describe 'Memory management', () ->
-
-    it 'should close all instances of the image trimmer when the module stops', () ->
-      FK.App.ImageTrimmer.stop()
-      expect($('body #image-trimmer-region').length).toBe(0)
+    $('#testbed').remove()
 
   describe 'Image setting', () ->
     it 'should be able to load an image', () ->
