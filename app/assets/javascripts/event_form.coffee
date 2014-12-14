@@ -1,8 +1,17 @@
 $ ->
-  $('[name="name"]').keyup((e) =>
-    val = $(e.target).val()
+  $('[name="name"]').keyup(refreshRemaningCount)
+  $('[name="location_type"]').change(refreshLocationType)
 
-    remaining_count = 100 - val.length
+  refreshRemaningCount()
+  refreshLocationType()
 
-    $('[data-role="counter"]').text(remaining_count)
-  )
+refreshRemaningCount = ->
+  val = $('input[name="name"]').val()
+  remaining_count = 100 - val.length
+  $('[data-role="counter"]').text(remaining_count)
+
+refreshLocationType = ->
+  location_type = $('[type="radio"][name="location_type"]:checked').val()
+  console.log(location_type)
+  $('select[name="country"]').prop('disabled', location_type == 'international')
+
