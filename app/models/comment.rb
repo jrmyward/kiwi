@@ -36,6 +36,28 @@ class Comment
     HipChatNotification.new_comment(comment)
   end
 
+  def delete(user)
+    if owning_user?(user)
+      self.deleted_by = user
+    elsif user.moderator?
+      self.muted_by = user
+    end
+
+    save
+  end
+
+  def muted?
+    status == 'muted'
+  end
+
+  def deleted?
+    status == 'deleted'
+  end
+
+  def owning_user?(user)
+    user == authored_by
+  end
+
   def status
     return 'deleted' if deleted_by.kind_of? User
     return 'muted' if muted_by.kind_of? User

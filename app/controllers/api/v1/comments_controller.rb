@@ -25,7 +25,13 @@ module Api
       end
 
       def destroy
+        authenticate!
 
+        comment = Comment.where(id: params[:id]).first
+
+        error! :not_found if comment.nil?
+
+        comment.delete(api_current_user)
       end
 
       protected

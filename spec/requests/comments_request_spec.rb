@@ -5,7 +5,7 @@ def sign_in(user)
 end
 
 describe 'Comments Requests' do
-  let(:u1) { create :user }
+  let(:u1) { create :moderator }
   let(:u2) { create :user }
   let(:u3) { create :user }
   let(:u4) { create :user }
@@ -195,7 +195,7 @@ describe 'Comments Requests' do
         expect(resp['downvoted']).not_to be
       end
 
-      it 'responds with a 401 status code and an error message when trying to comment on a comment that does not exist' do
+      it 'responds with a 404 status code and an error message when trying to comment on a comment that does not exist' do
         post "/api/1/comments/ZZZ/replies", { message: 'Something great is happening!' }
 
         expect(response.code).to eq '404'
@@ -507,16 +507,55 @@ describe 'Comments Requests' do
   end
 
   describe 'DELETE /api/1/comments/{id}' do
-    it 'mutes a comment as a moderator' do
+    context 'signed in as a moderator' do
+      before(:each) do
+        sign_in(u1)
+      end
 
+      it 'mutes a comment' do
+        delete "/api/1/comments/#{r2.id}"
+
+        expect(response.code).to eq '200'
+
+        expect(r2.reload).to be_muted
+      end
     end
 
-    it 'deletes a comment as a user' do
+    context 'signed in as the owning user' do
+      before(:each) do
+        sign_in(u1)
+      end
 
+      it 'deletes a comment' do 
+        delete "/api/1/comments/#{c1.id}"
+
+        expect(response.code).to eq '200'
+
+        expect(c1.reload).to be_deleted
+      end
+
+      it 'provides a 404 when the comment was not found' do
+        delete "/api/1/comments/ZZZ"
+        expect(response.code).to eq '404'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'not_found'
+        expect(resp['error_description']).to eq 'The requested resource could not be found.'
+      end
     end
 
-    it 'provides a 404 when the comment was not found' do
+    context 'not signed in' do
+      it 'responds with a 401 status code and error message' do
+        delete "/api/1/comments/#{c1.id}"
 
+        expect(response.code).to eq '401'
+
+        resp = JSON.parse(response.body)
+
+        expect(resp['error']).to eq 'unauthenticated'
+        expect(resp['error_description']).to eq 'This action requires authentication to continue.'
+      end
     end
   end
 end

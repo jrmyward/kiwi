@@ -14,5 +14,9 @@ FactoryGirl.define do
     password "secret1234"
     country "CA"
     receive_comment_notifications true
+
+    factory :moderator do
+      moderator true
+    end
   end
 end
