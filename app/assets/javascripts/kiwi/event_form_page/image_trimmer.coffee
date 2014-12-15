@@ -233,12 +233,24 @@ class FK.ImageTrimmer.ImageCalculator extends Backbone.Model
     crop_y = -y / @ratioToOriginalHeight() + @get('border_top')
     @positionImage(crop_x, crop_y)
 
+  cropXValue: =>
+    -(@get('crop_x') - @get('border_left')) * @ratioToOriginalWidth()
+
+  cropYValue: =>
+    -(@get('crop_y') - @get('border_top')) * @ratioToOriginalHeight()
+
+  widthValue: =>
+    @get('trim_width') * @ratioToOriginalWidth()
+
+  heightValue: =>
+    @get('trim_height') * @ratioToOriginalHeight()
+
   image: () ->
     image =
-      crop_x: - (@get('crop_x') - @get('border_left')) * @ratioToOriginalWidth()
-      crop_y: - (@get('crop_y') - @get('border_top')) * @ratioToOriginalHeight()
-      width: @get('trim_width') * @ratioToOriginalWidth()
-      height: @get('trim_height') * @ratioToOriginalHeight()
+      crop_x: @cropXValue()
+      crop_y: @cropYValue()
+      width: @widthValue()
+      height: @heightValue()
 
     image.image = @get('file') if @get('source') is 'upload'
     image.url = @get('url') if @get('source') is 'remote'
