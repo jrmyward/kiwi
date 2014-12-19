@@ -20,6 +20,7 @@ module Api
 
         event = Event.new(event_params)
         event.save
+
         exposes(decorate_one(event))
       end
 
@@ -79,6 +80,7 @@ module Api
       def decorate_one(event)
         json = {}
 
+        json['id'] = event.id.to_s
         json['name'] = event.name
         json['subkast'] = event.subkast
         json['international'] = true if event.international?

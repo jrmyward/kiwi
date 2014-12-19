@@ -17,6 +17,7 @@ class FK.Models.Event extends Backbone.Model
       upvotes: 0
       have_i_upvoted: false
       country_full_name: ''
+      local_date: ''
     }
 
   urlRoot: () =>

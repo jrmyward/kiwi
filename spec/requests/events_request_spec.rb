@@ -164,6 +164,7 @@ describe 'Events Requests' do
 
         resp = JSON.parse(response.body)['response']
 
+        expect(resp['id']).to be
         expect(resp['name']).to eq 'Canada Day'
         expect(resp['subkast']).to eq 'HA'
         expect(resp['all_day']).to be
@@ -188,6 +189,7 @@ describe 'Events Requests' do
 
         resp = JSON.parse(response.body)['response']
 
+        expect(resp['id']).to be
         expect(resp['name']).to eq 'Hangout with Harper'
         expect(resp['subkast']).to eq 'EDU'
         expect(resp['country']).to eq 'CA'
@@ -211,6 +213,7 @@ describe 'Events Requests' do
 
         resp = JSON.parse(response.body)['response']
 
+        expect(resp['id']).to be
         expect(resp['name']).to eq 'School Starts'
         expect(resp['subkast']).to eq 'EDU'
         expect(resp['country']).to eq 'CA'
@@ -235,6 +238,7 @@ describe 'Events Requests' do
 
         resp = JSON.parse(response.body)['response']
 
+        expect(resp['id']).to be
         expect(resp['name']).to eq 'Hockey Night in Canada'
         expect(resp['subkast']).to eq 'SP'
         expect(resp['country']).to eq 'CA'
@@ -258,6 +262,7 @@ describe 'Events Requests' do
 
         resp = JSON.parse(response.body)['response']
 
+        expect(resp['id']).to be
         expect(resp['name']).to eq 'World Day'
         expect(resp['subkast']).to eq 'HA'
         expect(resp['international']).to be

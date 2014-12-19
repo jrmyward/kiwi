@@ -6,7 +6,7 @@ class FK.DatePicker.DatePickerView extends Marionette.ItemView
     local_hour: => @model.local_hour()
     local_minute: => @model.local_minute()
     local_ampm: => @model.local_ampm()
-    local_date: => @model.fk_datetime().format('MM/DD/YYYY')
+    local_date: => @model.fk_datetime().format('DD/MM/YYYY')
 
   events:
     'change [name="date"],[name="hours"],[name="minutes"],[name="ampm"]': 'updateDateTime'
@@ -77,5 +77,7 @@ class FK.DatePicker.DatePickerView extends Marionette.ItemView
     @refreshAllDay()
     @refreshTime()
     @refreshTimeFormat()
-    @datepicker = @$('input[name="date"]').datepicker()
+    @datepicker = @$('input[name="date"]').datepicker(
+      format: 'dd/mm/yyyy'
+    )
     @updateDateTime()

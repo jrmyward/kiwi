@@ -1,5 +1,4 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :comments]
   authorize_resource :only => [:destroy, :create]
 
   def index
@@ -176,7 +175,7 @@ class EventsController < ApplicationController
     def set_event
       @event = Event.where(id: params[:id]).first
       if @event.blank?
-        redirect_to "/#events/new"
+        redirect_to "/events/new"
       end
     end
 

@@ -2,6 +2,8 @@ $ ->
   $('[name="name"]').keyup(refreshRemaningCount)
   $('[name="location_type"]').change(refreshLocationType)
 
+  $('[data-action="save"]').click(saveEvent)
+
   refreshRemaningCount()
   refreshLocationType()
 
@@ -24,3 +26,55 @@ renderImageTrimmer = ->
 renderDateTimePicker = ->
   dateTimePicker = new FK.DatePicker.DatePickerController
   dateTimePicker.renderIn('#datetime-region')
+
+saveEvent = (e) ->
+  e.preventDefault()
+  form = $('form.event_form')
+
+  name = form.find('input[name="name"]').val()
+  subkast = form.find('[name="subkast"]').val()
+  location_type = form.find('[name="location_type"]:checked').val()
+  country = form.find('[name="country"]').val()
+  date = form.find('[name="date"]').val()
+  time = "#{form.find('[name="hours"]').val()}:#{form.find('[name="minutes"]').val()}:00 #{form.find('[name="ampm"]').val()}"
+  all_day = form.find('[name="is_all_day"]').is(':checked')
+  time_type = form.find('[name="time_format"]:checked').val()
+  image = form.find('[type="file"]')[0].files[0]
+  image_url = form.find('[name="image_url"]').val()
+  use_upload = true
+  height = form.find('[name="image_height"]').val()
+  width = form.find('[name="image_width"]').val()
+  crop_x = form.find('[name="image_x"]').val()
+  crop_y = form.find('[name="image_y"]').val()
+  description = form.find('[name="description"]').val()
+
+  formData = new FormData()
+
+  debugger
+  formData.append('name', name)
+  formData.append('subkast', subkast)
+  formData.append('international', true) if location_type is 'international'
+  formData.append('country', country) if location_type is 'national'
+  formData.append('date', date)
+  formData.append('time', time) unless all_day
+  formData.append('time_zone', jstz.determine().name()) if time_type is '' and all_day is false
+  formData.append('all_day', true) if all_day
+  formData.append('image', image) if use_upload
+  formData.append('image_url', image_url) unless use_upload
+  formData.append('crop_x', crop_x)
+  formData.append('crop_y', crop_y)
+  formData.append('height', height)
+  formData.append('width', width)
+  formData.append('description', description)
+
+  xhr = new XMLHttpRequest()
+  xhr.open('POST', '/api/1/events', true)
+  xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+
+  xhr.onload = (xhr_e) =>
+    event = JSON.parse(xhr_e.target.response)
+    console.log(event)
+    return unless event.response.id
+    window.location = "/events/#{event.response.id}"
+
+  xhr.send(formData)
