@@ -128,7 +128,7 @@ class Event
   end
 
   def pretty_datetime
-    get_local_datetime('America/New_York').strftime('%-d %B, %Y - %A')
+    get_local_datetime('America/New_York').strftime('%-d %B, %Y - %A, %l:%M %p')
   end
 
   def formatted_time(timezone)

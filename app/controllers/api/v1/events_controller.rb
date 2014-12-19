@@ -74,6 +74,8 @@ module Api
 
         json[:description] = params[:description]
 
+        json[:user] = api_current_user.username
+
         json
       end
 
@@ -93,6 +95,7 @@ module Api
         json['relative'] = true if event.relative?
         json['added_by'] = event.user
         json['description'] = event.description
+        json['added_by'] = event.user.to_s
         json['upvotes_url'] = api_event_upvote_path(1, event.id)
         json['comments_url'] = api_event_comments_path(1, event.id)
         json['reminders_url'] = api_event_reminders_path(1, event.id)

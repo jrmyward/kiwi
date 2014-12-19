@@ -171,6 +171,7 @@ describe 'Events Requests' do
         expect(resp['country']).to eq 'CA'
         expect(resp['date']).to eq '2014-07-01'
         expect(resp['description']).to eq 'Celebration of Canada\'s birthday!'
+        expect(resp['added_by']).to eq u1.username
       end
 
       it 'should be able to create a relative time event' do
@@ -195,6 +196,7 @@ describe 'Events Requests' do
         expect(resp['country']).to eq 'CA'
         expect(resp['datetime']).to eq '2014-07-01T23:00:00'
         expect(resp['description']).to eq 'Celebration of Canada\'s birthday!'
+        expect(resp['added_by']).to eq u1.username
       end
 
       it 'should be able to create a recurring time event' do
@@ -220,6 +222,7 @@ describe 'Events Requests' do
         expect(resp['datetime']).to eq '2014-08-01T08:30:00'
         expect(resp['recurring']).to be
         expect(resp['description']).to eq 'First day of classes'
+        expect(resp['added_by']).to eq u1.username
       end
 
       it 'should be able to create tv show event' do
@@ -245,6 +248,7 @@ describe 'Events Requests' do
         expect(resp['datetime']).to eq '2014-07-01T23:00:00'
         expect(resp['eastern_tv_show']).to be
         expect(resp['description']).to eq 'With George Strombolo...'
+        expect(resp['added_by']).to eq u1.username
       end
 
       it 'should be able to create international events' do
@@ -269,6 +273,7 @@ describe 'Events Requests' do
         expect(resp['all_day']).to be
         expect(resp['date']).to eq '2014-09-01'
         expect(resp['description']).to eq 'Celebration of world day!'
+        expect(resp['added_by']).to eq u1.username
       end
 
       it 'should be able to create events with an image' do
