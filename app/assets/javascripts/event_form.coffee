@@ -50,7 +50,6 @@ saveEvent = (e) ->
 
   formData = new FormData()
 
-  debugger
   formData.append('name', name)
   formData.append('subkast', subkast)
   formData.append('international', true) if location_type is 'international'
@@ -59,6 +58,8 @@ saveEvent = (e) ->
   formData.append('time', time) unless all_day
   formData.append('time_zone', jstz.determine().name()) if time_type is '' and all_day is false
   formData.append('all_day', true) if all_day
+  formData.append('recurring', true) if time_type is 'recurring'
+  formData.append('eastern_tv_show', true) if time_type is 'tv_show'
   formData.append('image', image) if use_upload
   formData.append('image_url', image_url) unless use_upload
   formData.append('crop_x', crop_x)

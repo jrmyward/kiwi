@@ -18,7 +18,21 @@ module Api
       def create
         authenticate!
 
-        event = Event.new(event_params)
+        event = Event.new
+
+        #Picture cropping parameters need to be ready before the image is added to the model
+        #because the paperclip processor will try to use them
+        event.width = event_params[:width]
+        event.height = event_params[:height]
+        event.crop_x = event_params[:crop_x]
+        event.crop_y = event_params[:crop_y]
+
+        event.update_attributes(event_params)
+
+        if (! event_params[:image] && event_params[:url])
+          event.image_from_url(event_params[:url])
+        end
+
         event.save
 
         exposes(decorate_one(event))
@@ -68,6 +82,13 @@ module Api
           datetime = DateTime.parse("#{params[:date]} #{params[:time]}")
           json[:datetime] = ActiveSupport::TimeZone.new(params[:time_zone]).local_to_utc(datetime)
         end
+
+        json[:url] = params[:image_url]
+        json[:image] = params[:image]
+        json[:crop_x] = params[:crop_x]
+        json[:crop_y] = params[:crop_y]
+        json[:width] = params[:width]
+        json[:height] = params[:height]
 
         json[:time_format] = 'recurring' if params[:recurring].present?
         json[:time_format] = 'tv_show' if params[:eastern_tv_show].present?
