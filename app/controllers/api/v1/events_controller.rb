@@ -20,18 +20,8 @@ module Api
 
         event = Event.new
 
-        #Picture cropping parameters need to be ready before the image is added to the model
-        #because the paperclip processor will try to use them
-        event.width = event_params[:width]
-        event.height = event_params[:height]
-        event.crop_x = event_params[:crop_x]
-        event.crop_y = event_params[:crop_y]
-
         event.update_attributes(event_params)
-
-        if (! event_params[:image] && event_params[:url])
-          event.image_from_url(event_params[:url])
-        end
+        event.save_image(event_params)
 
         event.save
 
@@ -47,6 +37,7 @@ module Api
         error! :forbidden unless Ability.new(api_current_user).can? :update, event
 
         event.update(event_params)
+        event.save_image(event_params)
 
         exposes(decorate_one(event))
       end

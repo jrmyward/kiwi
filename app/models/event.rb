@@ -149,6 +149,17 @@ class Event
     Reminder.where(event_id: id, user_id: user.id, time_to_event: interval).delete
   end
 
+  def save_image(params)
+    width = params[:width]
+    height = params[:height]
+    crop_x = params[:crop_x]
+    crop_y = params[:crop_y]
+
+    image = params[:image] if params[:image].present?
+
+    image_from_url(params[:url]) if params[:url].present? && !params[:image].present?
+  end
+
   def image_from_url(url)
     if url
       if url.start_with?('data:image/jpeg;base64')

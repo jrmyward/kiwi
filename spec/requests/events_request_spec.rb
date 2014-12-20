@@ -275,23 +275,6 @@ describe 'Events Requests' do
         expect(resp['description']).to eq 'Celebration of world day!'
         expect(resp['added_by']).to eq u1.username
       end
-
-      it 'should be able to create events with an image' do
-        event = {
-          name: 'Canada Day',
-          subkast: 'HA',
-          international: true,
-          date: '2014-07-01',
-          all_day: true,
-          description: 'Celebration of Canada\'s birthday!',
-          image_url: 'http://somewhere.com/image.png',
-          crop_x: 20,
-          crop_y: 50,
-          width: 100,
-          height: 150
-        }
-        post '/api/1/events', event
-      end
     end
 
     context 'not signed in' do
