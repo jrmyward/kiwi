@@ -14,6 +14,7 @@ class FK.ImageTrimmer.ImageTrimmerLayout extends Marionette.Layout
     'change:height': 'refreshImageHeightField'
     'change:crop_x': 'refreshImageXField'
     'change:crop_y': 'refreshImageYField'
+    'change:source': 'refreshUploadOrURL'
 
   refreshImageWidthField: (model) =>
     @$('input[name="image_width"]').val(model.widthValue())
@@ -26,6 +27,9 @@ class FK.ImageTrimmer.ImageTrimmerLayout extends Marionette.Layout
 
   refreshImageYField: (model) =>
     @$('input[name="image_y"]').val(model.cropYValue())
+
+  refreshUploadOrURL: (model, source) =>
+    @$('input[name="upload_or_url"]').val(source)
 
   onRender: () ->
     @imageChooseRegion.show new FK.ImageTrimmer.ImageChooseView

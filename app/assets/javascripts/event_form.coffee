@@ -41,7 +41,7 @@ saveEvent = (e) ->
   time_type = form.find('[name="time_format"]:checked').val()
   image = form.find('[type="file"]')[0].files[0]
   image_url = form.find('[name="image_url"]').val()
-  use_upload = true
+  use_upload = form.find('[name="upload_or_url"]').val() is 'upload'
   height = form.find('[name="image_height"]').val()
   width = form.find('[name="image_width"]').val()
   crop_x = form.find('[name="image_x"]').val()
