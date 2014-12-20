@@ -71,47 +71,10 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event.destroy
+    event = Event.find(params[:id])
+    event.destroy
     respond_to do |format|
       format.json { head :no_content }
     end
   end
-
-  def comments
-    @comments = @event.root_comments
-  end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event
-      @event = Event.where(id: params[:id]).first
-      if @event.blank?
-        redirect_to "/events/new"
-      end
-    end
-
-    def event_params
-      params.permit(:details,
-                    :user,
-                    :datetime,
-                    :name,
-                    :image,
-                    :url,
-                    :width,
-                    :height,
-                    :crop_x,
-                    :crop_y,
-                    :is_all_day,
-                    :time_format,
-                    :tv_time,
-                    :creation_timezone,
-                    :local_time,
-                    :local_date,
-                    :description,
-                    :have_i_upvoted,
-                    :country,
-                    :location_type,
-                    :subkast
-                   )
-    end
 end
