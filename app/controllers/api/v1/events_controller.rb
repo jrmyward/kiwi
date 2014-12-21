@@ -20,7 +20,7 @@ module Api
 
         event = Event.new
 
-        event.save_event(event_params)
+        event.update_attributes(event_params)
         event.save_image(image_params)
 
         event.save!

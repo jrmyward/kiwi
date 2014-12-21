@@ -165,25 +165,13 @@ class Event
     Reminder.where(event_id: id, user_id: user.id, time_to_event: interval).delete
   end
 
-  def save_event(params)
-    update_attribute(:name, params[:name])
-    update_attribute(:subkast, params[:subkast])
-    update_attribute(:country, params[:country])
-    update_attribute(:is_all_day, params[:is_all_day])
-    update_attribute(:location_type, params[:location_type])
-    update_attribute(:local_date, params[:local_date])
-    update_attribute(:local_time, params[:local_time])
-    update_attribute(:datetime, params[:datetime])
-    update_attribute(:time_format, params[:time_format])
-    update_attribute(:description, params[:description])
-    update_attribute(:user, params[:user])
-  end
-
   def save_image(params)
     update_attribute(:width, params[:width])
     update_attribute(:height, params[:height])
     update_attribute(:crop_x, params[:crop_x])
     update_attribute(:crop_y, params[:crop_y])
+
+    return image.reprocess! if params[:image].blank? && params[:url].blank?
 
     update_attribute(:image, params[:image]) if params[:image].present?
 

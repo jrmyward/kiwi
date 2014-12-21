@@ -97,7 +97,7 @@ saveEvent = (e) ->
   formData.append('description', description)
 
   xhr = new XMLHttpRequest()
-  xhr.open('POST', '/api/1/events', true)
+  xhr.open(form.data('method'), "/api/1/events/#{form.data('event-id')}", true)
   xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
 
   xhr.onload = (xhr_e) =>
