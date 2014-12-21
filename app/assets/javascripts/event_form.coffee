@@ -10,6 +10,26 @@ $ ->
   renderDateTimePicker()
   renderImageTrimmer()
 
+  $('form.event_form').validate()
+
+  jQuery.validator.addMethod('chosen', (value, element, arg) =>
+    value != 'Please select...'
+  , 'Value must be present.')
+
+  $('[name="name"]').rules('add', {
+    required: true,
+    messages: {
+      required: 'Event must have a name.'
+    }
+  })
+
+  $('[name="subkast"]').rules('add', {
+    chosen: true,
+    messages: {
+      chosen: 'Event must have a subkast.'
+    }
+  })
+
 refreshRemaningCount = ->
   val = $('input[name="name"]').val()
   remainingCount = 100 - val.length
@@ -58,6 +78,8 @@ renderDateTimePicker = ->
 saveEvent = (e) ->
   e.preventDefault()
   form = $('form.event_form')
+
+  return unless form.valid()
 
   saveContainer = form.find('.save-container')
 

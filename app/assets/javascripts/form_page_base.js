@@ -1,5 +1,6 @@
 //= require jquery
 //= require jquery_ujs
+//= require jquery.validate.min
 //= require underscore
 //= require bootstrap/tooltip
 //= require bootstrap/popover

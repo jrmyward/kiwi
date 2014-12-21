@@ -6,7 +6,7 @@
     <div class="form-group event_form_name">
       <div class="col-sm-3">
         <label class="control-label" for="name">Name of event</label></br>
-        <span class="error" name="name"></span>
+        <label id="name-error" class="error" for="name"></label>
       </div>
       <div class="col-sm-9">
         <input class="form-control" type="text" name="name" id="name" maxlength="100" value="<%= @event.name || '' %>"></input>
@@ -17,11 +17,11 @@
     <div class="form-group event_form_subkast">
       <div class="col-sm-3">
         <label class="control-label">Subkast</label><br />
-        <span class="error" data-field="subkast"></span>
+        <label id="subkast-error" class="error" for="subkast"></label>
       </div>
       <div class="col-sm-9">
-        <select class="form-control" name="subkast">
-          <option value="-">Please select...</option>
+        <select class="form-control" name="subkast" id="subkast">
+          <option>Please select...</option>
           <% Subkast.all.each do |subkast| %>
             <% if subkast.code == @event.subkast %>
               <option value="<%=subkast.code%>" selected><%=subkast.name%></option>

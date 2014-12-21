@@ -527,8 +527,10 @@ body.not-found {
   .row {
     margin-bottom: 35px;
   }
-  span.error {
+  label.error {
+    font-size: 12px;
     color: red;
+    font-weight: normal;
   }
 }
 .event {
