@@ -2,82 +2,46 @@ class FK.DatePicker.DatePickerView extends Marionette.ItemView
   className: 'date_picker'
   template: FK.Template('event_form_page/date_picker')
 
-  templateHelpers: =>
-    local_hour: => @model.local_hour()
-    local_minute: => @model.local_minute()
-    local_ampm: => @model.local_ampm()
-    local_date: => @model.fk_datetime().format('DD/MM/YYYY')
-
   events:
-    'change [name="date"],[name="hours"],[name="minutes"],[name="ampm"]': 'updateDateTime'
-    'change [name="time_format"]': 'updateTimeFormat'
-    'click .datepicker .day': 'updateDateTime'
-    'click [name="is_all_day"]': 'updateAllDay'
+    'click [name="all_day"]': 'updateAllDay'
+    'change [name="date"]': 'updateDate'
+    'change [name="hours"]': 'updateTime'
+    'change [name="minutes"]': 'updateTime'
+    'change [name="ampm"]': 'updateTime'
+    'click [name="time_format"]': 'updateFormat'
 
-  updateDateTime: =>
-    @datepicker.datepicker('hide')
-    date = @$('input[name=date]').val()
-    time = "#{@$('select[name=hours]').val()}:#{@$('select[name=minutes]').val()} #{@$('select[name=ampm]').val()}"
-    @model.moveToDateTime(date, time) if date and time
+  updateAllDay: (e) =>
+    @model.set('all_day', $(e.target).is(':checked'))
 
-  updateTimeFormat: =>
-    time_format = @$('input[name=time_format]:checked').val()
-    @model.set('time_format', time_format)
-    @updateDateTime()
+  updateDate: (e) =>
+    @model.set('date', $(e.target).val())
 
-  updateAllDay: =>
-    @updateDateTime()
-    is_all_day = @$('input[name=is_all_day]').prop('checked')
-    @model.set('is_all_day', is_all_day)
-    @toggleAllDay(is_all_day)
+  updateTime: =>
+    @model.set('hour', @$('[name="hours"]').val())
+    @model.set('minute', @$('[name="minutes"]').val())
+    @model.set('ampm', @$('[name="ampm"]').val())
+
+  updateFormat: =>
+    @model.set('format', @$('[name="time_format"]:checked').val())
 
   modelEvents:
-    'change:is_all_day': 'refreshAllDay'
-    'change:datetime':   'refreshTime'
-    'change:time_format':'refreshTimeFormat'
+    'change:all_day': 'refreshTimeSelectActive'
+    'change:hour change:minute change:ampm change:format': 'refreshTimeDisplay'
 
-  refreshAllDay: =>
-    selector = @$('input[name=time_format],select[name=hours],select[name=minutes],select[name=ampm],select[name=time_type]')
-    if @model.isAllDay()
-      selector.attr('disabled','disabled')
-      @$('.timedisplay').hide()
-      @$('[name="is_all_day"]').attr('checked', 'checked')
+  refreshTimeSelectActive: (model, all_day) =>
+    if all_day
+      @$('.all_day_toggle').css('display', 'none')
     else
-      selector.removeAttr('disabled')
-      @$('.timedisplay').show()
-      @$('[name="is_all_day"]').removeAttr('checked')
-    @toggleAllDay(@model.isAllDay())
+      @$('.all_day_toggle').css('display', 'block')
 
-  toggleAllDay: (is_all_day) =>
-    if is_all_day
-      @$el.addClass('all_day')
-    else
-      @$el.removeClass('all_day')
-
-  refreshTime: =>
-    return unless @model.has('datetime')
-    @refreshTimeDisplay()
-
-  refreshTimeDisplay: =>
-    return unless @model.has('datetime')
-    @$('.time-display-value').text(@model.get('time'))
-    @$('.status').text(@model.get('datetime').format('ddd MMM DD YYYY HH:mm:ss'))
-
-  refreshTimeFormat: =>
-    @$('[name="time_format"]').not('[value="' + @model.get('time_format') + '"]').removeAttr('checked', 'checked')
-    @$('[name="time_format"][value="' + @model.get('time_format') + '"]').attr('checked', 'checked')
-    @refreshTimeDisplay()
-    @refreshTimezone()
-
-  refreshTimezone: =>
-    name = if @model.get('time_format') is 'tv_show' then 'US Eastern Timezone' else 'Your timezone'
-    @$('.zone-display').text("(#{name.replace('_', ' ')})")
+  refreshTimeDisplay: (model) =>
+    @$('.time-display-value').text(model.timeDisplay())
 
   onRender: () =>
-    @refreshAllDay()
-    @refreshTime()
-    @refreshTimeFormat()
     @datepicker = @$('input[name="date"]').datepicker(
       format: 'dd/mm/yyyy'
     )
-    @updateDateTime()
+    @refreshTimeDisplay(@model)
+
+  onShow: () =>
+    @updateTime() unless @model.hasTime()

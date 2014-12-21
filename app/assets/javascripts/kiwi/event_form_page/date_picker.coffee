@@ -1,6 +1,6 @@
 class FK.DatePicker.DatePickerController extends Marionette.Controller
   initialize: (options) =>
-    @model = new FK.Models.Event
+    @model = new FK.DatePicker.DateTimeModel
     @view = new FK.DatePicker.DatePickerView(model: @model)
     @regions = new Marionette.RegionManager()
 
@@ -9,11 +9,27 @@ class FK.DatePicker.DatePickerController extends Marionette.Controller
     @regions.addRegion('spot', selector)
     @regions.get('spot').show(@view)
 
-  value: () =>
-    {
-      datetime: @model.get('datetime')
-      local_time: @model.get('local_time')
-      local_date: moment(@model.get('local_date')).format('YYYY-MM-DD')
-      time_format: @model.get('time_format')
-      is_all_day: @model.get('is_all_day')
-    }
+class FK.DatePicker.DateTimeModel extends Backbone.Model
+  defaults:
+    hour: ''
+    minute: ''
+    ampm: ''
+    date: null
+    all_day: false
+    format: ''
+
+  hasTime: () =>
+    @get('hour') isnt '' && @get('minute') isnt '' && @get('ampm') isnt ''
+
+  timeDisplay: () =>
+    return "#{@get('hour')}:#{@get('minute')} #{@get('ampm')}" if @get('format') is '' or @get('format') is 'recurring'
+
+    hour = parseInt(@get('hour'))
+    minute = parseInt(@get('minute'))
+
+    minute = "0#{minute}" if minute < 10
+
+    centralHour = hour - 1
+    centralHour = 12 if centralHour == 0
+
+    return "#{hour}:#{minute}/#{centralHour}:#{minute}c"

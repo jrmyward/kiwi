@@ -20,7 +20,7 @@ module Api
 
         event = Event.new
 
-        event.update_attributes(event_params)
+        event.save_event(event_params)
         event.save_image(image_params)
 
         event.save!
@@ -36,7 +36,7 @@ module Api
         error! :not_found if event.nil?
         error! :forbidden unless Ability.new(api_current_user).can? :update, event
 
-        event.update(event_params)
+        event.update_attributes(event_params)
         event.save_image(image_params)
 
         exposes(decorate_one(event))
