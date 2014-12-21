@@ -127,6 +127,22 @@ class Event
     Time.parse(local_date.to_s + " " + local_time)
   end
 
+  def local_date_with_slashes
+    local_date.strftime('%d/%m/%Y')
+  end
+
+  def local_hour
+    7
+  end
+
+  def local_minute
+    30
+  end
+
+  def local_ampm
+    'PM'
+  end
+
   def pretty_datetime
     get_local_datetime('America/New_York').strftime('%-d %B, %Y - %A, %l:%M %p')
   end

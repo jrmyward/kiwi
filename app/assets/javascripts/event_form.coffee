@@ -36,7 +36,23 @@ renderImageTrimmer = ->
     trimmer.setPosition(crop_x, crop_y)
 
 renderDateTimePicker = ->
+  elem = $('#datetime-region')
+
+  date = elem.data('date')
+  hour = elem.data('hour')
+  minute = elem.data('minute')
+  ampm = elem.data('ampm')
+  allDay = elem.data('all-day')
+  format = elem.data('format')
+  
   dateTimePicker = new FK.DatePicker.DatePickerController
+    date: date
+    hour: hour
+    minute: minute
+    ampm: ampm
+    all_day: allDay
+    format: format
+
   dateTimePicker.renderIn('#datetime-region')
 
 saveEvent = (e) ->

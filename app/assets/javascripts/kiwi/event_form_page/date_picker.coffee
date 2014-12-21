@@ -1,6 +1,7 @@
 class FK.DatePicker.DatePickerController extends Marionette.Controller
   initialize: (options) =>
-    @model = new FK.DatePicker.DateTimeModel
+    console.log(options)
+    @model = new FK.DatePicker.DateTimeModel(options)
     @view = new FK.DatePicker.DatePickerView(model: @model)
     @regions = new Marionette.RegionManager()
 

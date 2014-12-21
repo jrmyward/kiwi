@@ -66,7 +66,7 @@
         <span class="error" data-field="datetime"></span>
       </div>
       <div class="col-sm-9">
-        <div id="datetime-region"></div>
+        <div id="datetime-region" data-date="<%= @event.local_date_with_slashes %>" data-hour="<%= @event.local_hour %>" data-minute="<%= @event.local_minute %>" data-ampm="<%= @event.local_ampm %>" data-all-day="<%= @event.all_day? %>" data-format="<%= @event.time_format %>"></div>
       </div>
       <div class="clear"></div>
     </div>
