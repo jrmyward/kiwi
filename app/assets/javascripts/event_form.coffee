@@ -20,8 +20,20 @@ refreshLocationType = ->
   $('select[name="country"]').prop('disabled', location_type == 'international')
 
 renderImageTrimmer = ->
+  elem = $('#image-region')
+
+  url = elem.data('url')
+  width = elem.data('width')
+  crop_x = elem.data('crop-x')
+  crop_y = elem.data('crop-y')
+
   trimmer = new FK.ImageTrimmer.ImageTrimmerController
   trimmer.renderIn('#image-region')
+
+  if url && url isnt '/images/original/missing.png'
+    trimmer.newImage(url, 'reload')
+    trimmer.setWidth(width)
+    trimmer.setPosition(crop_x, crop_y)
 
 renderDateTimePicker = ->
   dateTimePicker = new FK.DatePicker.DatePickerController

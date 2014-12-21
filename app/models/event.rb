@@ -155,7 +155,7 @@ class Event
     crop_x = params[:crop_x]
     crop_y = params[:crop_y]
 
-    image = params[:image] if params[:image].present?
+    update_attribute(:image, params[:image]) if params[:image].present?
 
     image_from_url(params[:url]) if params[:url].present? && !params[:image].present?
   end

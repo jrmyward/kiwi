@@ -21,9 +21,9 @@ module Api
         event = Event.new
 
         event.update_attributes(event_params)
-        event.save_image(event_params)
+        event.save_image(image_params)
 
-        event.save
+        event.save!
 
         exposes(decorate_one(event))
       end
@@ -37,7 +37,7 @@ module Api
         error! :forbidden unless Ability.new(api_current_user).can? :update, event
 
         event.update(event_params)
-        event.save_image(event_params)
+        event.save_image(image_params)
 
         exposes(decorate_one(event))
       end
@@ -74,19 +74,25 @@ module Api
           json[:datetime] = ActiveSupport::TimeZone.new(params[:time_zone]).local_to_utc(datetime)
         end
 
-        json[:url] = params[:image_url]
-        json[:image] = params[:image]
-        json[:crop_x] = params[:crop_x]
-        json[:crop_y] = params[:crop_y]
-        json[:width] = params[:width]
-        json[:height] = params[:height]
-
         json[:time_format] = 'recurring' if params[:recurring].present?
         json[:time_format] = 'tv_show' if params[:eastern_tv_show].present?
 
         json[:description] = params[:description]
 
         json[:user] = api_current_user.username
+
+        json
+      end
+
+      def image_params
+        json = {}
+
+        json[:url] = params[:image_url]
+        json[:image] = params[:image]
+        json[:crop_x] = params[:crop_x]
+        json[:crop_y] = params[:crop_y]
+        json[:width] = params[:width]
+        json[:height] = params[:height]
 
         json
       end

@@ -24,7 +24,7 @@
         </div>
         <% if current_user.present? && @event.user == current_user.username %>
           <div class="event-tool-container">
-             <span class="event-tool" data-action="edit">(Edit my event)</span>
+            <%= link_to '(Edit my event)', edit_event_path(@event), class: 'event-tool' %>
           </div>
         <% end %>
         <% if current_user.present? && (current_user.username == @event.user || current_user.moderator?)  %>

@@ -64,10 +64,14 @@ class EventsController < ApplicationController
 
   def new
     authenticate_user!
+
+    @event = Event.new
   end
 
   def edit
     authenticate_user!
+
+    @event = Event.find(params[:id])
   end
 
   def destroy
