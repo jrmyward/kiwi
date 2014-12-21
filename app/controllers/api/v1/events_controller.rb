@@ -23,6 +23,8 @@ module Api
         event.update_attributes(event_params)
         event.save_image(image_params)
 
+        event.add_upvote(api_current_user)
+
         event.save!
 
         exposes(decorate_one(event))
