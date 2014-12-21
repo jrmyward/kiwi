@@ -27,6 +27,7 @@ class FK.DatePicker.DatePickerView extends Marionette.ItemView
   modelEvents:
     'change:all_day': 'refreshTimeSelectActive'
     'change:hour change:minute change:ampm change:format': 'refreshTimeShown'
+    'change:format': 'refreshTimezoneDisplay'
 
   refreshTimeSelectActive: (model, all_day) =>
     if all_day
@@ -44,6 +45,12 @@ class FK.DatePicker.DatePickerView extends Marionette.ItemView
   refreshTimeFormat: (model) =>
     @$("[name=\"time_format\"][value=\"#{model.get('format')}\"]").prop('checked', true)
 
+  refreshTimezoneDisplay: (model) =>
+    if model.get('format') is 'tv_show'
+      @$('.zone-display').text('(US Eastern Timezone)')
+    else
+      @$('.zone-display').text('(Your Timezone)')
+
   refreshTimeShown: (model) =>
     @$('.time-display-value').text(model.timeDisplay())
 
@@ -55,6 +62,7 @@ class FK.DatePicker.DatePickerView extends Marionette.ItemView
     @refreshTimeShown(@model)
     @refreshTime(@model)
     @refreshTimeFormat(@model)
+    @refreshTimezoneDisplay(@model)
 
   onShow: () =>
     @updateTime() unless @model.hasTime()
