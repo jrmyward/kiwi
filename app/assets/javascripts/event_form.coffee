@@ -59,13 +59,17 @@ saveEvent = (e) ->
   e.preventDefault()
   form = $('form.event_form')
 
+  saveContainer = form.find('.save-container')
+
+  saveContainer.html('<i class="fa fa-spinner fa-spin fa-3x"></i>')
+
   name = form.find('input[name="name"]').val()
   subkast = form.find('[name="subkast"]').val()
   location_type = form.find('[name="location_type"]:checked').val()
   country = form.find('[name="country"]').val()
   date = form.find('[name="date"]').val()
   time = "#{form.find('[name="hours"]').val()}:#{form.find('[name="minutes"]').val()}:00 #{form.find('[name="ampm"]').val()}"
-  all_day = form.find('[name="is_all_day"]').is(':checked')
+  all_day = form.find('[name="all_day"]').is(':checked')
   time_type = form.find('[name="time_format"]:checked').val()
   image = form.find('[type="file"]')[0].files[0]
   image_url = form.find('[name="image_url"]').val()
@@ -97,7 +101,11 @@ saveEvent = (e) ->
   formData.append('description', description)
 
   xhr = new XMLHttpRequest()
-  xhr.open(form.data('method'), "/api/1/events/#{form.data('event-id')}", true)
+  url = "/api/1/events"
+
+  url = "#{url}/#{form.data('event-id')}" if form.data('method') is 'PUT'
+
+  xhr.open(form.data('method'), url, true)
   xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
 
   xhr.onload = (xhr_e) =>

@@ -128,7 +128,7 @@ class Event
   end
 
   def local_date_with_slashes
-    local_date.strftime('%d/%m/%Y')
+    local_date.strftime('%d/%m/%Y') rescue ''
   end
 
   def local_hour
