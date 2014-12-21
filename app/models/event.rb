@@ -132,15 +132,15 @@ class Event
   end
 
   def local_hour
-    7
+    local_time.split(' ')[0].split(':')[0] rescue ''
   end
 
   def local_minute
-    30
+    local_time.split(' ')[0].split(':')[1] rescue ''
   end
 
   def local_ampm
-    'PM'
+    local_time.split(' ')[1] rescue ''
   end
 
   def pretty_datetime
