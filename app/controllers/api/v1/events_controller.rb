@@ -63,7 +63,9 @@ module Api
         json[:name] = params[:name]
         json[:subkast] = params[:subkast]
         json[:country] = params[:country]
-        json[:is_all_day] = params[:all_day]
+
+        json[:is_all_day] = false
+        json[:is_all_day] = params[:all_day] if params[:all_day].present?
 
         json[:location_type] = 'international' unless params[:country].present?
         json[:location_type] = 'national' if params[:country].present?
@@ -75,6 +77,8 @@ module Api
           datetime = DateTime.parse("#{params[:date]} #{params[:time]}")
           json[:datetime] = ActiveSupport::TimeZone.new(params[:time_zone]).local_to_utc(datetime)
         end
+
+        json[:time_format] = ''
 
         json[:time_format] = 'recurring' if params[:recurring].present?
         json[:time_format] = 'tv_show' if params[:eastern_tv_show].present?

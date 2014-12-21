@@ -31,8 +31,10 @@ class FK.DatePicker.DatePickerView extends Marionette.ItemView
   refreshTimeSelectActive: (model, all_day) =>
     if all_day
       @$('.all_day_toggle').css('display', 'none')
+      @$('[name="all_day"]').prop('checked', true)
     else
       @$('.all_day_toggle').css('display', 'block')
+      @$('[name="all_day"]').prop('checked', false)
 
   refreshTime: (model) =>
     @$('[name="hours"]').val(model.get('hour'))
@@ -49,6 +51,7 @@ class FK.DatePicker.DatePickerView extends Marionette.ItemView
     @datepicker = @$('input[name="date"]').datepicker(
       format: 'dd/mm/yyyy'
     )
+    @refreshTimeSelectActive(@model, @model.get('all_day'))
     @refreshTimeShown(@model)
     @refreshTime(@model)
     @refreshTimeFormat(@model)

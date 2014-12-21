@@ -2,10 +2,6 @@ class EventsController < ApplicationController
   authorize_resource :only => [:destroy, :create]
 
   def index
-    # Include reminders
-    # Include comment count
-    # Include image
-
     url_subkast = [Subkast.by_slug(params[:subkast_slug]).code] if params[:subkast_slug]
 
     if params[:country] && current_user
@@ -18,6 +14,7 @@ class EventsController < ApplicationController
     else
       @country = params[:country] || 'CA'
     end
+
 
     @subkasts = params[:subkasts] || url_subkast || Subkast.by_user(current_user).map(&:code)
     date = params[:date] || DateTime.now.beginning_of_day.to_s
