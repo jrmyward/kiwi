@@ -5,7 +5,7 @@
     <a class='event-image' href=""><img src='<%=event.image.url(:thumb)%>' /></a>
   </div>
   <div class='meta-container pull-left'>
-    <a class='event-name' href="<%=event_path(event)%>"><%=event.name%></a><span class="event-info"> - <%=event.formatted_time(@time_zone)%></span><br />
+    <a class='event-name' href="<%=event_path(event)%>"><%=event.name%></a><span class="event-info"> - <%=event.pretty_time(@time_zone)%></span><br />
     <span class='event-meta'>Added by <%=event.user%> - <%=event.full_subkast%> - <%= pluralize(event.comment_count, 'comment') %> - <%=event.location_type.capitalize %>
     </span>
   </div>

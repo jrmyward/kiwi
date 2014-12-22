@@ -14,7 +14,7 @@
       <div class="event-heading-container">
         <span class="event-title"><%= @event.name %></span>
         </br>
-        <span class="event-time-location"><% if (@event.location_type == 'national') %><%= @event.country %><% else %>Global<% end %>, <%= @event.pretty_datetime %></span></div>
+        <span class="event-time-location"><% if (@event.location_type == 'national') %><%= @event.country %><% else %>Global<% end %>, <%= @event.pretty_datetime(@timezone) %></span></div>
 
       <div class="event-tools-container">
         <span class="event-upvotes"><i id="upvotes-icon" class="glyphicon glyphicon-chevron-up"></i> <span class="upvote-counter"></span> upvotes</span>

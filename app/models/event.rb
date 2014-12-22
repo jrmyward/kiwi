@@ -120,7 +120,7 @@ class Event
       return local_datetime
     end
 
-    return Time.parse(tz.utc_to_local(datetime).strftime("%Y-%m-%d %H:%M:%S"))
+    return Time.parse(tz.utc_to_local(datetime.utc).strftime("%Y-%m-%d %H:%M:%S"))
   end
 
   def local_datetime
@@ -143,11 +143,11 @@ class Event
     local_time.split(' ')[1] rescue ''
   end
 
-  def pretty_datetime
-    get_local_datetime('America/New_York').strftime('%-d %B, %Y - %A, %l:%M %p')
+  def pretty_datetime(timezone)
+    get_local_datetime(timezone).strftime('%-d %B, %Y - %A, %l:%M %p')
   end
 
-  def formatted_time(timezone)
+  def pretty_time(timezone)
     return 'All Day' if is_all_day
     return get_local_datetime(timezone).strftime('%l:%M%P').strip if time_format == 'recurring' || time_format == ''
     return "#{get_local_datetime(timezone).strftime('%l:%M').strip}/#{(get_local_datetime(timezone) - 1.hour).strftime('%l:%M').strip}c"

@@ -57,6 +57,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @timezone = browser_timezone
   end
 
   def new
