@@ -65,6 +65,12 @@ class Comment
     'active'
   end
 
+  def template
+    return 'muted' if muted?
+    return 'deleted' if deleted?
+    'active'
+  end
+
   def new_comment(comment)
     comment.parent = self
   end
