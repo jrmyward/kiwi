@@ -4,7 +4,7 @@ module Api
       def create
         authenticate!
 
-        comment = Comment.where(id: params[:comment_id]).first
+        comment = Comment.find_by(id: params[:comment_id])
 
         error! :comment_not_found, metadata: comment_not_found if comment.nil?
         error! :comment_already_upvoted, metadata: comment_already_upvoted if comment.upvoted_by?(api_current_user)
@@ -17,7 +17,7 @@ module Api
       def destroy
         authenticate!
 
-        comment = Comment.where(id: params[:comment_id]).first
+        comment = Comment.find_by(id: params[:comment_id])
 
         error! :comment_not_found, metadata: comment_not_found if comment.nil?
         error! :comment_not_upvoted, metadata: comment_not_upvoted unless comment.upvoted_by?(api_current_user)

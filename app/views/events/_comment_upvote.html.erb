@@ -1,4 +1,8 @@
 <div class="up-vote">
-  <i class="fa fa-caret-up"></i>
-  <i class="fa fa-caret-down"></i>
+  <a class="comment-upvote" href="#" data-comment-id="<%= comment.id %>" data-method="<%= have_i_comment_upvoted?(comment) ? 'DELETE' : 'POST' %>">
+    <i class="fa fa-caret-up"></i>
+  </a>
+  <a class="comment-downvote" href="#" data-comment-id="<%= comment.id %>" data-method="<%= have_i_comment_downvoted?(comment) ? 'DELETE' : 'POST' %>">
+    <i class="fa fa-caret-down"></i>
+  </a>
 </div>

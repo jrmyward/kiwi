@@ -4,11 +4,12 @@ module Api
       def create
         error! :unauthenticated if api_current_user.nil?
 
-        comment = Comment.where(id: params[:comment_id]).first
+        comment = Comment.find_by(id: params[:comment_id])
         error! :not_found, metadata: comment_not_found if comment.nil?
 
         reply = comment.reply(params['message'], api_current_user)
 
+        CommentMailer.send_notifications(comment)
         exposes(decorate_one(reply))
       end
 
@@ -18,6 +19,7 @@ module Api
           error_description: 'Could not find the comment to reply to.'
         }
       end
+
     end
   end
 end

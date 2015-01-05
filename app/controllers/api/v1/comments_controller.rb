@@ -1,17 +1,20 @@
 module Api
   module V1
     class CommentsController < BaseController
-      before_action :get_event, only: [:index, :create]
       def index
+        get_event
         error! :event_not_found, metadata: event_not_found if @event.nil?
         expose(decorate(@event.root_comments))
       end
 
       def create
+        get_event
         error! :event_not_found, metadata: event_not_found if @event.nil?
         error! :unauthenticated if api_current_user.nil?
 
-        @event.comment(params['message'], api_current_user)
+        comment = @event.comment(params['message'], api_current_user)
+        CommentMailer.send_notifications(comment)
+
         expose(decorate(@event.root_comments))
       end
 
@@ -36,7 +39,7 @@ module Api
         json = {
           id: comment.id,
           message: comment.message,
-          by: comment.authored_by.username,
+          by: comment.authored_by_name,
           upvote_count: comment.upvote_count,
           downvote_count: comment.downvote_count
         }
@@ -47,8 +50,6 @@ module Api
 
         json
       end
-
-      private
 
       def get_event
         @event = Event.find_by(id: params[:event_id])

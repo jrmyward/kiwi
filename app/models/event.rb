@@ -95,7 +95,7 @@ class Event
       return tz.local_to_utc(local_datetime) if time_format == 'recurring'
 
       if time_format == 'tv_show'
-        tz = TZInfo::Timezone.get('America/New_York')
+        tz = TZInfo::Timezone.get(Event::DEFAULT_TIME_ZONE)
         return tz.local_to_utc(local_datetime)
       end
     else

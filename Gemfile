@@ -41,6 +41,8 @@ gem 'jquery-rails'
 gem 'therubyracer', platforms: :ruby
 gem 'less-rails'
 
+gem 'redcarpet'
+
 gem 'jbuilder', '~> 1.2'
 gem 'oj'
 gem 'paperclip', '~> 3.0'
