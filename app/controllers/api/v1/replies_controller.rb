@@ -4,7 +4,7 @@ module Api
       def create
         error! :unauthenticated if api_current_user.nil?
 
-        comment = Comment.find_by(id: params[:comment_id])
+        comment = Comment.where(id: params[:comment_id]).first
         error! :not_found, metadata: comment_not_found if comment.nil?
 
         reply = comment.reply(params['message'], api_current_user)

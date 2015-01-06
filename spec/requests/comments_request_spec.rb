@@ -7,6 +7,7 @@ describe 'Comments Requests' do
   let(:u4) { create :user }
   let(:u5) { create :user }
 
+  let!(:mrx) { create :user, username: 'mrx' }
   let(:event) { create :event }
 
   let!(:c1) { event.comment('Event looking good!', u1) }

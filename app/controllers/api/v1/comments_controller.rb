@@ -20,7 +20,7 @@ module Api
 
       def destroy
         authenticate!
-        comment = Comment.find_by(id: params[:id])
+        comment = Comment.where(id: params[:id]).first
 
         error! :not_found if comment.nil?
         error! :forbidden unless Ability.new(api_current_user).can? :destroy, comment
@@ -52,7 +52,7 @@ module Api
       end
 
       def get_event
-        @event = Event.find_by(id: params[:event_id])
+        @event = Event.where(id: params[:event_id]).first
       end
 
     end
