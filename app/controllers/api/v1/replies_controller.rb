@@ -9,6 +9,7 @@ module Api
 
         reply = comment.reply(params['message'], api_current_user)
 
+        CommentMailer.send_notifications(comment)
         exposes(decorate_one(reply))
       end
 
@@ -18,6 +19,7 @@ module Api
           error_description: 'Could not find the comment to reply to.'
         }
       end
+
     end
   end
 end

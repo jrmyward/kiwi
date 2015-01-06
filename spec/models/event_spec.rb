@@ -95,19 +95,19 @@ describe Event do
 
     describe 'friendly print' do
       it 'looks nice for all day events' do
-        expect(all_day_event.formatted_time('America/New_York')).to eq 'All Day'
+        expect(all_day_event.pretty_time('America/New_York')).to eq 'All Day'
       end
 
       it 'looks nice for tv show events' do
-        expect(tv_show_event.formatted_time('America/New_York')).to eq '6:00/5:00c'
+        expect(tv_show_event.pretty_time('America/New_York')).to eq '6:00/5:00c'
       end
 
       it 'looks nice for relative time events' do
-        expect(relative_time_event.formatted_time('America/New_York')).to eq '10:00pm'
+        expect(relative_time_event.pretty_time('America/New_York')).to eq '10:00pm'
       end
 
       it 'looks nice for recurring time events' do
-        expect(recurring_time_event.formatted_time('America/New_York')).to eq '6:00pm'
+        expect(recurring_time_event.pretty_time('America/New_York')).to eq '6:00pm'
       end
     end
   end

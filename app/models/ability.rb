@@ -15,7 +15,7 @@ class Ability
     end
 
     can :destroy, Comment do |comment|
-      comment.authored_by.username == user.username
+      comment.authored_by.username == user.username rescue false
     end
   end
 end

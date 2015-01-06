@@ -1,0 +1,30 @@
+<div id="c_<%= comment.id %>" data-comment-id="<%= comment.id %>" class="user-comment active col-md-12">
+  <div class="row">
+    <div class="info col-md-12">
+      <%= render partial: 'events/comment_upvote', locals: {comment: comment } %>
+      <span class="username"> <%= comment.authored_by.present? ? comment.authored_by.username : '' %> </span>
+      <div class="tools">
+        <span class="upvotes"><%= pluralize comment_netvotes(comment), 'upvote' %></span>
+        - <a href="#" data-comment-id="<%= comment.id %>" class="reply">Reply</a>
+        <% if can? :destroy, comment  %>
+          <% if comment.authored_by.present? && current_user.id == comment.authored_by.id %>
+            - <a href="#" data-event-id="<%= @event.id %>" data-comment-id="<%= comment.id %>" data-original-text="Delete" class="mute-delete">Delete</a>
+          <% else %>
+            - <a href="#" data-event-id="<%= @event.id %>" data-comment-id="<%= comment.id %>" data-original-text="Mute" class="mute-delete">Mute</a>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="comment-text"><%= md comment.message %></div>
+  </div>
+  <div class="row nested-comments">
+    <div class="col-md-12 replies-region">
+      <% comment.children.each do |child_comment| %>
+        <%= render partial: "events/comment_#{child_comment.template}", locals: {comment: child_comment } %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="replybox-region"></div>
+  </div>
+</div>

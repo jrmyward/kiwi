@@ -36,6 +36,10 @@ class Comment
     HipChatNotification.new_comment(comment)
   end
 
+  def authored_by_name
+    authored_by ? authored_by.username : 'noname'
+  end
+
   def delete(user)
     if owning_user?(user)
       self.deleted_by = user
@@ -62,6 +66,11 @@ class Comment
     return 'deleted' if deleted_by.kind_of? User
     return 'muted' if muted_by.kind_of? User
     return 'flagged' if flagged_by.size > 0
+    'active'
+  end
+
+  def template
+    return 'deleted' if deleted? || muted?
     'active'
   end
 

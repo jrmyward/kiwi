@@ -285,6 +285,7 @@ GEM
       ffi (>= 0.5.0)
     rdoc (4.1.1)
       json (~> 1.4)
+    redcarpet (3.2.2)
     ref (1.0.5)
     rocket_pants (1.10.0)
       actionpack (>= 3.0, < 5.0)
@@ -423,6 +424,7 @@ DEPENDENCIES
   puma
   puma_worker_killer
   rails (~> 4.0.3)
+  redcarpet
   rocket_pants
   rspec-rails
   sass-rails (~> 4.0.0)

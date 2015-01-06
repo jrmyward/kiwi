@@ -29,6 +29,7 @@ class Event
   field :location_type, type: String
   field :subkast, type: String
 
+
   has_many :reminders
   has_many :comments
 
@@ -44,6 +45,8 @@ class Event
     },
     :s3_protocol => :https,
     :processors => [:cropper]
+
+  DEFAULT_TIME_ZONE = 'America/New_York'
 
   after_create do |event|
     HipChatNotification.new_event(event)
@@ -92,7 +95,7 @@ class Event
       return tz.local_to_utc(local_datetime) if time_format == 'recurring'
 
       if time_format == 'tv_show'
-        tz = TZInfo::Timezone.get('America/New_York')
+        tz = TZInfo::Timezone.get(Event::DEFAULT_TIME_ZONE)
         return tz.local_to_utc(local_datetime)
       end
     else
@@ -109,6 +112,7 @@ class Event
   def get_local_datetime(timezone)
     return Time.parse(local_date.to_s) if is_all_day == true
 
+    timezone ||= Event::DEFAULT_TIME_ZONE
     tz = TZInfo::Timezone.get(timezone)
 
     if time_format == 'tv_show'

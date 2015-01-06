@@ -1,6 +1,6 @@
 class EventRepository
   def initialize(time_zone, country, subkasts = nil)
-    @time_zone = ActiveSupport::TimeZone.new(time_zone)
+    @time_zone = time_zone.present? ? ActiveSupport::TimeZone.new(time_zone) : ActiveSupport::TimeZone.new(Event::DEFAULT_TIME_ZONE)
     @country = country
     @subkasts = subkasts || Subkast.all.map(&:code)
   end

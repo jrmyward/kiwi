@@ -2,36 +2,28 @@ module Api
   module V1
     class CommentsController < BaseController
       def index
-        event = Event.where(id: params[:event_id]).first
-
-        error! :event_not_found, metadata: event_not_found if event.nil?
-
-        comments = decorate(event.root_comments)
-
-        expose(comments)
+        get_event
+        error! :event_not_found, metadata: event_not_found if @event.nil?
+        expose(decorate(@event.root_comments))
       end
 
       def create
-        event = Event.where(id: params[:event_id]).first
-
-        error! :event_not_found, metadata: event_not_found if event.nil?
+        get_event
+        error! :event_not_found, metadata: event_not_found if @event.nil?
         error! :unauthenticated if api_current_user.nil?
 
-        event.comment(params['message'], api_current_user)
+        comment = @event.comment(params['message'], api_current_user)
+        CommentMailer.send_notifications(comment)
 
-        comments = decorate(event.root_comments)
-
-        expose(comments)
+        expose(decorate(@event.root_comments))
       end
 
       def destroy
         authenticate!
-
         comment = Comment.where(id: params[:id]).first
 
         error! :not_found if comment.nil?
         error! :forbidden unless Ability.new(api_current_user).can? :destroy, comment
-
         comment.delete(api_current_user)
       end
 
@@ -47,7 +39,7 @@ module Api
         json = {
           id: comment.id,
           message: comment.message,
-          by: comment.authored_by.username,
+          by: comment.authored_by_name,
           upvote_count: comment.upvote_count,
           downvote_count: comment.downvote_count
         }
@@ -58,6 +50,11 @@ module Api
 
         json
       end
+
+      def get_event
+        @event = Event.where(id: params[:event_id]).first
+      end
+
     end
   end
 end

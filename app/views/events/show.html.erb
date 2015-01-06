@@ -1,3 +1,4 @@
+<%= javascript_include_tag "show_page_base" %>
 <div class="event-page col-sm-10">
   <div class="event-card row">
     <div class="event-image-container col-sm-7">
@@ -16,28 +17,59 @@
         </br>
         <span class="event-time-location"><% if (@event.location_type == 'national') %><%= @event.country %><% else %>Global<% end %>, <%= @event.pretty_datetime(@timezone) %></span></div>
 
-      <div class="event-tools-container">
-        <span class="event-upvotes"><i id="upvotes-icon" class="glyphicon glyphicon-chevron-up"></i> <span class="upvote-counter"></span> upvotes</span>
-        <div class="reminder-container">
-          <span class="glyphicon glyphicon-bell"></span>
-          <div class="sub-container"></div>
+        <div class="event-tools-container">
+          <span class="event-upvotes"><i id="upvotes-icon" class="glyphicon glyphicon-chevron-up"></i> <span class="upvote-counter"></span> upvotes</span>
+          <div class="reminder-container">
+            <span class="glyphicon glyphicon-bell"></span>
+            <div class="sub-container"></div>
+          </div>
+          <% if current_user.present? && @event.user == current_user.username %>
+            <div class="event-tool-container">
+              <%= link_to '(Edit my event)', edit_event_path(@event), class: 'event-tool' %>
+            </div>
+          <% end %>
+          <% if current_user.present? && (current_user.username == @event.user || current_user.moderator?)  %>
+            <div class="event-tool-container">
+               <span class="event-tool" data-action="destroy"></span>
+            </div>
+          <% end %>
         </div>
-        <% if current_user.present? && @event.user == current_user.username %>
-          <div class="event-tool-container">
-            <%= link_to '(Edit my event)', edit_event_path(@event), class: 'event-tool' %>
-          </div>
-        <% end %>
-        <% if current_user.present? && (current_user.username == @event.user || current_user.moderator?)  %>
-          <div class="event-tool-container">
-             <span class="event-tool" data-action="destroy"></span>
-          </div>
-        <% end %>
-      </div>
 
-      <div class="event-description-container">
-        <div class="event-description"><%= @event.description %></div>
-        <div class="event-submitter">(Submitted by <%= @event.user %>)</div>
+        <div class="event-description-container">
+          <div class="event-description"><%= @event.description %></div>
+          <div class="event-submitter">(Submitted by <%= @event.user %>)</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Comments</h3>
+      </div>
+    </div>
+    <div class="row comments" id="event-comments-region">
+      <div id="comment-new" class="col-md-12">
+      </div>
+      <div class="col-md-12">
+        <div class="row" id="comment-list">
+          <% @event.root_comments.each do |comment| %>
+            <%= render partial: "events/comment_#{comment.template}", locals: {comment: comment } %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
 </div>
+<script type="text/html" id="comment-new-template">
+  <form class="form-vertical" data-event-id="<%= @event.id.to_s %>" data-method="POST" >
+    <div class="form-group">
+      <textarea name="message" class="form-control" rows="2"></textarea>
+      <input type="hidden" name="parent_id"></input>
+    </div>
+    <div class="form-group pull-right">
+      <span class="markdown-supported">Markdown format supported</span>
+      <button class="btn btn-default btn-xs" data-action="cancel">CANCEL</button>
+      <button class="btn btn-default btn-xs" data-action="comment">ADD COMMENT</button>
+    </div>
+    <div class="clearfix"></div>
+  </form>
+</script>
