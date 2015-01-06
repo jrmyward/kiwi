@@ -17,5 +17,4 @@
 //= require kiwi
 //= require_tree ./utils
 //= require ./kiwi/models/event
-//= require_tree ./kiwi/templates/event_show_page
 //= require event_show_page
