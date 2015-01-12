@@ -51,6 +51,8 @@ $ ->
     newCount = eventBlock.children().length
 
     $(form).remove() if (newCount >= $(form).attr('total'))
+    $(form).find('input[name=skip]').val(newCount)
+
 
     renderUpvotes()
     renderReminders()
@@ -67,7 +69,7 @@ $ ->
 
   $('select[name="country"]').on('change', (e) =>
     country = $(e.target).val()
-    
+
     noCountryLocation = window.location.href.substring(0, window.location.href.indexOf('?'))
 
     window.location.href = "#{noCountryLocation}?country=#{country}"
