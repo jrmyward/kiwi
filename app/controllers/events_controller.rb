@@ -60,6 +60,13 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     @timezone = browser_timezone
+
+    # temporary for app backwards compatability
+
+    respond_to do |format|
+      format.json
+      format.html
+    end
   end
 
   def new
