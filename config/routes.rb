@@ -5,14 +5,11 @@ Kiwi::Application.routes.draw do
   }
 
   root :to => 'events#index'
-
   resources :users
 
   get '/events/on_date', to: 'events#on_date', as: 'events_on_date'
   get '/events/from_date', to: 'events#from_date', as: 'events_from_date'
   resources :events
-  resources :comments
-  resources :reminders
 
 
   get '/weekly', :to => 'weekly#index', :as => 'weekly'
@@ -44,10 +41,8 @@ Kiwi::Application.routes.draw do
   end
 
   get '/change_password',        :to => 'passwords#change_password',  :as => 'change_password'
-  get '/api/events/startupEvents',   :to => 'events#startup_events', :as => 'startup_events'
-  get '/api/events/eventsAfterDate', :to => 'events#events_after_date', :as => 'events_after_date'
-  get '/api/events/eventsByDate', :to => 'events#events_by_date', :as => 'events_by_date'
-  get '/api/events/:id/comments', :to => 'events#comments', :as => 'events_comments'
+  get '/api/events/eventsByDate', :to => 'backwards#by_date', :as => 'events_by_date'
+  get '/api/events/:id/comments', :to => 'backwards#comments', :as => 'events_comments'
 
   get '/:subkast_slug', to: 'events#index', as: :events_by_subkast
 end

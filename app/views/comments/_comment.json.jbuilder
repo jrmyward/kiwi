@@ -9,8 +9,8 @@ def json_comment_tree_builder( json, comment )
   json.set! :parent_id, comment.parent.id.to_s unless comment.parent.nil?
   json.set! :event_id, comment.event.id.to_s
   if user_signed_in?
-    json.set! :have_i_upvoted, comment.have_i_upvoted(current_user.username)
-    json.set! :have_i_downvoted, comment.have_i_downvoted(current_user.username)
+    json.set! :have_i_upvoted, comment.upvoted_by?(current_user)
+    json.set! :have_i_downvoted, comment.downvoted_by?(current_user)
   end
   json.replies comment.children do |reply|
     json_comment_tree_builder( json, reply)

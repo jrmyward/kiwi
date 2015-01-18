@@ -1,5 +1,7 @@
 namespace :db do
   task :seed do
+    User.delete_all
+    User.create(username: 'rails')
     Rake::Task['db:seed_subkasts'].invoke
     Rake::Task['db:seed_countries'].invoke
     Rake::Task['db:seed_events'].invoke
