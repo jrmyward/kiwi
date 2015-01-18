@@ -16,6 +16,8 @@ class EventsController < ApplicationController
     end
 
 
+    @subkast = Subkast.by_slug(params[:subkast_slug])
+
     @subkasts = params[:subkasts] || url_subkast || Subkast.by_user(current_user).map(&:code)
     date = params[:date] || DateTime.now.beginning_of_day.to_s
     @repository = EventRepository.new(browser_timezone, @country, @subkasts)

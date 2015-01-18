@@ -39,7 +39,14 @@
           <li><a href="<%=new_user_session_path %>" class="btn btn-alt">Log In</a></li>
         <% end %>
       </ul>
-      <div id="mobile-sidebar"></div>
     </div>
   </div>
+  <% if @subkast.present? %>
+    <div class="navbar navbar-fixed-top subkast-navbar">
+      <a class="subkast-header-link" href="/<%=@subkast.url%>">
+        <span class="subkast-header">forekast.com/</span>
+        <span class="subkast"><%=@subkast.name.downcase %></span>
+      </a>
+    </div>
+  <% end %>
 </div>

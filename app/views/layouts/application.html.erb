@@ -4,10 +4,15 @@
 <!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
 <!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html class=""> <!--<![endif]-->
+
+  <% px = "60" %>
+  <% if @subkast.present?
+    px = "90"
+  end %>
   <head>
     <%= render :partial => 'layouts/head_section' %>
   </head>
-  <body style="margin-top: 60px">
+  <body style="margin-top: <%=px%>px">
     <%= render :partial => 'layouts/navbar' %>
     <%= yield %>
     <%= render :partial => 'layouts/facebook' %>
