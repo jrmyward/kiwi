@@ -40,6 +40,36 @@ class EventRepository
     events_by_range(from_date, to_date, how_many_events)
   end
 
+  # temporary implementation for backwards compatibility
+  def self.events_on_date_by_offset(datetime, zone_offset, country, subkasts, how_many, skip)
+    start_date = datetime.beginning_of_day
+    end_date = start_date + 1.day
+
+    utc_start_datetime = datetime - zone_offset.minutes
+    utc_end_datetime = datetime + 1.day
+
+    events = Event.any_of(
+      { is_all_day: false, time_format: '', datetime: (utc_start_datetime..utc_end_datetime), location_type: 'international' },
+      { is_all_day: false, time_format: '', datetime: (utc_start_datetime..utc_end_datetime), location_type: 'national', country: country },
+      { is_all_day: false, time_format: 'recurring', local_date: (start_date..end_date), location_type: 'international' },
+      { is_all_day: false, time_format: 'recurring', local_date: (start_date..end_date), location_type: 'national', country: country },
+      { is_all_day: false, time_format: 'tv_show', local_date: (start_date..end_date), location_type: 'international' },
+      { is_all_day: false, time_format: 'tv_show', local_date: (start_date..end_date), location_type: 'national', country: country },
+      { is_all_day: true, local_date: (start_date..end_date), location_type: 'international' },
+      { is_all_day: true, local_date: (start_date..end_date), location_type: 'national', country: country }
+    ).any_in({ subkast: subkasts }).to_a
+
+
+    sortedEvents = events.sort_by { |event| event.id }.sort_by { |event| - (event.upvote_count.nil? ? 0 : event.upvote_count) }
+    how_many = sortedEvents.size if how_many == 0
+
+    return [] if skip > sortedEvents.size
+
+    out = sortedEvents.slice(skip, how_many)
+
+    out
+  end
+
   private
 
   def events_by_range(start_date, end_date, how_many = 0, skip = 0)
