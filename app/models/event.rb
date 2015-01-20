@@ -53,6 +53,14 @@ class Event
     end
   end
 
+  after_save do |event|
+    return if event.reminders.blank?
+    event.reminders.each do |r|
+      r.refresh_send_at
+      r.save
+    end
+  end
+
   def reminders_for_user(user)
     reminders.where(user: user)
   end
