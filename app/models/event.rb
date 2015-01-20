@@ -53,8 +53,7 @@ class Event
     end
   end
 
-  after_save do
-    return if reminders.blank?
+  def refresh_reminders
     reminders.each do |r|
       r.refresh_send_at
       r.save
