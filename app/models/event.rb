@@ -53,9 +53,9 @@ class Event
     end
   end
 
-  after_save do |event|
-    return if event.reminders.blank?
-    event.reminders.each do |r|
+  after_save do
+    return if reminders.blank?
+    reminders.each do |r|
       r.refresh_send_at
       r.save
     end
