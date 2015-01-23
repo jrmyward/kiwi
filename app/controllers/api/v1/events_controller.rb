@@ -112,7 +112,7 @@ module Api
         json['international'] = true if event.international?
         json['country'] = event.country if event.national?
         json['date'] = event.local_date if event.all_day?
-        json['datetime'] = event.get_assumed_time.strftime('%Y-%m-%dT%H:%M:%S') unless event.all_day?
+        json['datetime'] = event.get_local_datetime(params[:time_zone]).strftime('%Y-%m-%dT%H:%M:%S') unless event.all_day?
         json['all_day'] = true if event.all_day?
         json['recurring'] = true if event.recurring?
         json['eastern_tv_show'] = true if event.tv_show?

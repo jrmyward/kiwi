@@ -55,7 +55,7 @@ describe 'Events Requests' do
       expect(resp[2]['name']).to eq 'E2'
       expect(resp[2]['subkast']).to eq 'TV'
       expect(resp[2]['country']).to eq 'CA'
-      expect(resp[2]['datetime']).to eq '2014-09-15T23:30:00'
+      expect(resp[2]['datetime']).to eq '2014-09-15T19:30:00'
       expect(resp[2]['eastern_tv_show']).to eq true
       expect(resp[2]['added_by']).to eq 'mrx'
       expect(resp[2]['description']).to eq 'This should be interesting.'
@@ -66,7 +66,7 @@ describe 'Events Requests' do
       expect(resp[3]['name']).to eq 'E4'
       expect(resp[3]['subkast']).to eq 'ST'
       expect(resp[3]['country']).to eq 'CA'
-      expect(resp[3]['datetime']).to eq '2014-09-15T12:00:00'
+      expect(resp[3]['datetime']).to eq '2014-09-15T08:00:00'
       expect(resp[3]['relative']).to eq true
       expect(resp[3]['added_by']).to eq 'mrx'
       expect(resp[3]['description']).to eq 'This should be exciting!'
@@ -107,7 +107,7 @@ describe 'Events Requests' do
       expect(resp[2]['name']).to eq 'E7'
       expect(resp[2]['subkast']).to eq 'TV'
       expect(resp[2]['country']).to eq 'CA'
-      expect(resp[2]['datetime']).to eq '2014-09-24T23:30:00'
+      expect(resp[2]['datetime']).to eq '2014-09-24T19:30:00'
       expect(resp[2]['eastern_tv_show']).to eq true
       expect(resp[2]['added_by']).to eq 'mrx'
       expect(resp[2]['description']).to eq 'This should be interesting.'
@@ -129,7 +129,7 @@ describe 'Events Requests' do
       expect(resp[4]['name']).to eq 'E9'
       expect(resp[4]['subkast']).to eq 'ST'
       expect(resp[4]['country']).to eq 'CA'
-      expect(resp[4]['datetime']).to eq '2014-09-26T12:00:00'
+      expect(resp[4]['datetime']).to eq '2014-09-26T08:00:00'
       expect(resp[4]['relative']).to eq true
       expect(resp[4]['added_by']).to eq 'mrx'
       expect(resp[4]['description']).to eq 'This should be exciting!'
@@ -201,7 +201,7 @@ describe 'Events Requests' do
         expect(resp['name']).to eq 'Hangout with Harper'
         expect(resp['subkast']).to eq 'EDU'
         expect(resp['country']).to eq 'CA'
-        expect(resp['datetime']).to eq '2014-07-01T23:00:00'
+        expect(resp['datetime']).to eq '2014-07-01T19:00:00'
         expect(resp['description']).to eq 'Celebration of Canada\'s birthday!'
         expect(resp['added_by']).to eq u1.username
 
@@ -266,7 +266,7 @@ describe 'Events Requests' do
         expect(resp['name']).to eq 'Hockey Night in Canada'
         expect(resp['subkast']).to eq 'SP'
         expect(resp['country']).to eq 'CA'
-        expect(resp['datetime']).to eq '2014-07-01T23:00:00'
+        expect(resp['datetime']).to eq '2014-07-01T19:00:00'
         expect(resp['eastern_tv_show']).to be
         expect(resp['description']).to eq 'With George Strombolo...'
         expect(resp['added_by']).to eq u1.username
