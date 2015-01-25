@@ -53,6 +53,13 @@ class Event
     end
   end
 
+  def refresh_reminders
+    reminders.each do |r|
+      r.refresh_send_at
+      r.save
+    end
+  end
+
   def reminders_for_user(user)
     reminders.where(user: user)
   end

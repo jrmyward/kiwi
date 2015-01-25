@@ -83,6 +83,7 @@ class EventsController < ApplicationController
 
     if @event.user == current_user.username
       @event.update_attributes(params)
+      @event.refresh_reminders
     end
 
     if @event.is_all_day == "true" or @event.is_all_day == true
