@@ -25,12 +25,33 @@ $ ->
   renderUpvotes()
   renderReminders()
 
+  $('.event-info-container').on('click', 'a.mute-delete', deleteEventPrep)
+
   $('#comment-new').html($('#comment-new-template').html())
   $('#event-comments-region').on('click', '[data-action="comment"]', comment)
   $('#event-comments-region').on('click', 'a.reply', replyComment)
   $('#event-comments-region').on('click','a.mute-delete', deletePrep)
   $('#event-comments-region').on('click','a.comment-upvote', upvoteComment)
   $('#event-comments-region').on('click','a.comment-downvote', downvoteComment)
+
+deleteEventPrep = (e) ->
+  e.stopPropagation()
+  e.preventDefault()
+  target = $(e.currentTarget)
+  if target.text() != "Confirm?"
+    target.addClass('btn btn-danger btn-xs')
+    target.text('Confirm?')
+    _.delay(->
+      target.removeClass('btn btn-danger btn-xs')
+      target.text(target.data('original-text'))
+    , 5000)
+  else
+    $.ajax({
+      method: 'delete',
+      url: "/events/#{target.data('event-id')}",
+      success: () =>
+        window.location = '/events'
+    })
 
 upvoteComment = (e) ->
   voteComment e, 'upvote'

@@ -17,4 +17,8 @@ module ApplicationHelper
     return 0 if net < 0
     return net
   end
+
+  def delete_event_text
+    "(Delete #{(current_user == @event.user) ? 'my' : ''} event)"
+  end
 end
