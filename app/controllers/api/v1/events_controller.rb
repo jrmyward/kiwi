@@ -123,6 +123,7 @@ module Api
         json['all_day'] = true if event.all_day?
         json['recurring'] = true if event.recurring?
         json['eastern_tv_show'] = true if event.tv_show?
+        json['eastern_tv_time'] = event.tv_time if event.tv_show?
         json['relative'] = true if event.relative?
         json['added_by'] = event.user
         json['description'] = event.description

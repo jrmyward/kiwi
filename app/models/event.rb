@@ -200,6 +200,10 @@ class Event
     return "#{get_local_datetime(timezone).strftime('%l:%M').strip}/#{(get_local_datetime(timezone) - 1.hour).strftime('%l:%M').strip}c"
   end
 
+  def tv_time
+    "#{get_local_datetime('America/New_York').strftime('%l:%M').strip}/#{(get_local_datetime('America/New_York') - 1.hour).strftime('%l:%M').strip}c"
+  end
+
   def reminders_for_user(user)
     reminders.where(user: user)
   end

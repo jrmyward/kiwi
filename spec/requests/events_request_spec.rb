@@ -57,6 +57,7 @@ describe 'Events Requests' do
       expect(resp[2]['country']).to eq 'CA'
       expect(resp[2]['datetime']).to eq '2014-09-15T19:30:00'
       expect(resp[2]['eastern_tv_show']).to eq true
+      expect(resp[2]['eastern_tv_time']).to eq '7:30/6:30c'
       expect(resp[2]['added_by']).to eq 'mrx'
       expect(resp[2]['description']).to eq 'This should be interesting.'
       expect(resp[2]['upvotes_url']).to eq "/api/1/events/#{e2.id}/upvote"
@@ -109,6 +110,7 @@ describe 'Events Requests' do
       expect(resp[2]['country']).to eq 'CA'
       expect(resp[2]['datetime']).to eq '2014-09-24T19:30:00'
       expect(resp[2]['eastern_tv_show']).to eq true
+      expect(resp[2]['eastern_tv_time']).to eq '7:30/6:30c'
       expect(resp[2]['added_by']).to eq 'mrx'
       expect(resp[2]['description']).to eq 'This should be interesting.'
       expect(resp[2]['upvotes_url']).to eq "/api/1/events/#{e7.id}/upvote"
@@ -291,6 +293,7 @@ describe 'Events Requests' do
         expect(resp['country']).to eq 'CA'
         expect(resp['datetime']).to eq '2014-07-01T19:00:00'
         expect(resp['eastern_tv_show']).to be
+        expect(resp['eastern_tv_time']).to eq '7:00/6:00c'
         expect(resp['description']).to eq 'With George Strombolo...'
         expect(resp['added_by']).to eq u1.username
 
