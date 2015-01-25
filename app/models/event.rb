@@ -87,6 +87,17 @@ class Event
     Subkast.by_code(subkast).name
   end
 
+  def refresh_reminders
+    reminders.each do |r|
+      r.refresh_send_at
+      r.save
+    end
+  end
+
+  def reminders_for_user(user)
+    reminders.where(user: user)
+  end
+
   def get_utc_datetime(timezone)
     if is_all_day == true or time_format == 'recurring' or time_format == 'tv_show'
       tz = TZInfo::Timezone.get(timezone)

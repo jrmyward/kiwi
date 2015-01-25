@@ -40,6 +40,7 @@ module Api
 
         event.update_attributes(event_params)
         event.save_image(image_params)
+        event.refresh_reminders
 
         exposes(decorate_one(event))
       end
