@@ -32,7 +32,7 @@ class FK.UpvoteCounterView extends Marionette.ItemView
 
   tooltip: () =>
     return if @model.get('logged_in')
-    @$el.tooltip(title: 'Login to upvote.')
+    @$('i').tooltip(title: 'Login to upvote.')
 
   onShow: () =>
     @tooltip()

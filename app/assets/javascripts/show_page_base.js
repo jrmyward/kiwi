@@ -16,5 +16,8 @@
 //= require_tree ./config
 //= require kiwi
 //= require_tree ./utils
-//= require ./kiwi/models/event
+//= require_tree ./kiwi/templates/components
+//= require_tree ./kiwi/front_page
+//= require_tree ./kiwi/models
+//= require_tree ./kiwi/components
 //= require event_show_page
