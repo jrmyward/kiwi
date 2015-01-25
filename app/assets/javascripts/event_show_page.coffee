@@ -23,6 +23,7 @@ renderReminders = () ->
 
 $ ->
   renderUpvotes()
+  renderReminders()
 
   $('#comment-new').html($('#comment-new-template').html())
   $('#event-comments-region').on('click', '[data-action="comment"]', comment)
