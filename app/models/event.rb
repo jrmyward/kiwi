@@ -59,12 +59,26 @@ class Event
     end
   end
 
+  def country_name
+    Country.find_by(code: country).en_name
+  end
+
   def national?
     location_type == 'national'
   end
 
   def international?
     location_type == 'international'
+  end
+
+  def location_string
+    return 'National' if national?
+    return 'Global' if international?
+  end
+
+  def location
+    return 'Global' if international?
+    return country_name
   end
 
   def all_day?
@@ -160,6 +174,24 @@ class Event
 
   def pretty_datetime(timezone)
     get_local_datetime(timezone).strftime('%-d %B, %Y - %A, %l:%M %p')
+  end
+
+  def datetime_string(timezone)
+    datetime = get_local_datetime(timezone)
+    return datetime.strftime("%A, %b %-d#{date_suffix(datetime)} %Y, All Day") if all_day?
+    datetime.strftime("%A, %b %-d#{date_suffix(datetime)} %Y, %l:%M %p")
+  end
+
+  def date_suffix(datetime)
+    date = datetime.day
+
+    digit = date % 10
+
+    return 'st' if digit == 1
+    return 'nd' if digit == 2
+    return 'rd' if digit == 3
+
+    'th'
   end
 
   def pretty_time(timezone)
