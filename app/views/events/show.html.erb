@@ -25,9 +25,11 @@
               <%= link_to '(Edit my event)', edit_event_path(@event), class: 'event-tool' %>
             </div>
           <% end %>
-          <div class="event-tool-container">
-            <a class="mute-delete event-tool" data-original-text="<%= delete_event_text %>" data-event-id="<%= @event.id %>"><%=delete_event_text%></a>
-          </div>
+          <% if current_user.present? && @event.user == current_user.username %>
+            <div class="event-tool-container">
+              <a class="mute-delete event-tool" data-original-text="<%= delete_event_text %>" data-event-id="<%= @event.id %>"><%=delete_event_text%></a>
+            </div>
+          <% end %>
         </div>
 
         <div class="event-description-container">
