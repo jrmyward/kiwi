@@ -19,7 +19,7 @@ describe 'Events Requests' do
 
     let!(:e6) { create :event, name: 'E6', local_date: DateTime.parse("Sep 23rd, 2014").to_date, is_all_day: true, upvote_names: ['v1', 'v2', 'v3', 'v4' ] }
     let!(:e7) { create :event, name: 'E7', local_date: DateTime.parse("Sep 24th, 2014").to_date, local_time: "7:30 PM", time_format: 'tv_show', upvote_names: ['v1', 'v2'], subkast: 'TV', description: 'This should be interesting.' }
-    let!(:e8) { create :event, name: 'E8', local_date: DateTime.parse("Sep 25th, 2014").to_date, local_time: "2:30 PM", time_format: 'recurring', upvote_names: ['v1', 'v2', 'v3'], location_type: 'international' }
+    let!(:e8) { create :event, name: 'E8', local_date: DateTime.parse("Sep 25th, 2014").to_date, local_time: "2:30 PM", time_format: 'recurring', upvote_names: ['v1', 'v2', 'v3'], subkast: 'TV', location_type: 'international' }
     let!(:e9) { create :event, name: 'E9', datetime: DateTime.parse("Sep 26th, 2014 12:00 PM"), local_date: DateTime.parse("Sep 26th, 2014").to_date }
 
 
@@ -118,7 +118,7 @@ describe 'Events Requests' do
       expect(resp[2]['reminders_url']).to eq "/api/1/events/#{e7.id}/reminders"
 
       expect(resp[3]['name']).to eq 'E8'
-      expect(resp[3]['subkast']).to eq 'ST'
+      expect(resp[3]['subkast']).to eq 'TV'
       expect(resp[3]['international']).to be
       expect(resp[3]['datetime']).to eq '2014-09-25T14:30:00'
       expect(resp[3]['recurring']).to eq true
@@ -138,6 +138,38 @@ describe 'Events Requests' do
       expect(resp[4]['upvotes_url']).to eq "/api/1/events/#{e9.id}/upvote"
       expect(resp[4]['comments_url']).to eq "/api/1/events/#{e9.id}/comments"
       expect(resp[4]['reminders_url']).to eq "/api/1/events/#{e9.id}/reminders"
+    end
+
+    it 'filters by subkast and returns only matching events' do
+      get '/api/1/events', { after_date: '2014-09-22', time_zone: 'America/New_York', country: 'CA', subkast: 'TV' }
+
+      expect(response.status).to eq 200
+
+      resp = JSON.parse(response.body)['response']
+
+      expect(resp[0]['name']).to eq 'E7'
+      expect(resp[0]['subkast']).to eq 'TV'
+      expect(resp[0]['country']).to eq 'CA'
+      expect(resp[0]['datetime']).to eq '2014-09-24T19:30:00'
+      expect(resp[0]['eastern_tv_show']).to eq true
+      expect(resp[0]['eastern_tv_time']).to eq '7:30/6:30c'
+      expect(resp[0]['added_by']).to eq 'mrx'
+      expect(resp[0]['description']).to eq 'This should be interesting.'
+      expect(resp[0]['upvotes_url']).to eq "/api/1/events/#{e7.id}/upvote"
+      expect(resp[0]['comments_url']).to eq "/api/1/events/#{e7.id}/comments"
+      expect(resp[0]['reminders_url']).to eq "/api/1/events/#{e7.id}/reminders"
+
+      expect(resp[1]['name']).to eq 'E8'
+      expect(resp[1]['subkast']).to eq 'TV'
+      expect(resp[1]['international']).to be
+      expect(resp[1]['datetime']).to eq '2014-09-25T14:30:00'
+      expect(resp[1]['recurring']).to eq true
+      expect(resp[1]['added_by']).to eq 'mrx'
+      expect(resp[1]['description']).to eq 'This should be exciting!'
+      expect(resp[1]['upvotes_url']).to eq "/api/1/events/#{e8.id}/upvote"
+      expect(resp[1]['comments_url']).to eq "/api/1/events/#{e8.id}/comments"
+      expect(resp[1]['reminders_url']).to eq "/api/1/events/#{e8.id}/reminders"
+
     end
   end
 

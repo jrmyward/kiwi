@@ -2,7 +2,11 @@ module Api
   module V1
     class EventsController < BaseController
       def index
-        repo = EventRepository.new(params[:time_zone], params[:country])
+        if params[:subkast].present?
+          repo = EventRepository.new(params[:time_zone], params[:country], [params[:subkast]])
+        else
+          repo = EventRepository.new(params[:time_zone], params[:country])
+        end
 
         if params[:on_date]
           events = repo.events_on_date(params[:on_date])
