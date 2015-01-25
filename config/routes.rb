@@ -20,7 +20,7 @@ Kiwi::Application.routes.draw do
 
   namespace :api do
     api version: 1, module: 'v1' do
-      resources :events, only: [:index, :create, :update, :destroy] do
+      resources :events, only: [:index, :show, :create, :update, :destroy] do
         resources :upvote, only: [:index, :create]
         delete 'upvote', to: 'upvote#destroy'
 

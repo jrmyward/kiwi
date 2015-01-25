@@ -139,6 +139,29 @@ describe 'Events Requests' do
     end
   end
 
+  describe 'GET /events/{id}' do
+    let!(:event) { create :event, name: 'Event X', datetime: DateTime.parse("Sep 15th, 2014 12:00 PM") }
+
+    it 'reponds wtih the requested event and a 200 status code' do
+      get "/api/1/events/#{event.id}"
+
+      expect(response.code).to eq '200'
+
+      resp = JSON.parse(response.body)['response']
+
+      expect(resp['name']).to eq 'Event X'
+      expect(resp['subkast']).to eq 'ST'
+      expect(resp['country']).to eq 'CA'
+      expect(resp['datetime']).to eq '2014-09-15T08:00:00'
+      expect(resp['relative']).to eq true
+      expect(resp['added_by']).to eq 'mrx'
+      expect(resp['description']).to eq 'This should be exciting!'
+      expect(resp['upvotes_url']).to eq "/api/1/events/#{event.id}/upvote"
+      expect(resp['comments_url']).to eq "/api/1/events/#{event.id}/comments"
+      expect(resp['reminders_url']).to eq "/api/1/events/#{event.id}/reminders"
+    end
+  end
+
   describe 'POST /events' do
 
     context 'signed in' do

@@ -15,6 +15,12 @@ module Api
         exposes(resp)
       end
 
+      def show
+        event = Event.find(params[:id])
+
+        exposes(decorate_one(event))
+      end
+
       def create
         authenticate!
 
