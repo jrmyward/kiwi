@@ -1,0 +1,9 @@
+<% if (upvoted) { %>
+  <i class="glyphicon glyphicon-ok small"></i>
+<% } else { %>
+  <i class="glyphicon glyphicon-chevron-up small"></i>
+<% } %>
+<div class="inline-text inline">
+  <div class="counter inline"><%= upvote_count %></div>
+  <div class="inline"><b>upvotes</b></div>
+</div>

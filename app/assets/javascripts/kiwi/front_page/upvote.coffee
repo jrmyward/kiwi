@@ -1,7 +1,12 @@
 class FK.UpvoteCounterComponent extends Marionette.Controller
   initialize: (opts) =>
-    @model = new FK.UpvoteCounter(opts)
-    @view = new FK.UpvoteCounterView(model: @model)
+    model = _.omit(opts, 'inline')
+    @model = new FK.UpvoteCounter(model)
+
+    viewOpts = _.pick(opts, 'inline')
+    viewOpts = _.extend(viewOpts, { model: @model })
+
+    @view = new FK.UpvoteCounterView(viewOpts)
     @regions = new Marionette.RegionManager()
 
     @view.on 'hide', () =>
@@ -15,6 +20,13 @@ class FK.UpvoteCounterComponent extends Marionette.Controller
 
 class FK.UpvoteCounterView extends Marionette.ItemView
   template: FK.Template('components/upvote')
+  className: 'upvote-counter black'
+
+  getTemplate: () =>
+    if (@inline)
+      return FK.Template('components/inline_upvote')
+    else
+      return FK.Template('components/upvote')
 
   events:
     'click .glyphicon-chevron-up': 'upvote'
@@ -24,6 +36,9 @@ class FK.UpvoteCounterView extends Marionette.ItemView
     'change:upvote_count': 'render'
     'change:upvoted': 'render'
 
+  initialize: (opts) =>
+    @inline = opts.inline
+
   upvote: =>
     @model.upvote()
 
@@ -32,7 +47,7 @@ class FK.UpvoteCounterView extends Marionette.ItemView
 
   tooltip: () =>
     return if @model.get('logged_in')
-    @$('i').tooltip(title: 'Login to upvote.')
+    @$el.tooltip(title: 'Login to upvote.')
 
   onShow: () =>
     @tooltip()

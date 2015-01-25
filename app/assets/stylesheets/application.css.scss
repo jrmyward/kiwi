@@ -98,6 +98,10 @@
   margin-right: 0;
 }
 
+div.inline {
+  display: inline-block;
+}
+
 /* USERVOICE */
 
 a.uservoice {
@@ -459,38 +463,10 @@ body.not-found {
   }
   .upvote-container {
     height: 60px;
-    margin-right: 14px;
     width: 20px;
-    color: #666;
-    text-align: center;
-    cursor: pointer;
-    &:hover {
-      color: #111;
-    }
-    i {
-      padding-top: 5px;
-      cursor: pointer;
-      text-align: center;
-      &.glyphicon-ok {
-        font-size: 15px;
-        color: $active;
-      }
-      &.glyphicon-remove {
-        color: #EB3D00;
-        font-size: 16px;
-        line-height: 0.9;
-      }
-      &.fa-caret-up {
-        font-size: 16px;
-      }
-    }
-    .upvote-counter {
-      font-size: 18px;
-      line-height: 1;
-      font-weight: 700;
-      text-align: center;
-    }
+    margin-right: 14px;
   }
+
   img {
     cursor: pointer;
   }
@@ -520,6 +496,49 @@ body.not-found {
     }
   }
 }
+
+.upvote-counter {
+  color: #666;
+  text-align: center;
+  cursor: pointer;
+  font-size: 18px;
+
+  .inline-text {
+    color: black;
+    font-size: 14px;
+  }
+
+  .small {
+    font-size: 14px;
+  }
+
+  &:hover {
+    color: #111;
+  }
+  i {
+    padding-top: 5px;
+    cursor: pointer;
+    text-align: center;
+    &.glyphicon-ok {
+      font-size: 15px;
+      color: $active;
+    }
+    &.glyphicon-remove {
+      color: #EB3D00;
+      font-size: 16px;
+      line-height: 0.9;
+    }
+    &.fa-caret-up {
+      font-size: 16px;
+    }
+  }
+  .counter {
+    line-height: 1;
+    font-weight: 700;
+    text-align: center;
+  }
+}
+
 .event-form {
   width: 925px;
   h3 {

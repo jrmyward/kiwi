@@ -1,7 +1,7 @@
 <%= javascript_include_tag "show_page_base" %>
 <div class="event-page col-sm-10">
   <div class="event-card row">
-    <div class="event-image-container col-sm-7">
+    <div class="event-image-container col-sm-6">
       <img src="<%=@event.image.url(:medium)%>" />
       <div class="event-likes-container">
         <div class="fb-like" data-layout="button" data-action="like" data-width="98" data-height="20" style="width:98px; float: left;"></div>
@@ -17,12 +17,9 @@
         </br>
         <span class="event-time-location"><%= @event.location %>, <%= @event.datetime_string(@timezone) %></span></div>
 
-        <div class="event-tools-container">
-          <div class="pull-left" data-upvote-component data-upvote-count="<%= @event.upvote_count %>" data-upvoted="<%= @event.upvoted?(current_user) %>" data-event-id="<%= @event.id %>" data-logged-in="<%= current_user.present? %>"></div> <b>upvotes</b>
-          <div class="reminder-container">
-            <span class="glyphicon glyphicon-bell"></span>
-            <div class="sub-container"></div>
-          </div>
+        <div class="event-tools-container clearfix">
+          <div class="pull-left" data-upvote-component data-upvote-count="<%= @event.upvote_count %>" data-upvoted="<%= @event.upvoted?(current_user) %>" data-event-id="<%= @event.id %>" data-logged-in="<%= current_user.present? %>"></div>
+          <div class="pull-left" style="margin-left: 5px;"></div>
           <% if current_user.present? && @event.user == current_user.username %>
             <div class="event-tool-container">
               <%= link_to '(Edit my event)', edit_event_path(@event), class: 'event-tool' %>

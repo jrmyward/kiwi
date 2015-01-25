@@ -5,7 +5,7 @@ renderUpvotes = () ->
     event_id = $(container).data('event-id')
     logged_in = $(container).data('logged-in')
 
-    component = new FK.UpvoteCounterComponent(upvote_count: upvote_count, upvoted: upvoted, event_id: event_id, logged_in: logged_in)
+    component = new FK.UpvoteCounterComponent(upvote_count: upvote_count, upvoted: upvoted, event_id: event_id, logged_in: logged_in, inline: true)
 
     component.renderIn('[data-upvote-component][data-event-id="' + event_id + '"]')
   )
