@@ -15,8 +15,8 @@
       <div class="event-heading-container">
         <span class="event-title"><%= @event.name %></span>
         </br>
-        <span class="event-time-location"><%= @event.location %>, <%= @event.datetime_string(@timezone) %></span></div>
-
+        <span class="event-time-location"><%= @event.location %>, <%= @event.datetime_string(@timezone) %></span>
+      </div>
         <div class="event-tools-container clearfix">
           <div class="pull-left" data-upvote-component data-upvote-count="<%= @event.upvote_count %>" data-upvoted="<%= @event.upvoted?(current_user) %>" data-event-id="<%= @event.id %>" data-logged-in="<%= current_user.present? %>"></div>
           <div class="pull-left reminder-container" style="margin-left: 5px;" data-reminder-component data-event-id="<%= @event.id %>" data-times="<%= @event.reminders_for_user(current_user).map(&:time_to_event).to_json %>" data-logged-in="<%= current_user.present? %>"></div>

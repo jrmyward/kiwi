@@ -178,8 +178,7 @@ class Event
 
   def datetime_string(timezone)
     datetime = get_local_datetime(timezone)
-    return datetime.strftime("%A, %b %-d#{date_suffix(datetime)} %Y, All Day") if all_day?
-    datetime.strftime("%A, %b %-d#{date_suffix(datetime)} %Y, %l:%M %p")
+    return datetime.strftime("%A, %b %-d#{date_suffix(datetime)} %Y, #{pretty_time(timezone)}")
   end
 
   def date_suffix(datetime)
@@ -195,9 +194,9 @@ class Event
   end
 
   def pretty_time(timezone)
-    return 'All Day' if is_all_day
-    return get_local_datetime(timezone).strftime('%l:%M%P').strip if time_format == 'recurring' || time_format == ''
-    return "#{get_local_datetime(timezone).strftime('%l:%M').strip}/#{(get_local_datetime(timezone) - 1.hour).strftime('%l:%M').strip}c"
+    return 'All Day' if all_day?
+    return tv_time if tv_show?
+    return get_local_datetime(timezone).strftime('%l:%M%P').strip
   end
 
   def tv_time
