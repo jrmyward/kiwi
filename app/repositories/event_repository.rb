@@ -11,21 +11,8 @@ class EventRepository
   end
 
   def events_from_date(date, how_many_dates, how_many_events_per_day = 3)
-    count = 0
-    events = []
-    dates_with_events = []
-
-    while dates_with_events.count < how_many_dates
-      new_events = events_on_date(date, 0, how_many_events_per_day).to_a
-      events = events + new_events
-
-      dates_with_events << date unless new_events.empty?
-      date = tomorrow(date)
-
-      break if DateTime.parse(date) >= get_last_date
-    end
-
-    events
+    date = DateTime.parse(date)
+    enough_events_from_date(date, how_many_dates, how_many_events_per_day)
   end
 
   def count_events_on_date(date)
@@ -96,6 +83,42 @@ class EventRepository
     out = sortedEvents.slice(skip, how_many)
 
     out
+  end
+
+  def enough_events_from_date(date, how_many_dates, events_per_day = 3)
+    datetime = @time_zone.local_to_utc(date)
+
+    possible_events = Event.any_of(
+      { is_all_day: false, time_format: '', :datetime.gte => datetime, location_type: 'national', country: @country },
+      { is_all_day: false, time_format: '', :datetime.gte => datetime, location_type: 'international' },
+      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'national', country: @country },
+      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'international' },
+      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'national', country: @country },
+      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'international' },
+      { is_all_day: true, :local_date.gte => date, location_type: 'national', country: @country },
+      { is_all_day: true, :local_date.gte => date, location_type: 'international' }
+    ).any_in({subkast: @subkasts}).to_a
+
+
+    dates = possible_events.collect { |event| event.get_local_datetime(@time_zone.name).to_date }
+    dates.sort_by! { |date| date }
+    dates = dates.uniq
+
+    events = []
+    sorted_possible_events = possible_events.sort_by { |event| - (event.upvote_count.nil? ? 0 : event.upvote_count) }
+
+    dates.each do |date|
+      break if how_many_dates == 0
+
+      eventsOnDate = sorted_possible_events.select { |event| event.get_local_datetime(@time_zone.name).to_date == date }
+      events.concat eventsOnDate.take(events_per_day)
+
+      how_many_dates = how_many_dates - 1 unless eventsOnDate.empty?
+    end
+
+    events = events.sort_by { |e| - (e.upvote_count.nil? ? 0 : e.upvote_count ) }
+
+    return events
   end
 
   def get_last_date
