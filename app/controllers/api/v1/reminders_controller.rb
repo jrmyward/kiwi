@@ -22,7 +22,7 @@ module Api
         existing_reminders = event.reminders_for_user(user).map(&:time_to_event)
         error! :reminder_already_set, metadata: reminder_already_set if existing_reminders.include?(params['interval'])
 
-        event.set_reminder(user, params['interval'])
+        event.set_reminder(user, params['interval'], params['time_zone'])
 
         exposes intervals_on_event_for_user(event, user)
       end
@@ -69,11 +69,17 @@ module Api
         ['15m', '1h', '4h', '1d']
       end
 
-      def intervals_on_event_for_user(event, user)
-        reminders = event.reminders_for_user(user).map(&:time_to_event)
+      def interval_sorting_map(i)
+        return 0 if i == '15m'
+        return 1 if i == '1h'
+        return 2 if i == '4h'
+        return 3 if i == '1d'
+      end
 
-        intervals = valid_intervals & reminders
-        intervals.map { |i| { interval: i } }
+      def intervals_on_event_for_user(event, user)
+        reminders = event.reminders_for_user(user).sort_by { |r| interval_sorting_map(r.time_to_event) }
+
+        reminders.map { |r| { interval: r.time_to_event, recipient_time_zone: r.recipient_time_zone } }
       end
     end
   end

@@ -5,7 +5,7 @@ def sign_in(user)
 end
 
 describe 'Reminders Requests' do
-  let!(:e1) { create :event }
+  let!(:e1) { create :event, datetime: DateTime.new(2014, 05, 15, 9, 0, 0) }
   let!(:e2) { create :event }
 
   let!(:u1) { create :user }
@@ -33,9 +33,13 @@ describe 'Reminders Requests' do
         expect(response.code).to eq '200'
 
         expect(resp[0]['interval']).to eq '15m'
+        expect(resp[0]['recipient_time_zone']).to eq 'America/New_York'
         expect(resp[1]['interval']).to eq '1h'
+        expect(resp[1]['recipient_time_zone']).to eq 'America/New_York'
         expect(resp[2]['interval']).to eq '4h'
+        expect(resp[2]['recipient_time_zone']).to eq 'America/New_York'
         expect(resp[3]['interval']).to eq '1d'
+        expect(resp[3]['recipient_time_zone']).to eq 'America/New_York'
       end
 
       it 'responds with an error and a 422 status code when the event could not be found' do
@@ -71,18 +75,20 @@ describe 'Reminders Requests' do
       end
 
       it 'creates a reminder for a user on an event' do
-        post "/api/1/events/#{e2.id}/reminders", { interval: '4h' }
+        post "/api/1/events/#{e2.id}/reminders", { interval: '4h', time_zone: 'America/New_York' }
 
         expect(response.code).to eq '200'
 
         resp = JSON.parse(response.body)['response']
 
         expect(resp[0]['interval']).to eq '15m'
+        expect(resp[0]['recipient_time_zone']).to eq 'America/New_York'
         expect(resp[1]['interval']).to eq '4h'
+        expect(resp[1]['recipient_time_zone']).to eq 'America/New_York'
       end
 
       it 'responds with a 422 status code and error message if an invalid reminder type is provided' do
-        post "/api/1/events/#{e1.id}/reminders", { interval: '16m' }
+        post "/api/1/events/#{e1.id}/reminders", { interval: '16m', time_zone: 'America/New_York' }
 
         expect(response.code).to eq '422'
 
@@ -93,7 +99,7 @@ describe 'Reminders Requests' do
       end
 
       it 'responds with a 422 status code and error message if this reminder is already created' do
-        post "/api/1/events/#{e1.id}/reminders", { interval: '15m' }
+        post "/api/1/events/#{e1.id}/reminders", { interval: '15m', time_zone: 'America/New_York' }
 
         expect(response.code).to eq '422'
 
@@ -104,7 +110,7 @@ describe 'Reminders Requests' do
       end
 
       it 'responds with a 422 status code and error message if a non existant event is provided' do
-        post "/api/1/events/ZZZ/reminders", { interval: '15m' }.to_json
+        post "/api/1/events/ZZZ/reminders", { interval: '15m', time_zone: 'America/New_York' }
 
         expect(response.code).to eq '422'
 
@@ -116,7 +122,7 @@ describe 'Reminders Requests' do
     end
 
     it 'responds with a 401 status code and error message if the user is not logged in' do
-      post "/api/1/events/#{e2.id}/reminders", { interval: '4h' }
+      post "/api/1/events/#{e2.id}/reminders", { interval: '4h', time_zone: 'America/New_York' }
 
       expect(response.code).to eq '401'
 

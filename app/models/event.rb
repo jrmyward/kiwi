@@ -207,8 +207,8 @@ class Event
     reminders.where(user: user)
   end
 
-  def set_reminder(user, interval)
-    Reminder.create(event_id: id, user_id: user.id, time_to_event: interval)
+  def set_reminder(user, interval, recipient_time_zone)
+    Reminder.create(event_id: id, user_id: user.id, time_to_event: interval, recipient_time_zone: recipient_time_zone)
   end
 
   def remove_reminder(user, interval)
