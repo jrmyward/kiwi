@@ -30,6 +30,17 @@ $ ->
     }
   })
 
+  $('[name="date"]').rules('add', {
+    required: true,
+    messages: {
+      required: 'Event must have a date.'
+    }
+  })
+
+  $('[name="date"]').change((e) =>
+    $('form.event_form').valid()
+  )
+
 refreshRemaningCount = ->
   val = $('input[name="name"]').val()
   remainingCount = 100 - val.length
