@@ -10,7 +10,7 @@ class EventsController < ApplicationController
     end
 
     if current_user
-      @country = current_user.country
+      @country = current_user.country || 'US'
     else
       @country = params[:country] || 'US'
     end
