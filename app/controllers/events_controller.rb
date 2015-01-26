@@ -12,7 +12,7 @@ class EventsController < ApplicationController
     if current_user
       @country = current_user.country
     else
-      @country = params[:country] || 'CA'
+      @country = params[:country] || 'US'
     end
 
     @subkast = Subkast.by_slug(params[:subkast_slug])
