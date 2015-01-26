@@ -75,7 +75,7 @@ describe 'Reminders Requests' do
       end
 
       it 'creates a reminder for a user on an event' do
-        post "/api/1/events/#{e2.id}/reminders", { interval: '4h', time_zone: 'America/New_York' }
+        post "/api/1/events/#{e2.id}/reminders", { interval: '4h', recipient_time_zone: 'America/New_York' }
 
         expect(response.code).to eq '200'
 

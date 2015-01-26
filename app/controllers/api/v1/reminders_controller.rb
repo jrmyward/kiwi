@@ -22,7 +22,7 @@ module Api
         existing_reminders = event.reminders_for_user(user).map(&:time_to_event)
         error! :reminder_already_set, metadata: reminder_already_set if existing_reminders.include?(params['interval'])
 
-        event.set_reminder(user, params['interval'], params['time_zone'])
+        event.set_reminder(user, params['interval'], params['recipient_time_zone'])
 
         exposes intervals_on_event_for_user(event, user)
       end

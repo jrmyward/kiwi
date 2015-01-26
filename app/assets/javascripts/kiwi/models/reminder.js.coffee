@@ -15,7 +15,8 @@ class FK.Models.Reminder extends Backbone.Model
 
     _.each(newTimes, (newTime) ->
       $.post("/api/1/events/#{@get('event_id')}/reminders", {
-        interval: newTime
+        interval: newTime,
+        recipient_time_zone: jstz.determine().name()
       })
     , @)
 
