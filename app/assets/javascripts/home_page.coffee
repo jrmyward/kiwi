@@ -64,7 +64,7 @@ $ ->
 
     percentage = $doc.scrollTop() / ($doc.height() - $window.height())
 
-    fetchMore() if percentage > 0.8
+    fetchMore() if percentage > 0.7
   )
 
   $('select[name="country"]').on('change', (e) =>
