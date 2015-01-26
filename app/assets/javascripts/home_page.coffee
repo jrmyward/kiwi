@@ -42,6 +42,8 @@ $ ->
   renderUpvotes()
   renderReminders()
 
+  $('[data-toggle="tooltip"]').tooltip()
+
   $('.more-form').on('ajax:success', (origin, resp) ->
     form = origin.target
 
