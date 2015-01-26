@@ -116,8 +116,6 @@ class EventRepository
       how_many_dates = how_many_dates - 1 unless eventsOnDate.empty?
     end
 
-    events = events.sort_by { |e| - (e.upvote_count.nil? ? 0 : e.upvote_count ) }
-
     return events
   end
 

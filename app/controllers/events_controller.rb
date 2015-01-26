@@ -15,7 +15,6 @@ class EventsController < ApplicationController
       @country = params[:country] || 'CA'
     end
 
-
     @subkast = Subkast.by_slug(params[:subkast_slug])
 
     @subkasts = params[:subkasts] || url_subkast || Subkast.by_user(current_user).map(&:code)
@@ -45,11 +44,11 @@ class EventsController < ApplicationController
   end
 
   def from_date
-    country = params[:country]
-    subkasts = params[:subkasts]
+    @country = params[:country]
+    @subkasts = params[:subkasts]
     date = params[:date]
 
-    @repository = EventRepository.new(browser_timezone, country, subkasts)
+    @repository = EventRepository.new(browser_timezone, @country, @subkasts)
 
     @time_zone = browser_timezone
     @events = @repository.events_from_date(date, 4)
