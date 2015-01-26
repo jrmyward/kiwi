@@ -109,4 +109,4 @@ class FK.EventStoreConfig extends Backbone.Model
 
   setCountry: (country) =>
     @set 'country', country
-    @set 'countryName', App.request('countryName', country)
+    @set 'countryName', FK.App.request('countryName', country)

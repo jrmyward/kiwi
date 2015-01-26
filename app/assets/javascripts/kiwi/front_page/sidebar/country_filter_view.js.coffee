@@ -9,6 +9,10 @@ FK.App.module "Sidebar", (Sidebar, App, Backbone, Marionette, $, _) ->
       country = @$('option:selected').val()
       @model.setCountry country
 
+      @user = App.request('currentUser')
+      if @user
+        @user.save('country', country)
+
     modelEvents:
       'change:country': 'refreshChosenCountry'
 
