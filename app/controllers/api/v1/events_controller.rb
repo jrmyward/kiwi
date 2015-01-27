@@ -135,6 +135,8 @@ module Api
         json['upvotes_url'] = api_event_upvote_path(1, event.id)
         json['comments_url'] = api_event_comments_path(1, event.id)
         json['reminders_url'] = api_event_reminders_path(1, event.id)
+        json['thumbnail_url'] = event.image.url(:thumb) if event.image.exists?
+        json['image_url'] = event.image.url(:medium) if event.image.exists?
 
         json
       end
