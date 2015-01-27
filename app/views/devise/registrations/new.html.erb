@@ -1,7 +1,9 @@
 <div id="container" class="container">
   <% if resource.errors.present? %>
-    <div class="alert alert-warning col-md-10">
-      <p> <%= devise_error_messages! %></p>
+    <div class="row">
+      <div class="alert alert-warning col-sm-10 col-sm-offset-1">
+        <p> <%= devise_error_messages! %></p>
+      </div>
     </div>
   <% end %>
   <div class="row signup-container">
