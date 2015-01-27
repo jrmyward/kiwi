@@ -132,6 +132,8 @@ module Api
         json['added_by'] = event.user
         json['description'] = event.description
         json['added_by'] = event.user.to_s
+        json['upvote_count'] = event.how_many_upvotes
+        json['upvoted'] = event.upvoted?(current_user) if current_user.present?
         json['upvotes_url'] = api_event_upvote_path(1, event.id)
         json['comments_url'] = api_event_comments_path(1, event.id)
         json['reminders_url'] = api_event_reminders_path(1, event.id)

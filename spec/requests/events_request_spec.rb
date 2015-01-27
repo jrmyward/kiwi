@@ -37,6 +37,7 @@ describe 'Events Requests' do
       expect(resp[0]['all_day']).to eq true
       expect(resp[0]['added_by']).to eq 'mrx'
       expect(resp[0]['description']).to eq 'This should be exciting!'
+      expect(resp[0]['upvote_count']).to eq 4
       expect(resp[0]['upvotes_url']).to eq "/api/1/events/#{e1.id}/upvote"
       expect(resp[0]['comments_url']).to eq "/api/1/events/#{e1.id}/comments"
       expect(resp[0]['reminders_url']).to eq "/api/1/events/#{e1.id}/reminders"
@@ -48,6 +49,7 @@ describe 'Events Requests' do
       expect(resp[1]['recurring']).to eq true
       expect(resp[1]['added_by']).to eq 'mrx'
       expect(resp[1]['description']).to eq 'This should be exciting!'
+      expect(resp[1]['upvote_count']).to eq 3
       expect(resp[1]['upvotes_url']).to eq "/api/1/events/#{e3.id}/upvote"
       expect(resp[1]['comments_url']).to eq "/api/1/events/#{e3.id}/comments"
       expect(resp[1]['reminders_url']).to eq "/api/1/events/#{e3.id}/reminders"
@@ -60,6 +62,7 @@ describe 'Events Requests' do
       expect(resp[2]['eastern_tv_time']).to eq '7:30/6:30c'
       expect(resp[2]['added_by']).to eq 'mrx'
       expect(resp[2]['description']).to eq 'This should be interesting.'
+      expect(resp[2]['upvote_count']).to eq 2
       expect(resp[2]['upvotes_url']).to eq "/api/1/events/#{e2.id}/upvote"
       expect(resp[2]['comments_url']).to eq "/api/1/events/#{e2.id}/comments"
       expect(resp[2]['reminders_url']).to eq "/api/1/events/#{e2.id}/reminders"
@@ -71,6 +74,7 @@ describe 'Events Requests' do
       expect(resp[3]['relative']).to eq true
       expect(resp[3]['added_by']).to eq 'mrx'
       expect(resp[3]['description']).to eq 'This should be exciting!'
+      expect(resp[3]['upvote_count']).to eq 0
       expect(resp[3]['upvotes_url']).to eq "/api/1/events/#{e4.id}/upvote"
       expect(resp[3]['comments_url']).to eq "/api/1/events/#{e4.id}/comments"
       expect(resp[3]['reminders_url']).to eq "/api/1/events/#{e4.id}/reminders"
@@ -90,6 +94,7 @@ describe 'Events Requests' do
       expect(resp[0]['all_day']).to eq true
       expect(resp[0]['added_by']).to eq 'mrx'
       expect(resp[0]['description']).to eq 'This should be exciting!'
+      expect(resp[0]['upvote_count']).to eq 4
       expect(resp[0]['upvotes_url']).to eq "/api/1/events/#{e6.id}/upvote"
       expect(resp[0]['comments_url']).to eq "/api/1/events/#{e6.id}/comments"
       expect(resp[0]['reminders_url']).to eq "/api/1/events/#{e6.id}/reminders"
@@ -101,6 +106,7 @@ describe 'Events Requests' do
       expect(resp[1]['all_day']).to eq true
       expect(resp[1]['added_by']).to eq 'mrx'
       expect(resp[1]['description']).to eq 'This should be exciting!'
+      expect(resp[1]['upvote_count']).to eq 3
       expect(resp[1]['upvotes_url']).to eq "/api/1/events/#{e10.id}/upvote"
       expect(resp[1]['comments_url']).to eq "/api/1/events/#{e10.id}/comments"
       expect(resp[1]['reminders_url']).to eq "/api/1/events/#{e10.id}/reminders"
@@ -113,6 +119,7 @@ describe 'Events Requests' do
       expect(resp[2]['eastern_tv_time']).to eq '7:30/6:30c'
       expect(resp[2]['added_by']).to eq 'mrx'
       expect(resp[2]['description']).to eq 'This should be interesting.'
+      expect(resp[2]['upvote_count']).to eq 2
       expect(resp[2]['upvotes_url']).to eq "/api/1/events/#{e7.id}/upvote"
       expect(resp[2]['comments_url']).to eq "/api/1/events/#{e7.id}/comments"
       expect(resp[2]['reminders_url']).to eq "/api/1/events/#{e7.id}/reminders"
@@ -124,6 +131,7 @@ describe 'Events Requests' do
       expect(resp[3]['recurring']).to eq true
       expect(resp[3]['added_by']).to eq 'mrx'
       expect(resp[3]['description']).to eq 'This should be exciting!'
+      expect(resp[3]['upvote_count']).to eq 3
       expect(resp[3]['upvotes_url']).to eq "/api/1/events/#{e8.id}/upvote"
       expect(resp[3]['comments_url']).to eq "/api/1/events/#{e8.id}/comments"
       expect(resp[3]['reminders_url']).to eq "/api/1/events/#{e8.id}/reminders"
@@ -135,6 +143,7 @@ describe 'Events Requests' do
       expect(resp[4]['relative']).to eq true
       expect(resp[4]['added_by']).to eq 'mrx'
       expect(resp[4]['description']).to eq 'This should be exciting!'
+      expect(resp[4]['upvote_count']).to eq 0
       expect(resp[4]['upvotes_url']).to eq "/api/1/events/#{e9.id}/upvote"
       expect(resp[4]['comments_url']).to eq "/api/1/events/#{e9.id}/comments"
       expect(resp[4]['reminders_url']).to eq "/api/1/events/#{e9.id}/reminders"
@@ -155,6 +164,7 @@ describe 'Events Requests' do
       expect(resp[0]['eastern_tv_time']).to eq '7:30/6:30c'
       expect(resp[0]['added_by']).to eq 'mrx'
       expect(resp[0]['description']).to eq 'This should be interesting.'
+      expect(resp[0]['upvote_count']).to eq 2
       expect(resp[0]['upvotes_url']).to eq "/api/1/events/#{e7.id}/upvote"
       expect(resp[0]['comments_url']).to eq "/api/1/events/#{e7.id}/comments"
       expect(resp[0]['reminders_url']).to eq "/api/1/events/#{e7.id}/reminders"
@@ -166,6 +176,7 @@ describe 'Events Requests' do
       expect(resp[1]['recurring']).to eq true
       expect(resp[1]['added_by']).to eq 'mrx'
       expect(resp[1]['description']).to eq 'This should be exciting!'
+      expect(resp[1]['upvote_count']).to eq 3
       expect(resp[1]['upvotes_url']).to eq "/api/1/events/#{e8.id}/upvote"
       expect(resp[1]['comments_url']).to eq "/api/1/events/#{e8.id}/comments"
       expect(resp[1]['reminders_url']).to eq "/api/1/events/#{e8.id}/reminders"
@@ -190,6 +201,7 @@ describe 'Events Requests' do
       expect(resp['relative']).to eq true
       expect(resp['added_by']).to eq 'mrx'
       expect(resp['description']).to eq 'This should be exciting!'
+      expect(resp['upvote_count']).to eq 0
       expect(resp['upvotes_url']).to eq "/api/1/events/#{event.id}/upvote"
       expect(resp['comments_url']).to eq "/api/1/events/#{event.id}/comments"
       expect(resp['reminders_url']).to eq "/api/1/events/#{event.id}/reminders"
@@ -228,14 +240,9 @@ describe 'Events Requests' do
         expect(resp['country']).to eq 'CA'
         expect(resp['date']).to eq '2014-07-01'
         expect(resp['description']).to eq 'Celebration of Canada\'s birthday!'
-        expect(resp['added_by']).to eq u1.username
-
-        get resp['upvotes_url']
-
-        resp = JSON.parse(response.body)['response']
-
         expect(resp['upvote_count']).to eq 1
         expect(resp['upvoted']).to be
+        expect(resp['added_by']).to eq u1.username
       end
 
       it 'should be able to create a relative time event' do
@@ -260,14 +267,9 @@ describe 'Events Requests' do
         expect(resp['country']).to eq 'CA'
         expect(resp['datetime']).to eq '2014-07-01T19:00:00'
         expect(resp['description']).to eq 'Celebration of Canada\'s birthday!'
-        expect(resp['added_by']).to eq u1.username
-
-        get resp['upvotes_url']
-
-        resp = JSON.parse(response.body)['response']
-
         expect(resp['upvote_count']).to eq 1
         expect(resp['upvoted']).to be
+        expect(resp['added_by']).to eq u1.username
       end
 
       it 'should be able to create a recurring time event' do
@@ -293,14 +295,9 @@ describe 'Events Requests' do
         expect(resp['datetime']).to eq '2014-08-01T08:30:00'
         expect(resp['recurring']).to be
         expect(resp['description']).to eq 'First day of classes'
-        expect(resp['added_by']).to eq u1.username
-
-        get resp['upvotes_url']
-
-        resp = JSON.parse(response.body)['response']
-
         expect(resp['upvote_count']).to eq 1
         expect(resp['upvoted']).to be
+        expect(resp['added_by']).to eq u1.username
       end
 
       it 'should be able to create tv show event' do
@@ -327,14 +324,9 @@ describe 'Events Requests' do
         expect(resp['eastern_tv_show']).to be
         expect(resp['eastern_tv_time']).to eq '7:00/6:00c'
         expect(resp['description']).to eq 'With George Strombolo...'
-        expect(resp['added_by']).to eq u1.username
-
-        get resp['upvotes_url']
-
-        resp = JSON.parse(response.body)['response']
-
         expect(resp['upvote_count']).to eq 1
         expect(resp['upvoted']).to be
+        expect(resp['added_by']).to eq u1.username
       end
 
       it 'should be able to create international events' do
@@ -359,14 +351,9 @@ describe 'Events Requests' do
         expect(resp['all_day']).to be
         expect(resp['date']).to eq '2014-09-01'
         expect(resp['description']).to eq 'Celebration of world day!'
-        expect(resp['added_by']).to eq u1.username
-
-        get resp['upvotes_url']
-
-        resp = JSON.parse(response.body)['response']
-
         expect(resp['upvote_count']).to eq 1
         expect(resp['upvoted']).to be
+        expect(resp['added_by']).to eq u1.username
       end
     end
 
