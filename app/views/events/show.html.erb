@@ -33,7 +33,7 @@
         </div>
 
         <div class="event-description-container">
-          <div class="event-description"><%= @event.description %></div>
+          <div class="event-description"><%= md @event.description %></div>
           <div class="event-submitter">(Submitted by <%= @event.user %>)</div>
         </div>
       </div>

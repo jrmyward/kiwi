@@ -1,6 +1,6 @@
 module ApplicationHelper
   def md(text)
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+    markdown = Redcarpet::Markdown.new(KiwiRenderer, autolink: true)
     markdown.render(text).html_safe
   end
 
