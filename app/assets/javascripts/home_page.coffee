@@ -23,27 +23,7 @@ renderReminders = () ->
     component.renderIn('[data-reminder-component][data-event-id="' + event_id + '"]')
   )
 
-fetchMore = _.throttle(() ->
-  return if fetching
-  fetching = true
-  $.get('/events/from_date', {
-    country: $('#home-list').data('country'),
-    subkasts: $('#home-list').data('subkasts'),
-    date: $('[data-tomorrow]').last().data('tomorrow')
-  }, (resp) ->
-    $('#home-list').append(resp)
-    renderUpvotes()
-    renderReminders()
-    fetching = false
-  )
-, 700)
-
-$ ->
-  renderUpvotes()
-  renderReminders()
-
-  $('[data-toggle="tooltip"]').tooltip()
-
+bindFetchMoreOnDay = () ->
   $('.more-form').on('ajax:success', (origin, resp) ->
     form = origin.target
 
@@ -59,6 +39,30 @@ $ ->
     renderUpvotes()
     renderReminders()
   )
+
+
+fetchMore = _.throttle(() ->
+  return if fetching
+  fetching = true
+  $.get('/events/from_date', {
+    country: $('#home-list').data('country'),
+    subkasts: $('#home-list').data('subkasts'),
+    date: $('[data-tomorrow]').last().data('tomorrow')
+  }, (resp) ->
+    $('#home-list').append(resp)
+    renderUpvotes()
+    renderReminders()
+    bindFetchMoreOnDay()
+    fetching = false
+  )
+, 700)
+
+$ ->
+  renderUpvotes()
+  renderReminders()
+  bindFetchMoreOnDay()
+
+  $('[data-toggle="tooltip"]').tooltip()
 
   $(document).scroll( (e) ->
     $doc = $(e.target)

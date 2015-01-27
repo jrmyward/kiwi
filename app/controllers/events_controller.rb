@@ -21,7 +21,7 @@ class EventsController < ApplicationController
     date = params[:date] || DateTime.now.beginning_of_day.to_s
     @repository = EventRepository.new(browser_timezone, @country, @subkasts)
     @time_zone = browser_timezone
-    @events = @repository.events_from_date(date, 5, 5)
+    @events = @repository.events_from_date(date, 7, 5)
     @all_subkasts = Subkast.by_user(current_user)
     @all_countries = Country.all.sort_by(&:en_name)
     @top_events = @repository.top_ranked_events(date, (DateTime.parse(date) + 7.days).to_s, 10)
@@ -51,7 +51,7 @@ class EventsController < ApplicationController
     @repository = EventRepository.new(browser_timezone, @country, @subkasts)
 
     @time_zone = browser_timezone
-    @events = @repository.events_from_date(date, 4)
+    @events = @repository.events_from_date(date, 5, 5)
 
     render :list_days, layout: false
   end
