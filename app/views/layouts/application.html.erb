@@ -16,5 +16,19 @@
     <%= render :partial => 'layouts/navbar' %>
     <%= yield %>
     <%= render :partial => 'layouts/facebook' %>
+    <div id="footer">
+      <div class="footer-text">
+        <%= link_to 'About', about_path %> &bull;
+        <%= link_to 'FAQ', faq_path %> &bull;
+        <a href="http://blog.forekast.com" target="_blank">Blog</a> &bull;
+        <%= link_to 'Terms', termsofservice_path %> &bull;
+        Follow Us:
+        <a href="https://twitter.com/theforekast" target="_blank" ><i class="fa fa-twitter"></i></a>
+        <a href="https://www.facebook.com/TheForekast" target="_blank"><i class="fa fa-facebook"></i></a>
+        <a href="http://blog.forekast.com/" target="_blank"><i class="fa fa-tumblr"></i></a>
+        <a href="https://plus.google.com/+Forekast" target="_blank"><i class="fa fa-google-plus"></i>
+        </a>&nbsp; &nbsp; &nbsp; Let's talk: <a href="mailto:hello@forekast.com">hello@forekast.com</a>
+      </div>
+    </div>
   </body>
 </html>
