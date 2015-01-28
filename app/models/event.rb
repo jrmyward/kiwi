@@ -78,7 +78,7 @@ class Event
 
   def location
     return 'Global' if international?
-    return country_name
+    return country_name.strip
   end
 
   def all_day?
