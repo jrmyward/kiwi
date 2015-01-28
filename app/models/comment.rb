@@ -101,7 +101,7 @@ class Comment
   end
 
   def upvoted_by?(user)
-    username = user.username
+    username = user.username rescue ''
     if self.upvote_names.nil?
       return false
     else
@@ -110,7 +110,7 @@ class Comment
   end
 
   def downvoted_by?(user)
-    username = user.username
+    username = user.username rescue ''
     if self.downvote_names.nil?
       return false
     else
