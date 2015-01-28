@@ -13,9 +13,7 @@ module ApplicationHelper
   end
 
   def comment_netvotes comment
-    net = comment.upvote_count - comment.downvote_count
-    return 0 if net < 0
-    return net
+    comment.netvotes
   end
 
   def delete_event_text

@@ -299,6 +299,15 @@ class Event
     Comment.create(event: self, message: message, authored_by: user)
   end
 
+  def rebalance_comments
+    root_comments.sort { |a,b|
+      b.netvotes <=> a.netvotes
+    }.each_with_index do |comment, i|
+      Comment.rebalance(comment, i)
+    end
+  end
+
+
   def comment_count
     Comment.where(event_id: id).count
   end

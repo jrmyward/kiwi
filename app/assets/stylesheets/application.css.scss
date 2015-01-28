@@ -1134,6 +1134,10 @@ form.event_form {
 
 #event-comments-region {
   width: 830px;
+  .user-comment,
+  .replies-region > div{
+    width: 100%;
+  }
   .markdown-supported {
     font-size: 12px;
     padding: 0 10px 0 0;
