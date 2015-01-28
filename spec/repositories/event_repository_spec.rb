@@ -61,7 +61,7 @@ describe EventRepository do
     end
 
     it 'should be able to fetch a fixed number of events per day' do
-      expect(repository.events_from_date("Sep 15th, 2014", 3, 5)).to eq [e9, e1, e3, e11, e2, e16, e5, e7, e6, e8, e14]
+      expect(repository.events_from_date("Sep 15th, 2014", 3, 5)).to eq [e9, e1, e3, e11, e10, e16, e5, e7, e6, e8, e14]
     end
 
     it 'should be able to stop when it reaches the last date' do
