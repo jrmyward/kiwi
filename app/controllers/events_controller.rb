@@ -72,6 +72,7 @@ class EventsController < ApplicationController
     authenticate_user!
 
     @event = Event.new
+    @event.country = current_user.last_posted_country
   end
 
   def edit

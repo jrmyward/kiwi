@@ -355,6 +355,23 @@ describe 'Events Requests' do
         expect(resp['upvoted']).to be
         expect(resp['added_by']).to eq u1.username
       end
+
+      it 'should update the user\'s last posted country' do
+        event = {
+          name: 'Hockey Night in Canada',
+          subkast: 'SP',
+          country: 'CA',
+          date: '2014-07-01',
+          time: '19:00',
+          eastern_tv_show: true,
+          description: 'With George Strombolo...'
+        }
+        post '/api/1/events', event
+
+        expect(response.code).to eq '200'
+
+        expect(u1.reload.last_posted_country).to eq 'CA'
+      end
     end
 
     context 'not signed in' do

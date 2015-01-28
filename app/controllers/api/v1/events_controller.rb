@@ -37,6 +37,11 @@ module Api
 
         event.save!
 
+        if event_params[:location_type] == 'national'
+          api_current_user.last_posted_country = event_params[:country]
+          api_current_user.save
+        end
+
         exposes(decorate_one(event))
       end
 
@@ -51,6 +56,8 @@ module Api
         event.update_attributes(event_params)
         event.save_image(image_params)
         event.refresh_reminders
+
+        api_current_user.update(last_posted_country: event_params[:country])
 
         exposes(decorate_one(event))
       end
