@@ -62,8 +62,6 @@ $ ->
   renderReminders()
   bindFetchMoreOnDay()
 
-  $('[data-toggle="tooltip"]').tooltip()
-
   $(document).scroll( (e) ->
     $doc = $(e.target)
     $window = $(window)
