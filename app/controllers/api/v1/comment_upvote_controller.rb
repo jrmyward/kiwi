@@ -10,6 +10,7 @@ module Api
         error! :comment_already_upvoted, metadata: comment_already_upvoted if comment.upvoted_by?(api_current_user)
 
         comment.add_upvote(api_current_user)
+        comment.event.rebalance_comments
 
         exposes(decorate_one(comment))
       end
@@ -23,6 +24,7 @@ module Api
         error! :comment_not_upvoted, metadata: comment_not_upvoted unless comment.upvoted_by?(api_current_user)
 
         comment.remove_upvote(api_current_user)
+        comment.event.rebalance_comments
 
         exposes(decorate_one(comment))
       end

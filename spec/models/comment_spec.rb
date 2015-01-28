@@ -4,7 +4,7 @@ describe Comment do
   before :all do
     @comment = build :comment
   end
-  
+
   describe "Creating and Setting Comments" do
 
     it "should create comments" do
@@ -27,7 +27,7 @@ describe Comment do
   end
 
   describe "Setting Comment Statuses" do
-    
+
     it "should have a flagged status" do
       comment = create :flagged_comment
       comment.status.should == "flagged"

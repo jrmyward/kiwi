@@ -94,6 +94,21 @@ class Comment
     User.where(username: event.user).first
   end
 
+  def netvotes
+    net = upvote_count - downvote_count
+    return 0 if net < 0
+    net
+  end
+
+  def self.rebalance(comment, position)
+    comment.update_attribute(:position, position)
+    comment.children.sort { |a,b|
+       b.netvotes <=> a.netvotes
+    }.each_with_index do |child_comment, i|
+       self.rebalance(child_comment, i)
+    end
+  end
+
   def setup_params(params)
     self.message = params[:message]
     self.parent_id = params[:parent_id]
