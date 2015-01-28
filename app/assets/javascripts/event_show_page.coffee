@@ -105,10 +105,12 @@ comment = (e) ->
   xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
 
   xhr.onload = (xhr_e) ->
-    if this.status is 200
-      success(xhr_e)
-    else
-      window.location = '/users/sign_in';
+    return window.location = '/users/sign_in' if this.status is 401
+
+    return success(xhr_e) if this.status is 200
+
+    return reload(xhr_e)
+
   xhr.send(formData)
 
 deleteComment = (e) ->
@@ -141,6 +143,10 @@ success = (xhr_e)->
   id = json.response.id['$oid']
   uri = window.location.toString().split('?')[0]
   window.location =  "#{uri}?r=#{rand()}#c_#{id}"
+
+reload = (xhr_e) ->
+  uri = window.location.toString().split('?')[0]
+  window.location =  "#{uri}"
 
 rand = ->
   Math.random().toString().slice(2,5)
