@@ -6,7 +6,6 @@ renderUpvotes = () ->
     logged_in = $(container).data('logged-in')
 
     component = new FK.UpvoteCounterComponent(upvote_count: upvote_count, upvoted: upvoted, event_id: event_id, logged_in: logged_in, inline: true)
-
     component.renderIn('[data-upvote-component][data-event-id="' + event_id + '"]')
   )
 
@@ -17,7 +16,6 @@ renderReminders = () ->
     logged_in = $(container).data('logged-in')
 
     component = new FK.RemindersDropdownController(times_to_event: times, event_id: event_id, logged_in: logged_in)
-
     component.renderIn('[data-reminder-component][data-event-id="' + event_id + '"]')
   )
 
@@ -28,6 +26,8 @@ $ ->
   $('.event-info-container').on('click', 'a.mute-delete', deleteEventPrep)
 
   $('#comment-new').html($('#comment-new-template').html())
+  $('#comment-new button[data-action=cancel]').remove()
+  $('#comment-list').on('click', '[data-action="cancel"]', cancelComment)
   $('#event-comments-region').on('click', '[data-action="comment"]', comment)
   $('#event-comments-region').on('click', 'a.reply', replyComment)
   $('#event-comments-region').on('click','a.mute-delete', deletePrep)
@@ -53,6 +53,11 @@ deleteEventPrep = (e) ->
         window.location = '/events'
     })
 
+cancelComment = (e) ->
+  e.preventDefault()
+  e.stopPropagation()
+  $($(e.currentTarget).parents('form')).remove()
+
 upvoteComment = (e) ->
   voteComment e, 'upvote'
 
@@ -65,14 +70,15 @@ voteComment = (e, action) ->
   commentId = $(e.currentTarget).data('comment-id')
   method = $(e.currentTarget).data('method')
   url = "/api/1/comments/#{commentId}/#{action}"
-  console.log url
   xhr = new XMLHttpRequest()
   xhr.open(method, url, true)
   xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-  xhr.onload = (xhr_e) =>
-    success(xhr_e)
+  xhr.onload = (xhr_e) ->
+    if this.status is 200
+      success(xhr_e)
+    else
+      window.location = '/users/sign_in';
   xhr.send({})
-
 
 replyComment = (e) ->
   e.preventDefault()
@@ -98,8 +104,11 @@ comment = (e) ->
   xhr.open(form.data('method'), url, true)
   xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
 
-  xhr.onload = (xhr_e) =>
-    success(xhr_e)
+  xhr.onload = (xhr_e) ->
+    if this.status is 200
+      success(xhr_e)
+    else
+      window.location = '/users/sign_in';
   xhr.send(formData)
 
 deleteComment = (e) ->
