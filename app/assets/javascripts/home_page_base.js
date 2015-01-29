@@ -18,4 +18,5 @@
 //= require_tree ./kiwi/front_page
 //= require_tree ./kiwi/models
 //= require_tree ./kiwi/components
+//= require browser_timezone_rails/application.js
 //= require home_page

@@ -19,8 +19,8 @@ class EventsController < ApplicationController
 
     @subkasts = params[:subkasts] || url_subkast || Subkast.by_user(current_user).map(&:code)
     date = params[:date] || DateTime.now.beginning_of_day.to_s
-    @repository = EventRepository.new(browser_timezone, @country, @subkasts)
-    @time_zone = browser_timezone
+    @repository = EventRepository.new(client_timezone, @country, @subkasts)
+    @time_zone = client_timezone
     @events = @repository.events_from_date(date, 7, 5)
     @all_subkasts = Subkast.by_user(current_user)
     @all_countries = Country.all.sort_by(&:en_name)
@@ -35,9 +35,9 @@ class EventsController < ApplicationController
     date = params[:date]
     skip = params[:skip].to_i
 
-    repo = EventRepository.new(browser_timezone, country, subkasts)
+    repo = EventRepository.new(client_timezone, country, subkasts)
 
-    @time_zone = browser_timezone
+    @time_zone = client_timezone
     @events = repo.events_on_date(date, skip)
 
     render :list_events, layout: false
@@ -48,9 +48,9 @@ class EventsController < ApplicationController
     @subkasts = params[:subkasts]
     date = params[:date]
 
-    @repository = EventRepository.new(browser_timezone, @country, @subkasts)
+    @repository = EventRepository.new(client_timezone, @country, @subkasts)
 
-    @time_zone = browser_timezone
+    @time_zone = client_timezone
     @events = @repository.events_from_date(date, 5, 5)
 
     render :list_days, layout: false
@@ -58,7 +58,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
-    @timezone = browser_timezone
+    @timezone = client_timezone
 
     # temporary for app backwards compatability
 
@@ -87,5 +87,11 @@ class EventsController < ApplicationController
     respond_to do |format|
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def client_timezone
+    browser_timezone || "America/New_York"
   end
 end

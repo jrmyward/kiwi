@@ -21,3 +21,4 @@
 //= require_tree ./kiwi/front_page
 //= require_tree ./kiwi/event_form_page
 //= require event_form
+//= require browser_timezone_rails/application.js
