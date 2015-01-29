@@ -9,6 +9,9 @@ FK.App.addInitializer (prefetch) ->
   FK.CurrentUser = new FK.Models.User(prefetch.user)
   FK.CurrentUser.set(logged_in: true, silent: true) if prefetch.user != null
 
+  
+  FK.CurrentUser.set('country', 'US') unless FK.CurrentUser.has('country')
+
   FK.Data.Subkasts = new FK.Collections.SubkastList(prefetch.subkasts)
   FK.Data.MySubkasts = new FK.Collections.SubkastList(prefetch.mySubkasts)
 
