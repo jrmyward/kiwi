@@ -30,7 +30,7 @@ class Event
   field :subkast, type: String
 
 
-  has_many :reminders
+  has_many :reminders, dependent: :delete
   has_many :comments
 
   index({local_date:1})
