@@ -54,6 +54,7 @@ module Api
         error! :forbidden unless Ability.new(api_current_user).can? :update, event
 
         event.update_attributes(event_params)
+        event.set_all_reminders_pending if event.time_changed?
         event.save_image(image_params)
         event.refresh_reminders
 

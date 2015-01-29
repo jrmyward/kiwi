@@ -150,4 +150,25 @@ describe Event do
       c.event.comment_count.should == 2
     end
   end
+
+  describe 'updating reminders' do
+    let(:event) { create :event }
+    let(:user) { create :user }
+    let(:user) { create :user }
+
+    it 'should determine if a time has changed' do
+      event.update_attributes({ is_all_day: true })
+      expect(event.time_changed?).to eq true
+      event.update_attributes({name: 'foobar' })
+      expect(event.time_changed?).to eq false
+    end
+
+    it 'should set all reminders to pending' do
+      create :reminder, :one_h_before, event: event, user: user
+      event.reminders.each { |r| r.update_attributes(status: Reminder::STATUS_DELIVERED) }
+      expect(event.reminders.first.status).to eq Reminder::STATUS_DELIVERED
+      event.set_all_reminders_pending
+      expect(event.reminders.first.status).to eq Reminder::STATUS_PENDING
+    end
+  end
 end

@@ -108,6 +108,17 @@ class Event
     end
   end
 
+  def set_all_reminders_pending
+    reminders.each do |reminder|
+      reminder.status = Reminder::STATUS_PENDING
+      reminder.save
+    end
+  end
+
+  def time_changed?
+    previous_changes.keys.any? { |k| %w(local_time datetime is_all_day time_format).include? k }
+  end
+
   def reminders_for_user(user)
     reminders.where(user: user)
   end
