@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   authorize_resource :only => [:destroy, :create]
+  before_action :get_time_zone, only: [:index, :new, :edit, :show]
 
   def index
     url_subkast = [Subkast.by_slug(params[:subkast_slug]).code] if params[:subkast_slug]
@@ -90,6 +91,11 @@ class EventsController < ApplicationController
   end
 
   private
+
+  def get_time_zone
+    return if browser_timezone.present?
+    redirect_to "/welcome?continue=#{request.path}"
+  end
 
   def client_timezone
     browser_timezone || "America/New_York"

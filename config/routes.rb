@@ -44,5 +44,6 @@ Kiwi::Application.routes.draw do
   get '/api/events/eventsByDate', :to => 'backwards#by_date', :as => 'events_by_date'
   get '/api/events/:id/comments', :to => 'backwards#comments', :as => 'events_comments'
 
+  get '/welcome', to: 'home#welcome', as: 'time_zone'
   get '/:subkast_slug', to: 'events#index', as: :events_by_subkast
 end
