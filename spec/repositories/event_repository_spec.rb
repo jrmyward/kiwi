@@ -51,17 +51,17 @@ describe EventRepository do
   end
 
   it 'should be able to fetch a given number of top ranked events over a given range of days' do
-    expect(repository.top_ranked_events("Sep 15th, 2014", "Sep 22nd, 2014", 10)).to eq [e13, e14, e15, e16, e9, e1, e5, e7, e3, e11]
+    expect(repository.top_ranked_events("Sep 15th, 2014", "Sep 22nd, 2014", 10)).to eq [e13, e14, e15, e16, e1, e5, e9, e3, e7, e11]
   end
 
   describe 'fetching events from date' do
 
     it 'should be able to fetch a few events for a given number of upcoming days' do
-      expect(repository.events_from_date("Sep 15th, 2014", 3)).to eq [e9, e1, e3, e16, e5, e7, e14]
+      expect(repository.events_from_date("Sep 15th, 2014", 3)).to eq [e1, e9, e3, e16, e5, e7, e14]
     end
 
     it 'should be able to fetch a fixed number of events per day' do
-      expect(repository.events_from_date("Sep 15th, 2014", 3, 5)).to eq [e9, e1, e3, e11, e10, e16, e5, e7, e6, e8, e14]
+      expect(repository.events_from_date("Sep 15th, 2014", 3, 5)).to eq [e1, e9, e3, e11, e2, e16, e5, e7, e6, e8, e14]
     end
 
     it 'should be able to stop when it reaches the last date' do

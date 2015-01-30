@@ -17,7 +17,7 @@ class Event
   field :url, type: String
   field :is_all_day, type: Boolean
   field :time_format, type: String
-  field :tv_time , type: String
+  field :tv_time, type: String
   field :creation_timezone, type: String
   field :local_time, type: String
   field :local_date, type: Date
@@ -28,7 +28,6 @@ class Event
   field :country, type: String
   field :location_type, type: String
   field :subkast, type: String
-
 
   has_many :reminders, dependent: :delete
   has_many :comments

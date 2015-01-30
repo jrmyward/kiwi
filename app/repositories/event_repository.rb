@@ -75,7 +75,14 @@ class EventRepository
     ).any_in({ subkast: @subkasts }).to_a
 
 
-    sortedEvents = events.sort_by { |event| event.id }.sort_by { |event| - (event.upvote_count.nil? ? 0 : event.upvote_count) }
+    sortedEvents = events.sort do |e1, e2|
+      if e1.upvote_count == e2.upvote_count
+        e1.id <=> e2.id
+      else
+        e2.upvote_count <=> e1.upvote_count
+      end
+    end
+
     how_many = sortedEvents.size if how_many == 0
 
     return [] if skip > sortedEvents.size
@@ -105,7 +112,13 @@ class EventRepository
     dates = dates.uniq
 
     events = []
-    sorted_possible_events = possible_events.sort_by { |event| event.id }.sort_by { |event| - (event.upvote_count.nil? ? 0 : event.upvote_count) }
+    sorted_possible_events = possible_events.sort do |e1, e2|
+      if e1.upvote_count == e2.upvote_count
+        e1.id <=> e2.id
+      else
+        e2.upvote_count <=> e1.upvote_count
+      end
+    end
 
     dates.each do |date|
       break if how_many_dates == 0
