@@ -36,8 +36,14 @@ bindFetchMoreOnDay = () ->
     $(form).find('input[name=skip]').val(newCount)
 
 
+    $(origin.target).find('.btn-more').removeAttr('disabled')
+
     renderUpvotes()
     renderReminders()
+  )
+
+  $('.more-form').on('ajax:send', (origin, resp) ->
+    $(origin.target).find('.btn-more').attr('disabled', true)
   )
 
 
