@@ -13,6 +13,8 @@ module Api
         error! :unauthenticated if api_current_user.nil?
 
         comment = @event.comment(params['message'], api_current_user)
+        comment.add_upvote(api_current_user)
+
         CommentMailer.send_notifications(comment)
 
         expose(decorate(@event.root_comments))

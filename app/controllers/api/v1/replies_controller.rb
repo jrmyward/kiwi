@@ -8,6 +8,7 @@ module Api
         error! :not_found, metadata: comment_not_found if comment.nil?
 
         reply = comment.reply(params['message'], api_current_user)
+        reply.add_upvote(api_current_user)
 
         CommentMailer.send_notifications(comment)
         exposes(decorate_one(reply))

@@ -160,8 +160,8 @@ describe 'Comments Requests' do
 
         expect(resp[2]['message']).to eq 'Something great is happening!'
         expect(resp[2]['by']).to eq u2.username
-        expect(resp[2]['upvote_count']).to eq 0
-        expect(resp[2]['upvoted']).not_to be
+        expect(resp[2]['upvote_count']).to eq 1
+        expect(resp[2]['upvoted']).to be
         expect(resp[2]['downvote_count']).to eq 0
         expect(resp[2]['downvoted']).not_to be
       end
@@ -186,8 +186,8 @@ describe 'Comments Requests' do
 
         expect(resp['message']).to eq 'That reply was pretty cool.'
         expect(resp['by']).to eq u2.username
-        expect(resp['upvote_count']).to eq 0
-        expect(resp['upvoted']).not_to be
+        expect(resp['upvote_count']).to eq 1
+        expect(resp['upvoted']).to be
         expect(resp['downvote_count']).to eq 0
         expect(resp['downvoted']).not_to be
       end
