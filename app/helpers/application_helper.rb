@@ -16,10 +16,6 @@ module ApplicationHelper
     comment.netvotes
   end
 
-  def delete_event_text
-    "(Delete #{(current_user == @event.user) ? 'my' : ''} event)"
-  end
-
   def today(date)
     Date.today.day == date.day ? 'Today,' : ''
   end

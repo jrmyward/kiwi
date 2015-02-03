@@ -10,7 +10,9 @@
     "<%=@comment.message%>"
   </p>
   <p>
-  <a href="<%=url_for(controller: 'registrations', action: 'edit', only_path: false)%>">Change notification settings</a>
+    <%= link_to edit_user_registration_url do %>
+      Change notification settings
+    <% end %>
   </p>
 </td></tr></table>
 </div>

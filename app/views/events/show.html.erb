@@ -22,12 +22,12 @@
           <div class="pull-left reminder-container" style="margin-left: 5px;" data-reminder-component data-event-id="<%= @event.id %>" data-times="<%= @event.reminders_for_user(current_user).map(&:time_to_event).to_json %>" data-logged-in="<%= current_user.present? %>"></div>
           <% if can? :update, @event %>
             <div class="event-tool-container">
-              <%= link_to '(Edit my event)', edit_event_path(@event), class: 'event-tool' %>
+              <%= link_to "(Edit #{(current_user.username == @event.user) ? 'my' : ''} event)", edit_event_path(@event), class: 'event-tool' %>
             </div>
           <% end %>
           <% if can? :destroy, @event %>
             <div class="event-tool-container">
-              <a class="mute-delete event-tool" data-original-text="<%= delete_event_text %>" data-event-id="<%= @event.id %>"><%=delete_event_text%></a>
+              <a class="mute-delete event-tool" data-original-text="<%= "(Delete #{(current_user.username == @event.user) ? 'my' : ''} event)" %>" data-event-id="<%= @event.id %>"><%="(Delete #{(current_user.username == @event.user) ? 'my' : ''} event)"%></a>
             </div>
           <% end %>
         </div>
