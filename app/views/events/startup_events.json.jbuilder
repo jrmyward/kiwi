@@ -1,7 +1,6 @@
 json.array!(@events) do |event|
   json.extract! event,
     :details,
-    :name,
     :created_at,
     :updated_at,
     :local_time,
@@ -19,6 +18,7 @@ json.array!(@events) do |event|
     :location_type,
     :subkast,
     :comment_count
+  json.set! :name, event.name_escaped
   json.set! '_id', event._id.to_s
   json.set! :datetime, event.datetime.utc if event.datetime != nil
   json.set! :mediumUrl, event.image.url(:medium)

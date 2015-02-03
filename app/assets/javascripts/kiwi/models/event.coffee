@@ -266,6 +266,9 @@ class FK.Models.Event extends Backbone.Model
     return 'Other' if not @has('subkast')
     return FK.Data.Subkasts.getNameByCode(@get('subkast'))
 
+  nameParsed: () =>
+    @escape('name')
+
   descriptionParsed: () =>
     marked(@escape('description'))
 

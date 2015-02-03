@@ -1,0 +1,39 @@
+<div class="event-image-container col-sm-7">
+  <img src="<%=mediumUrl%>" />
+  <div class="event-likes-container">
+    <div class="fb-like" data-layout="button" data-action="like" data-width="98" data-height="20" style="width:98px; float: left;"></div>
+    <div style="float: left; width: 98px">
+      <a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-via="theforekast">Tweet</a>
+    </div>
+    <div class="g-plusone" data-size="medium" data-annotation="none" data-width="200"></div>
+  </div>
+</div>
+<div class="event-info-container col-sm-6">
+  <div class="event-heading-container">
+    <span class="event-title"><%= name() %></span>
+    </br>
+    <span class="event-time-location"><% if (location_type == 'national') { %><%= country_full_name%><% } else { %>Global<% } %>, <%= prettyDateTime() %></span></div>
+
+  <div class="event-tools-container">
+    <span class="event-upvotes"><i id="upvotes-icon" class="glyphicon glyphicon-chevron-up"></i> <span class="upvote-counter"></span> upvotes</span>
+    <div class="reminder-container">
+      <span class="glyphicon glyphicon-bell"></span>
+      <div class="sub-container"></div>
+    </div>
+    <% if (myEvent()) { %>
+      <div class="event-tool-container">
+         <span class="event-tool" data-action="edit">(Edit my event)</span>
+      </div>
+    <% } %>
+    <% if (myEvent() || moderator()) { %>
+      <div class="event-tool-container">
+         <span class="event-tool" data-action="destroy"></span>
+      </div>
+    <% } %>
+  </div>
+
+  <div class="event-description-container">
+    <div class="event-description"><%= description()%></div>
+    <div class="event-submitter">(Submitted by <%= user %>)</div>
+  </div>
+</div>

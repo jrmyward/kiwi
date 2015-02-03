@@ -118,6 +118,10 @@ class Event
     previous_changes.keys.any? { |k| %w(local_time datetime is_all_day time_format).include? k }
   end
 
+  def name_escaped
+    ActionView::Base.full_sanitizer.sanitize(name)
+  end
+
   def reminders_for_user(user)
     reminders.where(user: user)
   end
@@ -317,6 +321,29 @@ class Event
     end
   end
 
+  def self.get_events_by_range(startDatetime, endDatetime, zone_offset, country, subkasts, howMany=0, skip=0)
+    startDate = (startDatetime - zone_offset.minutes).beginning_of_day
+    endDate = (endDatetime - zone_offset.minutes).beginning_of_day
+
+    events = self.any_of(
+      { is_all_day: false, time_format: '', datetime: ((startDatetime)..(endDatetime)), location_type: 'international' },
+      { is_all_day: false, time_format: '', datetime: (startDatetime..endDatetime), location_type: 'national', country: country },
+      { is_all_day: false, time_format: 'recurring', local_date: (startDate..endDate), location_type: 'international' },
+      { is_all_day: false, time_format: 'recurring', local_date: (startDate..endDate), location_type: 'national', country: country },
+      { is_all_day: false, time_format: 'tv_show', local_date: (startDate..endDate), location_type: 'international' },
+      { is_all_day: false, time_format: 'tv_show', local_date: (startDate..endDate), location_type: 'national', country: country },
+      { is_all_day: true, local_date: (startDate..endDate), location_type: 'international' },
+      { is_all_day: true, local_date: (startDate..endDate), location_type: 'national', country: country }
+    ).any_in({subkast: subkasts }).to_a
+
+    sortedEvents = events.sort_by { |event| - (event.upvote_count.nil? ? 0 : event.upvote_count) }
+    howMany = sortedEvents.size if howMany == 0
+    return sortedEvents.slice(skip, howMany)
+  end
+
+  def self.get_last_date
+    self.order_by([:local_date, :desc])[0].local_date
+  end
 
   def comment_count
     Comment.where(event_id: id).count
