@@ -1214,6 +1214,8 @@ form.event_form {
   }
   .mute-delete {
     cursor: pointer;
+    font-weight: bold;
+    color: #666;
     &.btn-xs {
       padding: 0 5px;
       height: 19px;
