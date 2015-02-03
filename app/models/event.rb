@@ -248,10 +248,10 @@ class Event
             self.image = data
         end
       else
-        self.image = open(url)
+        update_attribute(:image, open(url))
       end
     else
-      self.image = self.no_image()
+      update_attribute(:image, self.no_image())
     end
   end
 
