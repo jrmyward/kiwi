@@ -1,6 +1,6 @@
-<div id="c_<%= comment.id %>" data-comment-id="<%= comment.id %>" class="user-comment deleted col-md-12">
-  <div class="row">
-    <div class="info col-md-12">
+<div id="c_<%= comment.id %>" data-comment-id="<%= comment.id %>" class="comment deleted col-md-12">
+  <div class="row comment">
+    <div class="col-md-12">
       <%= render partial: 'events/comment_upvote', locals: {comment: comment } %>
       <span class="username"> <%= comment.authored_by_name %> </span>
       <div class="tools">
@@ -8,19 +8,21 @@
         - <a href="#" data-comment-id="<%= comment.id %>" class="reply">Reply</a>
       </div>
       <% if comment.muted? %>
-        <div class="comment-text">Muted by Admin</div>
+        <div class="comment-text"><p>Muted by Admin</p></div>
       <% else %>
-        <div class="comment-text">Deleted by <%= comment.deleted_by.username %></div>
+        <div class="comment-text"><p>Deleted by <%= comment.deleted_by.username %></p></div>
       <% end %>
     </div>
   </div>
-  <div class="row nested-comments">
-    <div class="col-md-12 replies-region">
-      <% comment.children.each do |child_comment| %>
-        <%= render partial: "events/comment_#{child_comment.template}", locals: {comment: child_comment } %>
-      <% end %>
+  <% unless comment.children.empty? %>
+    <div class="row nested-comments">
+      <div class="col-md-12 reply-list">
+        <% comment.children.each do |child_comment| %>
+          <%= render partial: "events/comment_#{child_comment.template}", locals: {comment: child_comment } %>
+        <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
   <div class="row">
     <div class="replybox-region"></div>
   </div>

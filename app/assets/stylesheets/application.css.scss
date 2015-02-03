@@ -1134,21 +1134,41 @@ form.event_form {
 
 #event-comments-region {
   width: 830px;
-  .user-comment,
-  .replies-region > div{
+  .comment,
+  .reply-list > div {
     width: 100%;
+  }
+
+  .reply-list {
+    margin-bottom: 12px;
+  }
+
+  .comment-container {
+    display: inline-block;
+    float: left;
+
+    .comment {
+      margin-bottom: 12px;
+    }
+
+    &:last-child {
+      .comment {
+        margin-bottom: 0px;
+
+        .comment-text {
+          p {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+  .reply-list {
+    border-left: dotted 1px #ddd;
   }
   .markdown-supported {
     font-size: 12px;
     padding: 0 10px 0 0;
-  }
-  .comment {
-    margin: 10px 0 0;
-  }
-  .user-comment {
-    margin: 10px 0;
-    display: inline-block;
-    float: left;
   }
   .up-vote {
     display: inline-block;
@@ -1175,9 +1195,6 @@ form.event_form {
   }
   .downvote-marked {
     color: #FFA094;
-  }
-  .info {
-    margin-bottom: 3px;
   }
   .username {
     font-size: 18px;
@@ -1678,80 +1695,6 @@ body.dark .container {
     a {
       word-break: break-all;
       word-wrap: break-word;
-    }
-    #event-card-region {
-      width: initial;
-      .event-card {
-        margin: 0;
-        padding: 0;
-        .event-image-container {
-          width: initial;
-          height: initial;
-          margin: 0;
-          padding: 0;
-          text-align: center;
-          .event-likes-container {
-            display: none;
-          }
-        }
-        .event-heading-container {
-          .event-title {
-            font-size: 18px;
-          }
-          .event-time-location {
-            font-size: 12px;
-            padding: 5px 0 10px;
-          }
-        }
-        .event-info-container {
-          width: initial;
-          .event-description-container {
-            margin: 10px 0 0;
-            .event-submitter {
-              padding: 5px 0 0;
-            }
-          }
-        }
-      }
-    }
-    #event-comments-region {
-      width: initial;
-      padding: 0 15px;
-      .row {
-        margin: 0;
-        .col-md-12 {
-          padding: 0;
-        }
-      }
-      h3 {
-        margin: 10px 0;
-        font-weight: 18px;
-      }
-      .pull-right {
-        margin: 0;
-      }
-      .comment {
-        margin: 10px 0 0;
-        .info {
-          padding: 13px 0 0;
-        }
-        .user-comment {
-          padding: 0 0 0 25px;
-          float: none;
-          display: block;
-          margin: 0;
-          .up-vote {
-            margin: 0 5px 0 0;
-            display: block;
-          }
-          .username {
-            font-size: 15px;
-          }
-        }
-        .comment-text {
-          font-size: 13px;
-        }
-      }
     }
   }
   .event-form {
