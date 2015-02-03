@@ -1162,6 +1162,13 @@ form.event_form {
       height: 20px;
       font-size: 25px;
     }
+
+    .comment-upvote, .comment-downvote {
+      color: #888;
+      &:hover {
+        text-decoration: none;
+      }
+    }
   }
   .upvote-marked {
     color: #89E4D9;
