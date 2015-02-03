@@ -74,10 +74,6 @@ class Comment
     'active'
   end
 
-  def new_comment(comment)
-    comment.parent = self
-  end
-
   def reply(message, user)
     Comment.create(event: event, message: message, authored_by: user, parent: self)
   end

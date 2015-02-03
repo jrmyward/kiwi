@@ -10,7 +10,7 @@ module Api
         reply = comment.reply(params['message'], api_current_user)
         reply.add_upvote(api_current_user)
 
-        CommentMailer.send_notifications(comment)
+        CommentMailer.send_notifications(reply)
         exposes(decorate_one(reply))
       end
 

@@ -19,8 +19,8 @@ describe Comment do
 
     it "should create trees of comments" do
       root = @comment
-      root.new_comment(create(:comment))
-      root.new_comment(create(:comment))
+      root.reply("good point", create(:user))
+      root.reply("great point", create(:user))
       root.children.length.should == 2
     end
 

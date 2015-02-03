@@ -1,16 +1,9 @@
 class CommentMailer < ActionMailer::Base
   default from: "Forekast <hello@forekast.com>"
+
   def send_notifications(comment)
-
-    if comment.reply?
-      if should_send_comment_reply?(comment)
-        reply_notice(comment).deliver!
-      end
-    end
-
-    if should_send_comment_notice?(comment)
-      comment_notice(comment).deliver!
-    end
+    reply_notice(comment).deliver! if comment.reply? and should_send_comment_reply?(comment)
+    comment_notice(comment).deliver! if should_send_comment_notice?(comment)
   end
 
   def should_send_comment_reply?(comment)
