@@ -60,6 +60,10 @@ class Event
     end
   end
 
+  def name_escaped
+    ActionView::Base.full_sanitizer.sanitize(name)
+  end
+
   def reminders_for_user(user)
     reminders.where(user: user)
   end

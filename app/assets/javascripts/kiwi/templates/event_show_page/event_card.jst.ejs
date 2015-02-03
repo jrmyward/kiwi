@@ -10,7 +10,7 @@
 </div>
 <div class="event-info-container col-sm-6">
   <div class="event-heading-container">
-    <span class="event-title"><%= name %></span>
+    <span class="event-title"><%= name() %></span>
     </br>
     <span class="event-time-location"><% if (location_type == 'national') { %><%= country_full_name%><% } else { %>Global<% } %>, <%= prettyDateTime() %></span></div>
 

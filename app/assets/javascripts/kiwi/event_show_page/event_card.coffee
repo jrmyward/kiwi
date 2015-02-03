@@ -10,6 +10,7 @@ FK.App.module "Events.EventPage", (EventPage, App, Backbone, Marionette, $, _) -
           myEvent: () => @myEvent()
           moderator: () => @moderatorMode
           description: () => @model.descriptionParsed()
+          name: () => @model.nameParsed()
         }
 
       ui:
