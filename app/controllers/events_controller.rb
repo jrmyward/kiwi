@@ -93,6 +93,7 @@ class EventsController < ApplicationController
   private
 
   def get_time_zone
+    return unless request.format == 'html'
     return if browser_timezone.present?
     redirect_to "/welcome?continue=#{request.path}"
   end
