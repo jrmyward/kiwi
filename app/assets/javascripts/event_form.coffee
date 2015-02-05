@@ -113,6 +113,8 @@ saveEvent = (e) ->
   crop_y = form.find('[name="image_y"]').val()
   description = form.find('[name="description"]').val()
 
+  time_zone = jstz.determine().name()
+
   formData = new FormData()
 
   formData.append('name', name)
@@ -132,6 +134,7 @@ saveEvent = (e) ->
   formData.append('height', height)
   formData.append('width', width)
   formData.append('description', description)
+  formData.append('time_zone', time_zone)
 
   xhr = new XMLHttpRequest()
   url = "/api/1/events"
