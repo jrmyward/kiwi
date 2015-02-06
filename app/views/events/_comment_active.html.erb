@@ -1,6 +1,6 @@
-<div id="c_<%= comment.id %>" data-comment-id="<%= comment.id %>" class="comment-container active col-md-12">
+<div id="c_<%= comment.id %>" data-comment-id="<%= comment.id %>" class="comment-container active col-sm-12">
   <div class="row comment">
-    <div class="col-md-12">
+    <div class="col-sm-12">
       <%= render partial: 'events/comment_upvote', locals: {comment: comment } %>
       <span class="username"> <%= comment.authored_by.present? ? comment.authored_by.username : '' %> </span>
       <div class="tools">
