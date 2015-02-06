@@ -1,4 +1,4 @@
-<div id="c_<%= comment.id %>" data-comment-id="<%= comment.id %>" class="comment deleted col-md-12">
+<div id="c_<%= comment.id %>" data-comment-id="<%= comment.id %>" class="comment col-md-12">
   <div class="row comment">
     <div class="col-md-12">
       <%= render partial: 'events/comment_upvote', locals: {comment: comment } %>
@@ -8,9 +8,9 @@
         - <a href="#" data-comment-id="<%= comment.id %>" class="reply">Reply</a>
       </div>
       <% if comment.muted? %>
-        <div class="comment-text"><p>Muted by Admin</p></div>
+        <div class="comment-text deleted"><p>Muted by Admin</p></div>
       <% else %>
-        <div class="comment-text"><p>Deleted by <%= comment.deleted_by.username %></p></div>
+        <div class="comment-text deleted"><p>Deleted by <%= comment.deleted_by.username %></p></div>
       <% end %>
     </div>
   </div>

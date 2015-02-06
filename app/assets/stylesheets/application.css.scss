@@ -1149,17 +1149,9 @@ form.event_form {
 
     .comment {
       margin-bottom: 12px;
-    }
 
-    &:last-child {
-      .comment {
-        margin-bottom: 0px;
-
-        .comment-text {
-          p {
-            margin: 0;
-          }
-        }
+      .mute-delete.btn {
+        color: white;
       }
     }
   }
@@ -1231,7 +1223,7 @@ form.event_form {
     color: #AAA;
     font-size: 13px;
   }
-  .deleted .comment-text {
+  .deleted.comment-text {
     font-style: italic;
   }
   .nested-comments {
