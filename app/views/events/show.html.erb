@@ -1,0 +1,72 @@
+<%= javascript_include_tag "show_page_base" %>
+<div class="event-page col-sm-10">
+  <div class="event-card row">
+    <div class="event-image-container col-sm-6">
+      <img src="<%=@event.image.url(:medium)%>" />
+      <div class="event-likes-container">
+        <div class="fb-like" data-layout="button" data-action="like" data-width="98" data-height="20" style="width:98px; float: left;"></div>
+        <div style="float: left; width: 98px">
+          <a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-via="theforekast">Tweet</a>
+        </div>
+        <div class="g-plusone" data-size="medium" data-annotation="none" data-width="200"></div>
+      </div>
+    </div>
+    <div class="event-info-container col-sm-6">
+      <div class="event-heading-container">
+        <span class="event-title"><%= @event.name %></span>
+        </br>
+        <span class="event-time-location"><%= @event.location %>, <%= @event.datetime_string(@timezone) %></span>
+      </div>
+        <div class="event-tools-container clearfix">
+          <div class="pull-left" data-upvote-component data-upvote-count="<%= @event.upvote_count %>" data-upvoted="<%= @event.upvoted?(current_user) %>" data-event-id="<%= @event.id %>" data-logged-in="<%= current_user.present? %>"></div>
+          <div class="pull-left reminder-container" style="margin-left: 5px;" data-reminder-component data-event-id="<%= @event.id %>" data-times="<%= @event.reminders_for_user(current_user).map(&:time_to_event).to_json %>" data-logged-in="<%= current_user.present? %>"></div>
+          <% if can? :update, @event %>
+            <div class="event-tool-container">
+              <%= link_to "(Edit #{(current_user.username == @event.user) ? 'my' : ''} event)", edit_event_path(@event), class: 'event-tool' %>
+            </div>
+          <% end %>
+          <% if can? :destroy, @event %>
+            <div class="event-tool-container">
+              <a class="mute-delete event-tool" data-original-text="<%= "(Delete #{(current_user.username == @event.user) ? 'my' : ''} event)" %>" data-event-id="<%= @event.id %>"><%="(Delete #{(current_user.username == @event.user) ? 'my' : ''} event)"%></a>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="event-description-container">
+          <div class="event-description"><%= md @event.description %></div>
+          <div class="event-submitter">(Submitted by <%= @event.user %>)</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Comments</h3>
+      </div>
+    </div>
+    <div class="row comments" id="event-comments-region">
+      <div id="comment-new" class="col-md-12">
+      </div>
+      <div class="col-md-12">
+        <div class="row" id="comment-list">
+          <% @event.root_comments.each do |comment| %>
+            <%= render partial: "events/comment_#{comment.template}", locals: {comment: comment } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/html" id="comment-new-template">
+  <form class="form-vertical" data-event-id="<%= @event.id.to_s %>" data-method="POST" >
+    <div class="form-group">
+      <textarea name="message" class="form-control" rows="2"></textarea>
+      <input type="hidden" name="parent_id"></input>
+    </div>
+    <div class="form-group pull-right">
+      <span class="markdown-supported">Markdown format supported</span>
+      <button class="btn btn-default btn-xs" data-action="cancel">CANCEL</button>
+      <button class="btn btn-default btn-xs" data-action="comment">ADD COMMENT</button>
+    </div>
+    <div class="clearfix"></div>
+  </form>
+</script>

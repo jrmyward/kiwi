@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div id="home-list" class="col-sm-8" data-country="<%= @country %>" data-subkasts="<%= @subkasts %>" >
+      <% @events.group_by { |event| event.get_local_datetime(@time_zone).beginning_of_day }.each do |date, events| %>
+        <%= render partial: 'day_summary', locals: { events: events, date: date, repository: @repository, subkasts: @subkasts, country: @country } %>
+      <% end %>
+    </div>
+    <div id="sidebar-region" class="col-sm-4">
+      <div class="sidebar">
+        <div id="subkast-filter">
+          <%= render partial: 'subkast_list' %>
+        </div>
+        <div id="country-filter">
+          <%= render partial: 'country_filter' %>
+        </div>
+        <div id="sidebar-social">
+          <%= render partial: 'aside_section' %>
+        </div>
+        <div id="sidebar-event-list" class="sidebar-element">
+          <%= render partial: 'event_list' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag "home_page_base" %>

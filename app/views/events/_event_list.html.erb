@@ -1,0 +1,8 @@
+<div class="top-ranked">
+  <h5 class="top-events">Top Events of the Next 7 Days:</h5>
+  <ul class="events">
+    <% @top_events.each do |event| %>
+      <a class="event-name" href="<%=event_path(event)%>"><li><%=event.name%></li></a>
+    <% end %>
+  </ul>
+</div>

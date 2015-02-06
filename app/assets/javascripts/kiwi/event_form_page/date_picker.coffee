@@ -1,34 +1,35 @@
-FK.App.module "DatePicker", (DatePicker, App, Backbone, Marionette, $, _) ->
-  Instance = null
+class FK.DatePicker.DatePickerController extends Marionette.Controller
+  initialize: (options) =>
+    @model = new FK.DatePicker.DateTimeModel(options)
+    @view = new FK.DatePicker.DatePickerView(model: @model)
+    @regions = new Marionette.RegionManager()
 
-  @addFinalizer () ->
-    Instance.close()
+  renderIn: (selector) =>
+    $(selector).attr('data-rendered', 'true')
+    @regions.addRegion('spot', selector)
+    @regions.get('spot').show(@view)
 
-  @create = (domLocation, model) ->
-    Instance = new DatePicker.DatePickerController
-      model: model
+class FK.DatePicker.DateTimeModel extends Backbone.Model
+  defaults:
+    hour: ''
+    minute: ''
+    ampm: ''
+    date: null
+    all_day: false
+    format: ''
 
-    regionManager = new Marionette.RegionManager()
-    region = regionManager.addRegion("instance", domLocation)
-    datepicker_view = new DatePicker.DatePickerView
-      model: model
+  hasTime: () =>
+    @get('hour') isnt '' && @get('minute') isnt '' && @get('ampm') isnt ''
 
-    region.show datepicker_view
+  timeDisplay: () =>
+    return "#{@get('hour')}:#{@get('minute')} #{@get('ampm')}" if @get('format') is '' or @get('format') is 'recurring'
 
-    Instance.on 'close', () =>
-      regionManager.close()
+    hour = parseInt(@get('hour'))
+    minute = parseInt(@get('minute'))
 
-    return Instance
+    minute = "0#{minute}" if minute < 10
 
-  class DatePicker.DatePickerController extends Marionette.Controller
-    initialize: (options) =>
-      @model = options.model
-    value: () =>
-      # I'm a good citizen, i only return what I partied on
-      {
-        datetime: @model.get('datetime')
-        local_time: @model.get('local_time')
-        local_date: moment(@model.get('local_date')).format('YYYY-MM-DD')
-        time_format: @model.get('time_format')
-        is_all_day: @model.get('is_all_day')
-      }
+    centralHour = hour - 1
+    centralHour = 12 if centralHour == 0
+
+    return "#{hour}:#{minute}/#{centralHour}:#{minute}c"

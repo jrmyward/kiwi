@@ -1,46 +1,27 @@
-class FK.Models.Reminder extends Backbone.GSModel
+class FK.Models.Reminder extends Backbone.Model
   idAttribute: "_id"
 
   defaults:
-    time_to_event: ''
-    user: ''
-    event: ''
+    times_to_event: []
+    event_id: null
+    logged_in: true
 
-class FK.Collections.Reminders extends Backbone.Collection
-  model: FK.Models.Reminder
-  url: '/reminders'
+  noTimesSet: =>
+    @get('times_to_event').length == 0
 
-  addReminders: (user, event, timesToEvent) =>
-    reminders = _.map(timesToEvent, (timeToEvent) =>
-        user_id: user.userId()
-        event_id: event.get('_id')
-        time_to_event: timeToEvent
+  updateTimes: (times) =>
+    newTimes = _.difference(times, @get('times_to_event'))
+    oldTimes = _.difference(@get('times_to_event'), times)
+
+    _.each(newTimes, (newTime) ->
+      $.post("/api/1/events/#{@get('event_id')}/reminders", {
+        interval: newTime,
         recipient_time_zone: jstz.determine().name()
-    )
+      })
+    , @)
 
-    _.each(reminders, (reminder) =>
-      @create reminder if not @findReminder(user, event, reminder.time_to_event)
-    )
+    _.each(oldTimes, (oldTime) ->
+      $.ajax(url: "/api/1/events/#{@get('event_id')}/reminders/#{oldTime}", method: 'DELETE')
+    , @)
 
-  removeReminders: (user, event, timesToEvent) ->
-    _.each(timesToEvent, (timeToEvent) =>
-      reminder = @findReminder(user, event, timeToEvent)
-      reminder.destroy() if reminder
-    )
-
-  findReminder: (user, event, timeToEvent) =>
-    @findWhere
-      user_id: user.userId()
-      time_to_event: timeToEvent
-      event_id: event.get('_id')
-
-  fetchForUserAndEvent: (user, event) =>
-    @fetch
-      data:
-        user_id: user.userId()
-        event_id: event.get('_id')
-      success: () =>
-        @trigger 'fetched'
-      
-  times: () =>
-    @pluck 'time_to_event'
+    @set('times_to_event', times)

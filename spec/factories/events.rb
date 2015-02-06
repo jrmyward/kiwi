@@ -20,7 +20,9 @@ FactoryGirl.define do
     subkast "ST"
     is_all_day false
     time_format ''
-    user "mr. x"
+    user "mrx"
+
+    description 'This should be exciting!'
 
     trait :with_2_upvotes do
       upvote_names ["eventlover1", "eventlover2"]

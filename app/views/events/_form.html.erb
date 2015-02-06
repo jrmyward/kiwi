@@ -1,0 +1,100 @@
+<%= javascript_include_tag "form_page_base" %>
+
+<div class="event-form container">
+  <h3>Add Event</h3>
+  <form data-event-id="<%= @event.id.to_s %>" data-method="<%= @event.persisted? ? 'PUT' : 'POST'%>" class="well event_form form-horizonal">
+    <div class="form-group event_form_name">
+      <div class="col-sm-3">
+        <label class="control-label" for="name">Name of event</label></br>
+        <label id="name-error" class="error" for="name" style="display: none;"></label>
+      </div>
+      <div class="col-sm-9">
+        <input class="form-control" type="text" name="name" id="name" maxlength="100" value="<%= @event.name || '' %>"></input>
+        <span class="counter-label"><span data-role="counter">100</span> characters remaining</span>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="form-group event_form_subkast">
+      <div class="col-sm-3">
+        <label class="control-label">Subkast</label><br />
+        <label id="subkast-error" class="error" for="subkast" style="display: none;"></label>
+      </div>
+      <div class="col-sm-9">
+        <select class="form-control" name="subkast" id="subkast">
+          <option>Please select...</option>
+          <% Subkast.all.each do |subkast| %>
+            <% if subkast.code == @event.subkast %>
+              <option value="<%=subkast.code%>" selected><%=subkast.name%></option>
+            <% else %>
+              <option value="<%=subkast.code%>"><%=subkast.name%></option>
+            <% end %>
+          <% end %>
+        </select>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="form-group event_form_location">
+      <div class="col-sm-3">
+        <label class="control-label" for="location">Location</label><br />
+        <span class="error" data-field="location"></span>
+      </div>
+      <div class="col-sm-9">
+        <label>
+          <input type="radio" name="location_type" id="" value="international" <%= (!@event.national?) ? 'checked' : '' %>>
+          This event can be experienced by an <b>international</b> audience.
+        </label>
+        </br>
+        <label>
+          <input type="radio" name="location_type" id="" value="national" <%= (@event.national?) ? 'checked' : '' %>>
+          This event can be experienced in a <b>specific country</b>:
+        </label>
+        <select class="form-control" name="country">
+          <% Country.all.sort_by(&:en_name).each do |country| %>
+            <% if country.code == @event.country %>
+              <option value="<%=country.code%>" selected><%=country.en_name%></option>
+            <% else %>
+              <option value="<%=country.code%>"><%=country.en_name%></option>
+            <% end %>
+          <% end %>
+        </select>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="form-group event_form_date">
+      <div class="col-sm-3">
+        <label for="location">Date and Time</label><br />
+        <label id="date-error" class="error" for="date" style="display: none;"></label>
+      </div>
+      <div class="col-sm-9">
+        <div id="datetime-region" data-date="<%= @event.local_date_with_slashes %>" data-hour="<%= @event.local_hour %>" data-minute="<%= @event.local_minute %>" data-ampm="<%= @event.local_ampm %>" data-all-day="<%= @event.all_day? %>" data-format="<%= @event.time_format %>"></div>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="form-group event_form_image">
+      <div class="col-sm-3">
+        <label>Image</label>
+        <p>Choosing a great picture helps bring attention to your event.</p>
+        <p class="ie-warning">Image support for Internet Explorer is coming soon.</p>
+      </div>
+      <div class="col-sm-9">
+        <div id="image-region" data-url="<%= @event.image.url(:original) %>" data-width="<%= @event.width %>" data-crop-x="<%= @event.crop_x%>" data-crop-y="<%= @event.crop_y %>"></div>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="form-group event_form_description">
+      <div class="col-sm-3">
+        <label class="control-label">Description</label>
+      </div>
+      <div class="col-sm-9">
+        <textarea class="form-control" name="description" rows="3"><%= @event.description %></textarea>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <center>
+      <div class="save-container">
+        <button class="btn btn-focus" data-action="save">Save Event</button>
+      </div>
+    </center>
+    <div class="clearfix"></div>
+  </form>
+</div>

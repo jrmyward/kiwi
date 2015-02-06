@@ -17,7 +17,7 @@ class Event
   field :url, type: String
   field :is_all_day, type: Boolean
   field :time_format, type: String
-  field :tv_time , type: String
+  field :tv_time, type: String
   field :creation_timezone, type: String
   field :local_time, type: String
   field :local_date, type: Date
@@ -28,8 +28,10 @@ class Event
   field :country, type: String
   field :location_type, type: String
   field :subkast, type: String
-  has_many :reminders
+
+  has_many :reminders, dependent: :delete
   has_many :comments
+
   index({local_date:1})
   index({datetime:1})
 
@@ -43,14 +45,59 @@ class Event
     :s3_protocol => :https,
     :processors => [:cropper]
 
+  DEFAULT_TIME_ZONE = 'America/New_York'
+
   after_create do |event|
     HipChatNotification.new_event(event)
   end
 
   before_save do |event|
+    event.upvote_count = 0
     if not event.upvote_names.nil?
       event.upvote_count = event.upvote_names.size
     end
+  end
+
+  def country_name
+    Country.find_by(code: country).en_name
+  end
+
+  def national?
+    location_type == 'national'
+  end
+
+  def international?
+    location_type == 'international'
+  end
+
+  def location_string
+    return 'National' if national?
+    return 'Global' if international?
+  end
+
+  def location
+    return 'Global' if international?
+    return country_name.strip
+  end
+
+  def all_day?
+    is_all_day
+  end
+
+  def recurring?
+    time_format == 'recurring'
+  end
+
+  def tv_show?
+    time_format == 'tv_show'
+  end
+
+  def relative?
+    time_format.blank?
+  end
+
+  def full_subkast
+    Subkast.by_code(subkast).name
   end
 
   def refresh_reminders
@@ -58,6 +105,17 @@ class Event
       r.refresh_send_at
       r.save
     end
+  end
+
+  def set_all_reminders_pending
+    reminders.each do |reminder|
+      reminder.status = Reminder::STATUS_PENDING
+      reminder.save
+    end
+  end
+
+  def time_changed?
+    previous_changes.keys.any? { |k| %w(local_time datetime is_all_day time_format).include? k }
   end
 
   def name_escaped
@@ -76,7 +134,7 @@ class Event
       return tz.local_to_utc(local_datetime) if time_format == 'recurring'
 
       if time_format == 'tv_show'
-        tz = TZInfo::Timezone.get('America/New_York')
+        tz = TZInfo::Timezone.get(Event::DEFAULT_TIME_ZONE)
         return tz.local_to_utc(local_datetime)
       end
     else
@@ -84,9 +142,16 @@ class Event
     end
   end
 
+  def get_assumed_time
+    return datetime if relative?
+    return TZInfo::Timezone.get('America/New_York').local_to_utc(local_datetime) if tv_show?
+    return local_datetime if recurring?
+  end
+
   def get_local_datetime(timezone)
     return Time.parse(local_date.to_s) if is_all_day == true
 
+    timezone ||= Event::DEFAULT_TIME_ZONE
     tz = TZInfo::Timezone.get(timezone)
 
     if time_format == 'tv_show'
@@ -98,11 +163,83 @@ class Event
       return local_datetime
     end
 
-    return Time.parse(tz.utc_to_local(datetime).strftime("%Y-%m-%d %H:%M:%S"))
+    return Time.parse(tz.utc_to_local(datetime.utc).strftime("%Y-%m-%d %H:%M:%S"))
   end
 
   def local_datetime
     Time.parse(local_date.to_s + " " + local_time)
+  end
+
+  def local_date_with_slashes
+    local_date.strftime('%d/%m/%Y') rescue ''
+  end
+
+  def local_hour
+    local_time.split(' ')[0].split(':')[0] rescue ''
+  end
+
+  def local_minute
+    local_time.split(' ')[0].split(':')[1] rescue ''
+  end
+
+  def local_ampm
+    local_time.split(' ')[1] rescue ''
+  end
+
+  def pretty_datetime(timezone)
+    get_local_datetime(timezone).strftime('%-d %B, %Y - %A, %l:%M %p')
+  end
+
+  def datetime_string(timezone)
+    datetime = get_local_datetime(timezone)
+    return datetime.strftime("%A, %b %-d#{date_suffix(datetime)} %Y, #{pretty_time(timezone)}")
+  end
+
+  def date_suffix(datetime)
+    date = datetime.day
+
+    digit = date % 10
+
+    return 'st' if digit == 1
+    return 'nd' if digit == 2
+    return 'rd' if digit == 3
+
+    'th'
+  end
+
+  def pretty_time(timezone)
+    return 'All Day' if all_day?
+    return tv_time if tv_show?
+    return get_local_datetime(timezone).strftime('%l:%M%P').strip
+  end
+
+  def tv_time
+    "#{get_local_datetime('America/New_York').strftime('%l:%M').strip}/#{(get_local_datetime('America/New_York') - 1.hour).strftime('%l:%M').strip}c"
+  end
+
+  def reminders_for_user(user)
+    reminders.where(user: user)
+  end
+
+  def set_reminder(user, interval, recipient_time_zone)
+    Reminder.create(event_id: id, user_id: user.id, time_to_event: interval, recipient_time_zone: recipient_time_zone)
+  end
+
+  def remove_reminder(user, interval)
+    Reminder.where(event_id: id, user_id: user.id, time_to_event: interval).delete
+  end
+
+  def save_image(params)
+    update_attribute(:width, params[:width])
+    update_attribute(:height, params[:height])
+    update_attribute(:crop_x, params[:crop_x])
+    update_attribute(:crop_y, params[:crop_y])
+
+    return image.reprocess! if params[:image].blank? && params[:url].blank?
+
+    update_attribute(:image, params[:image]) if params[:image].present?
+
+    image_from_url(params[:url]) if params[:url].present? && !params[:image].present?
   end
 
   def image_from_url(url)
@@ -115,10 +252,10 @@ class Event
             self.image = data
         end
       else
-        self.image = open(url)
+        update_attribute(:image, open(url))
       end
     else
-      self.image = self.no_image()
+      update_attribute(:image, self.no_image())
     end
   end
 
@@ -135,19 +272,23 @@ class Event
     File.open("#{Rails.root}/public/images/thumb/missing.png")
   end
 
-  def add_upvote(username)
+  def add_upvote(user)
     if self.upvote_names.nil?
       self.upvote_names = Array.new
     end
-    if ! self.upvote_names.include? username
-      self.upvote_names.push username
+    if ! self.upvote_names.include? user.username
+      self.upvote_names.push user.username
     end
+
+    save
   end
 
-  def remove_upvote(username)
+  def remove_upvote(user)
     if not self.upvote_names.nil?
-      self.upvote_names.delete username
+      self.upvote_names.delete user.username
     end
+
+    save
   end
 
   def how_many_upvotes
@@ -158,100 +299,26 @@ class Event
     end
   end
 
-  def have_i_upvoted(username)
+  def upvoted?(user)
+    return false if user.nil?
+
     if self.upvote_names.nil?
       return false
     else
-      self.upvote_names.include? username
+      self.upvote_names.include? user.username
     end
   end
 
-  def relative_date(zone_offset)
-    if self.is_all_day == true || self.time_format == "recurring" || self.time_format == "tv_show"
-      return self.local_date.to_date
-    else
-      return (self.datetime - zone_offset.minutes).beginning_of_day.to_date
+  def comment(message, user)
+    Comment.create(event: self, message: message, authored_by: user)
+  end
+
+  def rebalance_comments
+    root_comments.sort { |a,b|
+      b.netvotes <=> a.netvotes
+    }.each_with_index do |comment, i|
+      Comment.rebalance(comment, i)
     end
-  end
-
-  def self.get_starting_events(datetime, zone_offset, country, subkasts, minimum, eventsPerDay, topRanked)
-    listEvents = self.get_starting_events_query(datetime, zone_offset, country, subkasts, minimum, eventsPerDay)
-    topEvents = self.top_ranked(topRanked, datetime, datetime + 7.days, zone_offset, country, subkasts)
-    events = listEvents.concat topEvents
-    events.uniq!
-    events.sort_by! { |event| - (event.upvote_names.nil? ? 0 : event.upvote_names.size) }
-    return events
-  end
-
-  def self.get_events_after_date(datetime, zone_offset, country, subkasts, howMany=0)
-    self.get_enough_events_from_day(datetime, zone_offset, country, subkasts, howMany, 3)
-  end
-
-  def self.get_events_by_date(startDatetime, zone_offset, country, subkasts, howMany=0, skip=0)
-    endDatetime = startDatetime + 1.day - 1.second
-    self.get_events_by_range(startDatetime, endDatetime, zone_offset, country, subkasts, howMany, skip)
-  end
-
-  def self.count_events_by_date(datetime, zone_offset, country, subkasts)
-    Array(self.get_events_by_date(datetime, zone_offset, country, subkasts)).size
-  end
-
-  def self.top_ranked(howMany, startDatetime, endDatetime, zone_offset, country, subkasts)
-    self.get_events_by_range(startDatetime, endDatetime, zone_offset, country, subkasts, howMany)
-  end
-
-  def self.get_enough_events_from_day(datetime, zone_offset, country, subkasts, minimum, eventsPerDay)
-    date = (datetime - zone_offset.minutes).beginning_of_day
-
-    possible_events = self.any_of(
-      { is_all_day: false, time_format: '', :datetime.gte => datetime, location_type: 'national', country: country },
-      { is_all_day: false, time_format: '', :datetime.gte => datetime, location_type: 'international' },
-      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'national', country: country },
-      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'international' },
-      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'national', country: country },
-      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'international' },
-      { is_all_day: true, :local_date.gte => date, location_type: 'national', country: country },
-      { is_all_day: true, :local_date.gte => date, location_type: 'international' }
-    ).any_in({subkast: subkasts}).to_a
-
-    sorted_possible_events = possible_events.sort_by { |event| - (event.upvote_count.nil? ? 0 : event.upvote_count) }
-    massage_events(sorted_possible_events, possible_events, zone_offset, eventsPerDay, minimum)
-  end
-
-  def self.get_starting_events_query(datetime, zone_offset, country, subkasts, minimum, eventsPerDay)
-    date = (datetime - zone_offset.minutes).beginning_of_day
-
-    possible_events = self.any_of(
-      { is_all_day: false, time_format: '', :datetime.gte => datetime, location_type: 'national', country: country},
-      { is_all_day: false, time_format: '', :datetime.gte => datetime, location_type: 'international'},
-      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'national', country: country } ,
-      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'international'},
-      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'national', country: country },
-      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'international'},
-      { is_all_day: true, :local_date.gte => date, location_type: 'national', country: country},
-      { is_all_day: true, :local_date.gte => date, location_type: 'international'},
-    ).any_in({subkast: subkasts}).to_a
-
-    sorted_possible_events = possible_events.sort_by { |event| - (event.upvote_count.nil? ? 0 : event.upvote_count) }
-    massage_events(sorted_possible_events, possible_events, zone_offset, eventsPerDay, minimum)
-  end
-
-  def self.massage_events(sorted_possible_events, possible_events, zone_offset, eventsPerDay, minimum)
-    events = []
-
-    dates = possible_events.collect { |event| event.relative_date(zone_offset) }
-    dates.sort_by! { |date| date }
-    dates = dates.uniq
-
-    each_day_min_events = 0
-    dates.each do |date|
-      eventsOnDate = sorted_possible_events.select { |event| event.relative_date(zone_offset) == date }
-      events.concat eventsOnDate
-      each_day_min_events += eventsOnDate.take(eventsPerDay).size
-      break if each_day_min_events >= minimum
-    end
-
-    return events
   end
 
   def self.get_events_by_range(startDatetime, endDatetime, zone_offset, country, subkasts, howMany=0, skip=0)

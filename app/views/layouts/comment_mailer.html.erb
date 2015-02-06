@@ -2,13 +2,17 @@
 <table width="500" align="left"><tr><td>
   <h1 style="font-weight: 700, font-size: 35px; letter-spacing: 1px; color: #222;">FOREKAST</h1>
   <p>
-    <a href="<%=url_for(controller: 'home', action: 'index', only_path: false) + "events/show/#{@comment.event.id.to_s}"%>"><%=@comment.authored_by.username%> <%=yield%></a>
+    <%= link_to event_url(@comment.event) do %>
+      <%=@comment.authored_by.username%> <%=yield%>
+    <% end %>
   </p>
   <p>
     "<%=@comment.message%>"
   </p>
   <p>
-  <a href="<%=url_for(controller: 'registrations', action: 'edit', only_path: false)%>">Change notification settings</a>
+    <%= link_to edit_user_registration_url do %>
+      Change notification settings
+    <% end %>
   </p>
 </td></tr></table>
 </div>

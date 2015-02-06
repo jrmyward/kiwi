@@ -24,6 +24,8 @@ gem 'mailchimp-api', require: 'mailchimp'
 gem 'hipchat'
 gem 'aws-sdk'
 
+gem 'browser-timezone-rails'
+
 group :assets do
   gem 'sass-rails',   '~> 4.0.0'
   gem 'coffee-rails', '~> 4.0.0'
@@ -39,12 +41,17 @@ gem 'jquery-rails'
 gem 'therubyracer', platforms: :ruby
 gem 'less-rails'
 
+gem 'redcarpet'
+
 gem 'jbuilder', '~> 1.2'
 gem 'oj'
 gem 'paperclip', '~> 3.0'
 gem 'mongoid-paperclip', :require => 'mongoid_paperclip'
 
 gem 'tzinfo'
+
+gem 'rocket_pants'
+gem 'will_paginate_mongoid'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

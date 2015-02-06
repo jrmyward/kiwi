@@ -1,19 +1,12 @@
 describe 'Image Trimmer', () ->
 
   beforeEach () ->
-    FK.App.ImageTrimmer.start()
     $('body').append $('<div id="testbed"></div>')
-    @imageTrimmer = FK.App.ImageTrimmer.create("#testbed", new FK.Models.Event)
+    @imageTrimmer = new FK.ImageTrimmer.ImageTrimmerController
+    @imageTrimmer.renderIn('#testbed')
 
   afterEach () ->
-    $('body #testbed').remove()
-    FK.App.ImageTrimmer.stop()
-
-  describe 'Memory management', () ->
-
-    it 'should close all instances of the image trimmer when the module stops', () ->
-      FK.App.ImageTrimmer.stop()
-      expect($('body #image-trimmer-region').length).toBe(0)
+    $('#testbed').remove()
 
   describe 'Image setting', () ->
     it 'should be able to load an image', () ->
@@ -84,6 +77,33 @@ describe 'Image Trimmer', () ->
         @imageTrimmer.setPosition 100, 50
         expect(@imageTrimmer.value().crop_x).toBe(100)
         expect(@imageTrimmer.value().crop_y).toBe(50)
+
+    describe 'Hidden form inputs', () ->
+      beforeEach () ->
+        spy = jasmine.createSpy()
+        @imageTrimmer.on 'new:image:ready', spy
+
+        runs () ->
+          imageUrl = '/images/stubs/averageSize.jpg'
+          @imageTrimmer.newImage imageUrl, 'remote'
+          @imageTrimmer.setWidth 500
+          @imageTrimmer.setPosition 100, 50
+
+        waitsFor () ->
+          spy.callCount > 0
+
+      it 'sets the image url in an input field', ->
+       expect($('#testbed input[name="image_url"]').val()).toBe('/images/stubs/averageSize.jpg')
+
+      it 'sets the image width in a hidden field', ->
+       expect(Math.ceil($('#testbed input[name="image_width"]').val())).toBe(500)
+
+      it 'sets the image crop x in a hidden field', ->
+       expect($('#testbed input[name="image_x"]').val()).toBe('100')
+
+      it 'sets the image crop y in a hidden field', ->
+       expect($('#testbed input[name="image_y"]').val()).toBe('50')
+
 
   describe 'Validation', () ->
     beforeEach () ->

@@ -1,67 +1,71 @@
-<% if resource.errors.present? %>
-  <div class="alert alert-warning col-md-10">
-    <p> <%= devise_error_messages! %></p>
-  </div>
-<% end %>
-<div class="row signup-container">
-  <div class="col-md-10 signup-subcontainer">
-    <h3>Join</h3>
-    <% unless notice == "omniauthed" %>
-    <%- if devise_mapping.omniauthable? %>
-      <ul class="omniauth-login">
-        <%- resource_class.omniauth_providers.each do |provider| %>
-          <li class="<%= provider %>">
-          <%= link_to "<span class=\"icon icon-#{provider}\"></span><span class=\"txt\">Sign up with #{provider.to_s.titleize} </span>".html_safe, user_omniauth_authorize_path(provider), class: provider %></li>
-        <% end -%>
-      </ul>
-    <% end -%>
-  <div class="formlegend">
-    <div>Or via email</div>
-  </div>
+<div id="container" class="container">
+  <% if resource.errors.present? %>
+    <div class="row">
+      <div class="alert alert-warning col-sm-10 col-sm-offset-1">
+        <p> <%= devise_error_messages! %></p>
+      </div>
+    </div>
   <% end %>
-  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form', :class => "form-horizontal sign-up" } ) do |f| %>
-    <div class="form-group">
-      <%= f.label  :username, class: 'col-sm-2 control-label' %>
-      <div class="col-sm-offset-0 col-sm-4">
-        <%= f.text_field :username, class: 'form-control' %>
-      </div>
+  <div class="row signup-container">
+    <div class="col-md-10 signup-subcontainer">
+      <h3>Join</h3>
+      <% unless notice == "omniauthed" %>
+      <%- if devise_mapping.omniauthable? %>
+        <ul class="omniauth-login">
+          <%- resource_class.omniauth_providers.each do |provider| %>
+            <li class="<%= provider %>">
+            <%= link_to "<span class=\"icon icon-#{provider}\"></span><span class=\"txt\">Sign up with #{provider.to_s.titleize} </span>".html_safe, user_omniauth_authorize_path(provider), class: provider %></li>
+          <% end -%>
+        </ul>
+      <% end -%>
+    <div class="formlegend">
+      <div>Or via email</div>
     </div>
-
-    <div class="form-group">
-      <%= f.label :name, class: 'col-sm-2 control-label' %>
-      <div class="col-sm-offset-0 col-sm-4">
-        <%= f.text_field :name, class: 'form-control' %>
+    <% end %>
+    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form', :class => "form-horizontal sign-up" } ) do |f| %>
+      <div class="form-group">
+        <%= f.label  :username, class: 'col-sm-2 control-label' %>
+        <div class="col-sm-offset-0 col-sm-4">
+          <%= f.text_field :username, class: 'form-control' %>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <%= f.label :email, class: 'col-sm-2 control-label' %>
-      <div class="col-sm-offset-0 col-sm-4">
-        <%= f.text_field :email, class: 'form-control' %>
+      <div class="form-group">
+        <%= f.label :name, class: 'col-sm-2 control-label' %>
+        <div class="col-sm-offset-0 col-sm-4">
+          <%= f.text_field :name, class: 'form-control' %>
+        </div>
       </div>
-    </div>
 
-    <%= f.hidden_field :provider , class: 'form-control' %>
-    <%= f.hidden_field :uid %>
-
-    <div class="form-group">
-      <%= f.label :password, class: 'col-sm-2 control-label' %>
-      <div class="col-sm-offset-0 col-sm-4">
-        <%= f.password_field :password, class: 'form-control' %>
+      <div class="form-group">
+        <%= f.label :email, class: 'col-sm-2 control-label' %>
+        <div class="col-sm-offset-0 col-sm-4">
+          <%= f.text_field :email, class: 'form-control' %>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <%= f.label :password_confirmation, class: 'col-sm-2 control-label'  %>
-      <div class="col-sm-offset-0 col-sm-4">
-        <%= f.password_field :password_confirmation, class: 'form-control' %>
-      </div>
-    </div>
 
-    <div class="center"><%= f.submit "Join", class: 'btn btn-focus' %></div>
-  </div>
-  <hr />
-  <div class="col-md-10 center">
-    <p>Already have an account? <%= link_to "Log In", session_path(User) %></p>
+      <%= f.hidden_field :provider , class: 'form-control' %>
+      <%= f.hidden_field :uid %>
+
+      <div class="form-group">
+        <%= f.label :password, class: 'col-sm-2 control-label' %>
+        <div class="col-sm-offset-0 col-sm-4">
+          <%= f.password_field :password, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :password_confirmation, class: 'col-sm-2 control-label'  %>
+        <div class="col-sm-offset-0 col-sm-4">
+          <%= f.password_field :password_confirmation, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class="center"><%= f.submit "Join", class: 'btn btn-focus' %></div>
+    </div>
+    <hr />
+    <div class="col-md-10 center">
+      <p>Already have an account? <%= link_to "Log In", session_path(User) %></p>
+    </div>
+    <% end %>
   </div>
 </div>
-  <% end %>

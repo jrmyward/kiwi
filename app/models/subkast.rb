@@ -10,12 +10,23 @@ class Subkast
     self.in(code: user.my_subkasts)
   end
 
-  def as_json(option={})
+  def slug
+    url
+  end
+
+  def self.by_slug(slug)
+    Subkast.where(url: slug).first
+  end
+
+  def self.by_code(code)
+    Subkast.where(code: code).first
+  end
+
+  def serializable_hash(opts)
     {
-      '_id' => _id.to_s,
-      :code => code,
-      :name => name,
-      :url => url
+      name: name,
+      code: code,
+      slug: url
     }
   end
 end

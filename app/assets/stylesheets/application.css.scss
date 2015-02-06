@@ -3,6 +3,7 @@
  *= require home
  *= require scaffolds
  *= require font-awesome
+ *= require datepicker
  */
 
 // Core variables and mixins
@@ -95,6 +96,10 @@
 .form-horizontal .form-group {
   margin-left: 0;
   margin-right: 0;
+}
+
+div.inline {
+  display: inline-block;
 }
 
 /* USERVOICE */
@@ -211,6 +216,7 @@ body.not-found {
 .navbar-container {
   .navbar-collapse {
     padding: 0 !important;
+    margin-right: 20px;
     .tagline {
       color: #FFF;
       font-size: 16px;
@@ -457,38 +463,10 @@ body.not-found {
   }
   .upvote-container {
     height: 60px;
-    margin-right: 14px;
     width: 20px;
-    color: #666;
-    text-align: center;
-    cursor: pointer;
-    &:hover {
-      color: #111;
-    }
-    i {
-      padding-top: 5px;
-      cursor: pointer;
-      text-align: center;
-      &.glyphicon-ok {
-        font-size: 15px;
-        color: $active;
-      }
-      &.glyphicon-remove {
-        color: #EB3D00;
-        font-size: 16px;
-        line-height: 0.9;
-      }
-      &.fa-caret-up {
-        font-size: 16px;
-      }
-    }
-    .upvote-counter {
-      font-size: 18px;
-      line-height: 1;
-      font-weight: 700;
-      text-align: center;
-    }
+    margin-right: 14px;
   }
+
   img {
     cursor: pointer;
   }
@@ -518,6 +496,49 @@ body.not-found {
     }
   }
 }
+
+.upvote-counter {
+  color: #666;
+  text-align: center;
+  cursor: pointer;
+  font-size: 18px;
+
+  .inline-text {
+    color: black;
+    font-size: 14px;
+  }
+
+  .small {
+    font-size: 14px;
+  }
+
+  &:hover {
+    color: #111;
+  }
+  i {
+    padding-top: 5px;
+    cursor: pointer;
+    text-align: center;
+    &.glyphicon-ok {
+      font-size: 15px;
+      color: $active;
+    }
+    &.glyphicon-remove {
+      color: #EB3D00;
+      font-size: 16px;
+      line-height: 0.9;
+    }
+    &.fa-caret-up {
+      font-size: 16px;
+    }
+  }
+  .counter {
+    line-height: 1;
+    font-weight: 700;
+    text-align: center;
+  }
+}
+
 .event-form {
   width: 925px;
   h3 {
@@ -526,14 +547,16 @@ body.not-found {
   .row {
     margin-bottom: 35px;
   }
-  span.error {
+  label.error {
+    font-size: 12px;
     color: red;
+    font-weight: normal;
   }
 }
 .event {
   .reminder-container {
     position: absolute;
-    top: 15px;
+    top: 30px;
     right: 15px;
     width: 14px;
     height: 20px;
@@ -1061,6 +1084,8 @@ form.event_form {
         display: inline-block;
       }
       .event-tool {
+        margin-left: 8px;
+        color: #888;
         &.btn {
           height: 18px;
           color: #FFF;
@@ -1109,17 +1134,48 @@ form.event_form {
 
 #event-comments-region {
   width: 830px;
+  .comment,
+  .reply-list > div {
+    width: 100%;
+  }
+
+  .reply-list {
+    margin-bottom: 12px;
+  }
+
+  .comment-container {
+    display: inline-block;
+    float: left;
+
+    .comment {
+      margin-bottom: 12px;
+    }
+
+    &:last-child {
+      .comment {
+        margin-bottom: 0px;
+
+        .comment-text {
+          p {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+  .reply-list {
+    border-left: dotted 1px #ddd;
+  }
+
+  .replybox-region {
+    form {
+      margin-top: 10px;
+      margin-left: 30px;
+    }
+  }
   .markdown-supported {
     font-size: 12px;
     padding: 0 10px 0 0;
-  }
-  .comment {
-    margin: 10px 0 0;
-  }
-  .user-comment {
-    margin: 10px 0;
-    display: inline-block;
-    float: left;
   }
   .up-vote {
     display: inline-block;
@@ -1133,15 +1189,19 @@ form.event_form {
       height: 20px;
       font-size: 25px;
     }
+
+    .comment-upvote, .comment-downvote {
+      color: #888;
+      &:hover {
+        text-decoration: none;
+      }
+    }
   }
   .upvote-marked {
     color: #89E4D9;
   }
   .downvote-marked {
     color: #FFA094;
-  }
-  .info {
-    margin-bottom: 3px;
   }
   .username {
     font-size: 18px;
@@ -1154,6 +1214,8 @@ form.event_form {
   }
   .mute-delete {
     cursor: pointer;
+    font-weight: bold;
+    color: #666;
     &.btn-xs {
       padding: 0 5px;
       height: 19px;
@@ -1642,80 +1704,6 @@ body.dark .container {
     a {
       word-break: break-all;
       word-wrap: break-word;
-    }
-    #event-card-region {
-      width: initial;
-      .event-card {
-        margin: 0;
-        padding: 0;
-        .event-image-container {
-          width: initial;
-          height: initial;
-          margin: 0;
-          padding: 0;
-          text-align: center;
-          .event-likes-container {
-            display: none;
-          }
-        }
-        .event-heading-container {
-          .event-title {
-            font-size: 18px;
-          }
-          .event-time-location {
-            font-size: 12px;
-            padding: 5px 0 10px;
-          }
-        }
-        .event-info-container {
-          width: initial;
-          .event-description-container {
-            margin: 10px 0 0;
-            .event-submitter {
-              padding: 5px 0 0;
-            }
-          }
-        }
-      }
-    }
-    #event-comments-region {
-      width: initial;
-      padding: 0 15px;
-      .row {
-        margin: 0;
-        .col-md-12 {
-          padding: 0;
-        }
-      }
-      h3 {
-        margin: 10px 0;
-        font-weight: 18px;
-      }
-      .pull-right {
-        margin: 0;
-      }
-      .comment {
-        margin: 10px 0 0;
-        .info {
-          padding: 13px 0 0;
-        }
-        .user-comment {
-          padding: 0 0 0 25px;
-          float: none;
-          display: block;
-          margin: 0;
-          .up-vote {
-            margin: 0 5px 0 0;
-            display: block;
-          }
-          .username {
-            font-size: 15px;
-          }
-        }
-        .comment-text {
-          font-size: 13px;
-        }
-      }
     }
   }
   .event-form {

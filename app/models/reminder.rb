@@ -2,7 +2,7 @@ class Reminder
   include Mongoid::Document
   include Mongoid::Timestamps
   field :send_at,  :type => Time
-  field :status, :type => String 
+  field :status, :type => String
   field :time_to_event, :type => String
   field :recipient_time_zone, :type => String
   belongs_to :user

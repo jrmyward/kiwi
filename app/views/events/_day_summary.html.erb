@@ -1,0 +1,20 @@
+<% count = repository.count_events_on_date(date.strftime('%B %-d, %Y')) %>
+<div class="event-block" data-tomorrow='<%= (date + 1.day).strftime('%b %-d, %Y') %>'>
+  <h3><%= today(date) %> <%= date.strftime('%-d %B, %Y - %A') %></h3>
+  <div class="events">
+    <% events.each do |event| %>
+      <%= render partial: 'event_summary', locals: { event: event } %>
+    <% end %>
+  </div>
+  <% if events.size < count %>
+    <%= form_tag('/events/on_date', class: 'more-form', method: 'GET', total: count, remote: true) do %>
+      <input type="hidden" name="date" value="<%= date.strftime('%B %-d, %Y') %>" />
+      <input type="hidden" name="skip" value="<%= events.size %>" />
+      <% subkasts.each do |subkast| %>
+        <input type="hidden" name="subkasts[]" value="<%= subkast %>" />
+      <% end %>
+      <input type="hidden" name="country" value="<%= country %>" />
+      <%= submit_tag('Show More', class: 'btn btn-more') %>
+    <% end %>
+  <% end %>
+</div>

@@ -165,6 +165,11 @@ task :all_users_to_default => :environment do
   queue "cd #{deploy_to}/current; bundle exec rake db:all_users_to_default RAILS_ENV=production"
 end
 
+desc 'make a user a moderator by username'
+task :make_moderator => :environment do
+  queue "cd #{deploy_to}/current; bundle exec rake users:make_moderator RAILS_ENV=production username=#{ENV['username']}"
+end
+
 desc "Cold Deploy the application for the first time"
 task :cold_deploy => :environment do
   notify("#{ENV['host']} - cold deploy! ", 'green')

@@ -4,7 +4,7 @@ describe Comment do
   before :all do
     @comment = build :comment
   end
-  
+
   describe "Creating and Setting Comments" do
 
     it "should create comments" do
@@ -19,15 +19,15 @@ describe Comment do
 
     it "should create trees of comments" do
       root = @comment
-      root.new_comment(create(:comment))
-      root.new_comment(create(:comment))
+      root.reply("good point", create(:user))
+      root.reply("great point", create(:user))
       root.children.length.should == 2
     end
 
   end
 
   describe "Setting Comment Statuses" do
-    
+
     it "should have a flagged status" do
       comment = create :flagged_comment
       comment.status.should == "flagged"
@@ -46,39 +46,38 @@ describe Comment do
   end
 
   describe "Comment Voting" do
+    let(:u1) { create :user }
 
     it "should upvote comment" do
-      @comment.add_upvote(User)
-      @comment.upvote_names[0].should equal(User)
-      @comment.remove_upvote(User)
-      @comment.upvote_names[0].should be_nil
+      @comment.add_upvote(u1)
+      expect(@comment).to be_upvoted_by(u1)
+      @comment.remove_upvote(u1)
+      expect(@comment).not_to be_upvoted_by(u1)
     end
 
     it "should downvote comment" do
-      @comment.add_downvote(User)
-      @comment.downvote_names[0].should equal(User)
-      @comment.remove_downvote(User)
-      @comment.downvote_names[0].should be_nil
+      @comment.add_downvote(u1)
+      expect(@comment).to be_downvoted_by(u1)
+      @comment.remove_downvote(u1)
+      expect(@comment).not_to be_downvoted_by(u1)
     end
 
     it "was previously upvoted, it should now downvote comment" do
-      @comment.add_upvote(User)
-      @comment.upvote_names[0].should equal(User)
-      @comment.remove_upvote(User)
-      @comment.add_downvote(User)
-      @comment.upvote_names[0].should be_nil
-      @comment.downvote_names[0].should equal(User)
+      @comment.add_upvote(u1)
+      expect(@comment).to be_upvoted_by(u1)
+      @comment.remove_upvote(u1)
+      @comment.add_downvote(u1)
+      expect(@comment).not_to be_upvoted_by(u1)
+      expect(@comment).to be_downvoted_by(u1)
     end
 
     it "was previously downvoted, it should now upvote comment" do
-      @comment.add_downvote(User)
-      @comment.downvote_names[0].should equal(User)
-      @comment.remove_downvote(User)
-      @comment.add_upvote(User)
-      @comment.downvote_names[0].should be_nil
-      @comment.upvote_names[0].should equal(User)
+      @comment.add_downvote(u1)
+      expect(@comment).to be_downvoted_by(u1)
+      @comment.remove_downvote(u1)
+      @comment.add_upvote(u1)
+      expect(@comment).not_to be_downvoted_by(u1)
+      expect(@comment).to be_upvoted_by(u1)
     end
-
   end
-
 end

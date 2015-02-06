@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
-  def index
+  def welcome
+    render 'welcome', layout: false
   end
 end
