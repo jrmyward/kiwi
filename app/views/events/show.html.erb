@@ -4,11 +4,15 @@
     <div class="event-image-container col-sm-6">
       <img src="<%=@event.image.url(:medium)%>" />
       <div class="event-likes-container">
-        <div class="fb-like" data-layout="button" data-action="like" data-width="98" data-height="20" style="width:98px; float: left;"></div>
-        <div style="float: left; width: 98px">
-          <a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-via="theforekast">Tweet</a>
+        <div class="pull-left social-button-container">
+          <div class="fb-like" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
         </div>
-        <div class="g-plusone" data-size="medium" data-annotation="none" data-width="200"></div>
+        <div class="pull-left social-button-container">
+          <a href="https://twitter.com/share" class="twitter-share-button" data-count="none">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        </div>
+        <div class="pull-left social-button-container">
+          <div class="g-plusone" data-annotation="none" data-width="200"></div>
+        </div>
       </div>
     </div>
     <div class="event-info-container col-sm-6">
