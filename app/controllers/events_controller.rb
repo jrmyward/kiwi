@@ -5,6 +5,8 @@ class EventsController < ApplicationController
   def index
     url_subkast = [Subkast.by_slug(params[:subkast_slug]).code] if params[:subkast_slug]
 
+    @time_zone = client_timezone
+
     if params[:country] && current_user
       current_user.country = params[:country]
       current_user.save
@@ -19,9 +21,8 @@ class EventsController < ApplicationController
     @subkast = Subkast.by_slug(params[:subkast_slug])
 
     @subkasts = params[:subkasts] || url_subkast || Subkast.by_user(current_user).map(&:code)
-    date = params[:date] || DateTime.now.beginning_of_day.to_s
+    date = params[:date] || ActiveSupport::TimeZone.new(@time_zone).utc_to_local(DateTime.now.utc).beginning_of_day.to_s
     @repository = EventRepository.new(client_timezone, @country, @subkasts)
-    @time_zone = client_timezone
     @events = @repository.events_from_date(date, 7, 5)
     @all_subkasts = Subkast.by_user(current_user)
     @all_countries = Country.all.sort_by(&:en_name)
