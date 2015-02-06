@@ -24,7 +24,7 @@ renderReminders = () ->
   )
 
 bindFetchMoreOnDay = () ->
-  $('.more-form').on('ajax:success', (origin, resp) ->
+  $('.more-form:not([data-bound])').on('ajax:success', (origin, resp) ->
     form = origin.target
 
     eventBlock = $(form).closest('.event-block').children('.events').first()
@@ -42,9 +42,11 @@ bindFetchMoreOnDay = () ->
     renderReminders()
   )
 
-  $('.more-form').on('ajax:send', (origin, resp) ->
+  $('.more-form:not([data-bound])').on('ajax:send', (origin, resp) ->
     $(origin.target).find('.btn-more').attr('disabled', true)
   )
+
+  $('.more-form:not([data-bound])').attr('data-bound', true)
 
 
 fetchMore = _.throttle(() ->
