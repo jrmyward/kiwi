@@ -104,7 +104,7 @@ module Api
 
         json[:description] = params[:description]
 
-        json[:user] = api_current_user.username
+        json[:user] = api_current_user.username if action_name == 'post'
 
         json
       end
