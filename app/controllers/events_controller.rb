@@ -65,8 +65,9 @@ class EventsController < ApplicationController
     # temporary for app backwards compatability
 
     respond_to do |format|
-      format.json
+      # keep format.html first so facebook doesn't have a crawling problem when it's liked
       format.html
+      format.json
     end
   end
 
