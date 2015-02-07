@@ -2,6 +2,7 @@
 <% content_for :meta do %>
   <meta property="og:title" content="<%= @event.name %>">
   <meta property="og:image" content="<%= @event.image.url(:medium) %>">
+  <meta property="og:description" content="<%= @event.description %>">
 <% end %>
 <div class="event-page col-sm-10">
   <div class="event-card row">
