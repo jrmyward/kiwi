@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'open_uri_redirections'
 require 'active_support/core_ext'
 
 class Event
@@ -252,7 +253,7 @@ class Event
             self.image = data
         end
       else
-        update_attribute(:image, open(url))
+        update_attribute(:image, open(url, allow_redirections: :all))
       end
     else
       update_attribute(:image, self.no_image())
