@@ -114,9 +114,9 @@ describe "Reminder", ->
           expect(@requests[0].method).toBe('POST')
           expect(@requests[1].method).toBe('POST')
 
-        it 'sends the intervals in the request body', ->
-          expect(@requests[0].requestBody).toBe('interval=4h')
-          expect(@requests[1].requestBody).toBe('interval=1d')
+        it 'sends the intervals and request time zone in the request body', ->
+          expect(@requests[0].requestBody).toBe('interval=4h&recipient_time_zone=America%2FNew_York')
+          expect(@requests[1].requestBody).toBe('interval=1d&recipient_time_zone=America%2FNew_York')
 
       it 'closes the reminder popover', ->
         expect($('.event-reminders-super-container').length).toBe(0)

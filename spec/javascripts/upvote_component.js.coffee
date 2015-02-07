@@ -16,7 +16,7 @@ describe 'Upvote Counter', ->
         expect($('.upvote-counter').length).toBe(1)
 
       it 'shows the upvote count', ->
-        expect($('.upvote-counter').text()).toEqual('4')
+        expect($('.upvote-counter').text()).toMatch('4')
 
       it 'has a checkmark', ->
         expect($('.glyphicon-ok').length).toBe(1)
@@ -53,7 +53,7 @@ describe 'Upvote Counter', ->
         $('.glyphicon-chevron-up').click()
 
       it 'increases the upvote count by 1', ->
-        expect($('.upvote-counter').text()).toEqual('5')
+        expect($('.upvote-counter').text()).toMatch('5')
 
       it 'has a checkmark', ->
         expect($('.glyphicon-ok').length).toBe(1)
@@ -84,7 +84,7 @@ describe 'Upvote Counter', ->
         $('.glyphicon-ok').click()
 
       it 'deecreases the upvote count by 1', ->
-        expect($('.upvote-counter').text()).toEqual('3')
+        expect($('.upvote-counter').text()).toMatch('3')
 
       it 'has a chevron', ->
         expect($('.glyphicon-chevron-up').length).toBe(1)
@@ -115,7 +115,7 @@ describe 'Upvote Counter', ->
         $('.glyphicon-chevron-up').click()
 
       it 'does not change the upvote count', ->
-        expect($('.upvote-counter').text()).toEqual('4')
+        expect($('.upvote-counter').text()).toMatch('4')
 
       it 'does not change to a checbox', ->
         expect($('.glyphicon-ok').length).toEqual(0)
