@@ -12,6 +12,9 @@
   <head>
     <%= render :partial => 'layouts/head_section' %>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <% if content_for?(:meta) %>
+      <%= yield :meta %>
+    <% end %>
   </head>
   <body style="margin-top: <%=px%>px; padding-bottom: 60px;">
     <div id="fb-root"></div>
