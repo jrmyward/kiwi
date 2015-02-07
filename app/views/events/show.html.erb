@@ -1,6 +1,7 @@
 <%= javascript_include_tag "show_page_base" %>
 <% content_for :meta do %>
   <meta property="og:title" content="<%= @event.name %>">
+  <meta property="og:image" content="<%= @event.image.url(:medium) %>">
 <% end %>
 <div class="event-page col-sm-10">
   <div class="event-card row">
