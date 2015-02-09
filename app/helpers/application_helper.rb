@@ -17,6 +17,6 @@ module ApplicationHelper
   end
 
   def today(date)
-    Date.today.day == date.day ? 'Today,' : ''
+    ActiveSupport::TimeZone.new(@time_zone).utc_to_local(DateTime.now.utc).day == date.day ? 'Today,' : ''
   end
 end
