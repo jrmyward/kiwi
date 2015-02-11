@@ -489,7 +489,7 @@ body.not-found {
     a.event-name {
       color: #049ADA;
       cursor: pointer;
-        font-weight: 600;
+      font-weight: 600;
       &:hover {
         text-decoration: none;
       }
@@ -637,7 +637,32 @@ body.not-found {
   ol {
     padding-left: 22px;
   }
+
+  .recent-event-heading {
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  .recent-event-list {
+    height: 300px;
+    overflow: auto;
+  }
+  .event-mini {
+    background-color: #fbfbfd;
+    border: solid 1px #efefef;
+    padding: 10px;
+
+    .location-text {
+      color: #a2a2a2;
+    }
+
+    a {
+      color: #049ADA;
+      text-decoration: none;
+    }
+  }
   #subkast-filter {
+    padding: 20px 0 0;
     h5 {
       padding-top: 0;
     }

@@ -27,6 +27,24 @@ class EventRepository
     events_by_range(from_date, to_date, how_many_events)
   end
 
+  def most_recent_events(date, how_many)
+    date = DateTime.parse(date)
+    utc_date = @time_zone.local_to_utc(date)
+
+    events = Event.any_of(
+      { is_all_day: false, time_format: '', :datetime.gte => utc_date, location_type: 'international' },
+      { is_all_day: false, time_format: '', :datetime.gte => utc_date, location_type: 'national', country: @country },
+      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'international' },
+      { is_all_day: false, time_format: 'recurring', :local_date.gte => date, location_type: 'national', country: @country },
+      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'international' },
+      { is_all_day: false, time_format: 'tv_show', :local_date.gte => date, location_type: 'national', country: @country },
+      { is_all_day: true, :local_date.gte => date, location_type: 'international' },
+      { is_all_day: true, :local_date.gte => date, location_type: 'national', country: @country }
+    ).any_in({ subkast: @subkasts }).limit(how_many).to_a
+
+    events
+  end
+
   # temporary implementation for backwards compatibility
   def self.events_on_date_by_offset(datetime, zone_offset, country, subkasts, how_many, skip)
     start_date = datetime.beginning_of_day
