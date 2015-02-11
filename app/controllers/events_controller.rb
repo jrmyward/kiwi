@@ -27,7 +27,7 @@ class EventsController < ApplicationController
     @all_subkasts = Subkast.by_user(current_user)
     @all_countries = Country.all.sort_by(&:en_name)
     @top_events = @repository.top_ranked_events(date, (DateTime.parse(date) + 7.days).to_s, 10)
-    @recent_events = @repository.most_recent_events(date, 30)
+    @recent_events = @repository.most_recent_events(50)
 
     render :index
   end

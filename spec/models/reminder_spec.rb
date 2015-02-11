@@ -45,6 +45,10 @@ describe Reminder do
       Timecop.freeze(Time.utc(2014, 1, 10, 11, 0, 0))
     end
 
+    after(:each) do
+      Timecop.return
+    end
+
     it 'should be able to lookup all reminders that are due now' do
       Reminder.lookup_reminders_to_send.size.should == 4
     end
