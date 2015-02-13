@@ -21,7 +21,8 @@ class EventsController < ApplicationController
     @subkast = Subkast.by_slug(params[:subkast_slug])
 
     @subkasts = params[:subkasts] || url_subkast || Subkast.by_user(current_user).map(&:code)
-    date = params[:date] || ActiveSupport::TimeZone.new(@time_zone).utc_to_local(DateTime.now.utc).beginning_of_day.to_s
+    @datetime = ActiveSupport::TimeZone.new(@time_zone).utc_to_local(DateTime.now.utc)
+    date = params[:date] || @datetime.beginning_of_day.to_s
     @repository = EventRepository.new(client_timezone, @country, @subkasts)
     @events = @repository.events_from_date(date, 7, 5)
     @all_subkasts = Subkast.by_user(current_user)

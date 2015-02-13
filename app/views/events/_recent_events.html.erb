@@ -2,6 +2,9 @@
 <div class="recent-event-list">
   <% @recent_events.each do |event| %>
     <div class="event-mini">
+      <% if event.started?(@datetime, @time_zone) %>
+        <span class="label label-forekast">Started</span>
+      <% end %>
       <%= link_to event.name, event_path(event) %> - <span class="location-text"><%= event.location_string %></span>
     </div>
   <% end %>
