@@ -5,7 +5,7 @@
       <% if event.started?(@datetime, @time_zone) %>
         <span class="label label-forekast">Started</span>
       <% end %>
-      <%= link_to event.name, event_path(event) %> - <span class="location-text"><%= event.location_string %></span>
+      <%= link_to event.name, event_path(event) %> - <span class="location-text"><%= event.location_string %> - <%= event.date_string(@time_zone) %></span>
     </div>
   <% end %>
 </div>

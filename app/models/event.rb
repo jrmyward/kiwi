@@ -200,6 +200,11 @@ class Event
     return datetime.strftime("%A, %b %-d#{date_suffix(datetime)} %Y, #{pretty_time(timezone)}")
   end
 
+  def date_string(timezone)
+    datetime = get_local_datetime(timezone)
+    datetime.strftime("%b %-d#{date_suffix(datetime)} %Y")
+  end
+
   def date_suffix(datetime)
     date = datetime.day
 

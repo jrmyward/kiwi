@@ -646,11 +646,22 @@ body.not-found {
   .recent-event-list {
     height: 300px;
     overflow: auto;
+    margin-top: 4px;
+    border-top: solid 1px #efefef;
+    border-bottom: solid 1px #efefef;
   }
   .event-mini {
     background-color: #fbfbfd;
     border: solid 1px #efefef;
     padding: 10px;
+
+    &:first-child {
+      border-top: 0;
+    }
+
+    &:last-child {
+      border-bottom: 0;
+    }
 
     .location-text {
       color: #a2a2a2;
