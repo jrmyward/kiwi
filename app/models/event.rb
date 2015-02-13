@@ -97,6 +97,10 @@ class Event
     time_format.blank?
   end
 
+  def started?(datetime, time_zone)
+    datetime > get_local_datetime(time_zone)
+  end
+
   def full_subkast
     Subkast.by_code(subkast).name
   end

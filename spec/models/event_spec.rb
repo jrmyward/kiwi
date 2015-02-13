@@ -51,6 +51,49 @@ describe Event do
     end
   end
 
+  describe 'checking when its started' do
+    let(:all_day) { create :event, :all_day, name: 'E1', local_date: 'Jan 15, 2015' }
+    let(:relative) { create :event, name: 'E2', datetime: DateTime.new(2015, 1, 20, 12, 0, 0) }
+    let(:recurring) { create :event, :recurring, name: 'E3', local_date: 'Jan 15, 2015', local_time: '3:00 PM' }
+    let(:tv_show) { create :event, :tv_show, name: 'E4', local_date: 'Jan 15, 2015', local_time: '6:00 PM' }
+
+    before(:each) do
+      Time.zone = ActiveSupport::TimeZone['America/New_York']
+    end
+
+    it 'knows that an all day event has started on or after the date of the event' do
+      expect(all_day).to be_started(Time.zone.local(2015, 1, 15, 12, 0, 0), 'America/New_York')
+    end
+
+    it 'knows that an all day event has not started before the date of the event' do
+      expect(all_day).not_to be_started(Time.zone.local(2015, 1, 14, 14, 0, 0), 'America/New_York')
+    end
+
+    it 'knows that a relative time event has started after the time of the event' do
+      expect(relative).to be_started(Time.zone.local(2015, 1, 20, 13, 0, 0), 'America/New_York')
+    end
+
+    it 'knows that a relative time event has not started before the time fo the event' do
+      expect(relative).not_to be_started(Time.zone.local(2015, 1, 10, 13, 0, 0), 'America/New_York')
+    end
+
+    it 'knows that a recurring time event has started after the time of the event' do
+      expect(recurring).to be_started(Time.zone.local(2015, 1, 15, 16, 0, 0), 'America/New_York')
+    end
+
+    it 'knows that a recurring time event has not started before the time of the event' do
+      expect(recurring).not_to be_started(Time.zone.local(2015, 1, 15, 13, 0, 0), 'America/New_York')
+    end
+
+    it 'knows that a tv show event has started after the time of the event' do
+      expect(tv_show).to be_started(Time.zone.local(2015, 1, 15, 18, 30, 0), 'America/New_York')
+    end
+
+    it 'knows that a tv show event has not started before the time of the event' do
+      expect(tv_show).not_to be_started(Time.zone.local(2015, 1, 15, 17, 30, 0), 'America/New_York')
+    end
+  end
+
   describe 'datetime getters' do
     let(:all_day_event) { create :event, local_date: Time.local(2014, 1, 24).to_date, is_all_day: true }
     let(:relative_time_event) { create :event, datetime: Time.utc(2014, 1, 24, 3, 0, 0) }
