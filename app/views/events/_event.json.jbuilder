@@ -5,7 +5,6 @@ json.extract! event,
     :updated_at,
     :local_time,
     :local_date,
-    :tv_time,
     :is_all_day,
     :time_format,
     :description,
@@ -21,6 +20,7 @@ json.extract! event,
 json.set! :name, event.name_escaped
 json.set! '_id', event._id.to_s
 json.set! :datetime, event.datetime.utc if event.datetime != nil
+json.set! :tv_time, event.tv_time if event.tv_show?
 json.set! :mediumUrl, event.image.url(:medium)
 json.set! :thumbUrl, event.image.url(:thumb)
 json.set! :originalUrl, event.image.url(:original)
