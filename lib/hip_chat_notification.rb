@@ -16,7 +16,7 @@ class HipChatNotification
     begin
       uri = "http://forekast.com/events/#{reminder.event.id}"
       message = "#{count} Reminders sent for event: #{reminder.event.name} - <a href='#{uri}'>#{uri}</a>"
-      client[CONFIG['hipchat_notifications_room']].send('kiwibot', message, :color => 'blue')
+      client[CONFIG['hipchat_reminders_notifications_room']].send('kiwibot', message, :color => 'blue')
     rescue
       Rails.logger.error "Error in the hipchat API while trying to issue reminder #{reminder.id}."
     end
@@ -28,7 +28,7 @@ class HipChatNotification
     begin
       uri = "http://forekast.com/events/#{reminder.event.id}"
       message = "New reminder created: #{reminder.event.name} - <a href='#{uri}'>#{uri}</a> - by #{reminder.user.username}"
-      client[CONFIG['hipchat_notifications_room']].send('kiwibot', message, :color => 'gray')
+      client[CONFIG['hipchat_reminders_notifications_room']].send('kiwibot', message, :color => 'gray')
     rescue
       Rails.logger.error "Error in the hipchat API while trying to issue reminder #{reminder.id}."
     end
@@ -68,6 +68,7 @@ class HipChatNotification
   def self.is_properly_configured?
     return false unless CONFIG['hipchat_notifications_room'].present?
     return false unless CONFIG['hipchat_comments_notifications_room'].present?
+    return false unless CONFIG['hipchat_reminders_notifications_room'].present?
     return false unless CONFIG['hipchat_api_token'].present?
     return false if Rails.env != 'production'
     true
