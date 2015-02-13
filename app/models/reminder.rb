@@ -16,6 +16,10 @@ class Reminder
     reminder.status = STATUS_PENDING
   end
 
+  after_create do |reminder|
+    HipChatNotification.new_reminder(reminder)
+  end
+
   def refresh_send_at
     event_time = event.get_utc_datetime(recipient_time_zone)
     self.send_at = event_time - 15.minutes if time_to_event == '15m'
@@ -49,6 +53,8 @@ class Reminder
       reminder.update_attributes(status: STATUS_DELIVERED)
       count = count + 1
     end
+
+    HipChatNotification.sent_reminders(self, count)
 
     ::NewRelic::Agent.record_metric('Custom/Reminders/emails_sent', count)
   end

@@ -10,6 +10,30 @@ class HipChatNotification
     end
   end
 
+  def self.sent_reminders(reminder, count)
+    return unless self.is_properly_configured?
+    client = HipChat::Client.new(CONFIG['hipchat_api_token'])
+    begin
+      uri = "http://forekast.com/events/#{reminder.event.id}"
+      message = "#{count} Reminders sent for event: #{reminder.event.name} - <a href='#{uri}'>#{uri}</a>"
+      client[CONFIG['hipchat_notifications_room']].send('kiwibot', message, :color => 'blue')
+    rescue
+      Rails.logger.error "Error in the hipchat API while trying to issue reminder #{reminder.id}."
+    end
+  end
+
+  def self.new_reminder(reminder)
+    return unless self.is_properly_configured?
+    client = HipChat::Client.new(CONFIG['hipchat_api_token'])
+    begin
+      uri = "http://forekast.com/events/#{reminder.event.id}"
+      message = "New reminder created: #{reminder.event.name} - <a href='#{uri}'>#{uri}</a> - by #{reminder.user.username}"
+      client[CONFIG['hipchat_notifications_room']].send('kiwibot', message, :color => 'gray')
+    rescue
+      Rails.logger.error "Error in the hipchat API while trying to issue reminder #{reminder.id}."
+    end
+  end
+
   def self.new_event(event)
     return unless self.is_properly_configured?
     client = HipChat::Client.new(CONFIG['hipchat_api_token'])
