@@ -86,15 +86,15 @@ class Event
   end
 
   def recurring?
-    time_format == 'recurring'
+    !all_day? && time_format == 'recurring'
   end
 
   def tv_show?
-    time_format == 'tv_show'
+    !all_day? && time_format == 'tv_show'
   end
 
   def relative?
-    time_format.blank?
+    !all_day? && time_format.blank?
   end
 
   def full_subkast
