@@ -97,6 +97,10 @@ class Event
     !all_day? && time_format.blank?
   end
 
+  def started?(datetime, time_zone)
+    datetime > get_local_datetime(time_zone)
+  end
+
   def full_subkast
     Subkast.by_code(subkast).name
   end
@@ -194,6 +198,11 @@ class Event
   def datetime_string(timezone)
     datetime = get_local_datetime(timezone)
     return datetime.strftime("%A, %b %-d#{date_suffix(datetime)} %Y, #{pretty_time(timezone)}")
+  end
+
+  def date_string(timezone)
+    datetime = get_local_datetime(timezone)
+    datetime.strftime("%b %-d#{date_suffix(datetime)} %Y")
   end
 
   def date_suffix(datetime)

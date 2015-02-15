@@ -1,8 +1,4 @@
 FactoryGirl.define do 
-  before(:create) do
-    Timecop.freeze(Time.utc(2014, 1, 10, 12, 0, 0))
-  end
-
   factory :reminder do 
     event { create :event, datetime: Time.utc(2014, 1, 10, 12, 0, 0) }
     user { create :user }

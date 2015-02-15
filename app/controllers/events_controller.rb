@@ -21,12 +21,14 @@ class EventsController < ApplicationController
     @subkast = Subkast.by_slug(params[:subkast_slug])
 
     @subkasts = params[:subkasts] || url_subkast || Subkast.by_user(current_user).map(&:code)
-    date = params[:date] || ActiveSupport::TimeZone.new(@time_zone).utc_to_local(DateTime.now.utc).beginning_of_day.to_s
+    @datetime = ActiveSupport::TimeZone.new(@time_zone).utc_to_local(DateTime.now.utc)
+    date = params[:date] || @datetime.beginning_of_day.to_s
     @repository = EventRepository.new(client_timezone, @country, @subkasts)
     @events = @repository.events_from_date(date, 7, 5)
     @all_subkasts = Subkast.by_user(current_user)
     @all_countries = Country.all.sort_by(&:en_name)
     @top_events = @repository.top_ranked_events(date, (DateTime.parse(date) + 7.days).to_s, 10)
+    @recent_events = @repository.most_recent_events(50)
 
     render :index
   end

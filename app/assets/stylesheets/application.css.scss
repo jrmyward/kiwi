@@ -489,7 +489,7 @@ body.not-found {
     a.event-name {
       color: #049ADA;
       cursor: pointer;
-        font-weight: 600;
+      font-weight: 600;
       &:hover {
         text-decoration: none;
       }
@@ -625,9 +625,8 @@ body.not-found {
   padding: 0;
 }
 .sidebar {
+  margin-top: 36px;
   width: 350px;
-  margin: 0;
-  padding: 18px 15px 0;
   h5 {
     font-weight: 600;
     font-size: 16px;
@@ -638,7 +637,50 @@ body.not-found {
   ol {
     padding-left: 22px;
   }
+
+  .recent-event-heading {
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  .recent-event-list {
+    height: 300px;
+    overflow: auto;
+    margin-top: 4px;
+    border-top: solid 1px #efefef;
+    border-bottom: solid 1px #efefef;
+  }
+  .event-mini {
+    background-color: #fbfbfd;
+    border: solid 1px #efefef;
+    padding: 10px;
+
+    &:first-child {
+      border-top: 0;
+    }
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    .location-text {
+      color: #a2a2a2;
+    }
+
+    a {
+      color: #049ADA;
+      text-decoration: none;
+    }
+  }
+  .label-forekast {
+    background-color: #dedede;
+    color: #8d8d8d;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    font-weight: normal;
+  }
   #subkast-filter {
+    padding: 20px 0 0;
     h5 {
       padding-top: 0;
     }

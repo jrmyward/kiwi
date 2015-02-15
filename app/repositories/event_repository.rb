@@ -27,6 +27,14 @@ class EventRepository
     events_by_range(from_date, to_date, how_many_events)
   end
 
+  def most_recent_events(how_many)
+    Event.any_of({ location_type: 'international' }, { location_type: 'national', country: @country }).
+    any_in({ subkast: @subkasts }).
+    limit(how_many).
+    desc(:created_at).
+    to_a
+  end
+
   # temporary implementation for backwards compatibility
   def self.events_on_date_by_offset(datetime, zone_offset, country, subkasts, how_many, skip)
     start_date = datetime.beginning_of_day
