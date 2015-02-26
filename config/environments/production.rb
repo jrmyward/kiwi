@@ -68,7 +68,7 @@ Kiwi::Application.configure do
 
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-  config.assets.precompile += %w(home_page_base.js show_page_base.js form_page_base.js weekly.js weekly.css time_zone_set.js newsletter_banner.css)
+  config.assets.precompile += %w(home_page_base.js show_page_base.js form_page_base.js weekly.js weekly.css time_zone_set.js newsletter_banner.css newsletter_banner.js)
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
