@@ -49,7 +49,7 @@ class HipChatNotification
   def self.new_comment(comment)
     return unless self.is_properly_configured?
     client = HipChat::Client.new(CONFIG['hipchat_api_token'])
-    uri = "http://forekast.com/events/#{comment.event.id}."
+    uri = "http://forekast.com/events/#{comment.event.id}"
 
     if comment.message.size > 30
       comment_message = "#{comment.message[0..29]}..."

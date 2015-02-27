@@ -100,6 +100,18 @@ describe Event do
     let(:tv_show_event) { create :event, local_date: Time.local(2014, 1, 24).to_date, local_time: '6:00 PM', time_format: 'tv_show' }
     let(:recurring_time_event) { create :event, local_date: Time.local(2014, 1, 24).to_date, local_time: '6:00 PM', time_format: 'recurring' }
 
+    describe 'event#datetime_string' do
+      let(:another_event) { create :event, local_date: Time.local(2014, 3, 11).to_date, is_all_day: true }
+
+      it 'maps the ordinal correctly for 24th' do
+        expect(all_day_event.datetime_string('America/New_York')).to eq 'Friday, Jan 24th 2014, All Day'
+      end
+
+      it 'maps the 11th' do
+        expect(another_event.datetime_string('America/New_York')).to eq 'Tuesday, Mar 11th 2014, All Day'
+      end
+    end
+
     describe 'get utc datetime' do
       it 'should be able to get the utc datetime of an all day event' do
         all_day_event.get_utc_datetime('America/New_York').should == Time.utc(2014, 1, 24, 5, 0, 0)

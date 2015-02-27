@@ -206,15 +206,7 @@ class Event
   end
 
   def date_suffix(datetime)
-    date = datetime.day
-
-    digit = date % 10
-
-    return 'st' if digit == 1
-    return 'nd' if digit == 2
-    return 'rd' if digit == 3
-
-    'th'
+    datetime.day.ordinal
   end
 
   def pretty_time(timezone)
