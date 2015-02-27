@@ -7,7 +7,7 @@ $(document).ready(function() {
     }
     else {
     	$('.newsletter-bar').removeClass('hidden');
-        $('.close-button').on('click', function() { 
+        $('.newsletter-close-button').on('click', function() { 
             $('.newsletter-bar').remove(); 
             $.cookie('forekast_closed_newsletter_bar', 'true', { expires: 50*365, path: '/' });
         });
