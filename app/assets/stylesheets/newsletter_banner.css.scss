@@ -1,34 +1,20 @@
-* {
-    background: 0 0;
-    border: none;
-    outline: 0;
-    list-style: none;
-    resize: none;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-}
-a {
-    font-family: 'Nunito';
-    color: #439FE0;
-}
-a:hover {
-    color: #439FE0;
-}
 .newsletter-bar {
-    font-family: 'Nunito';
-    height: auto;
+    font-family: 'Open Sans', sans-serif;
     display: block;
     padding: 10px;
-    box-sizing: border-box;
     background-color: #F6E7DD;
     color: white;
     border-radius: 5px;
     margin: 80px auto 0px auto;
-    width: 900px;
-    height: 50px;
+    width: 925px;
+    height: 52px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
-
+.hidden { 
+    display: none; 
+}
 .newsletter-bar h3 {
     display: block;
     float: left;
@@ -38,15 +24,25 @@ a:hover {
     position: relative;
     top: -13px;
 }
-.hidden { 
-    display: none; 
+.newsletter-link {
+    font-family: 'Open Sans', sans-serif;
+    color:#439FE0;
+    font-weight: 600;
 }
-.close-button {
+.newsletter-link:hover {
+    color:#439FE0;
+    text-decoration: underline;
+}
+.newsletter-close-button {
     float: right;
     cursor: pointer;
-    color: #aaa;
+    color: #bbb;
+    font-weight: 600;
     position: relative;
-    top: 3px;
+    top: 5px;
+    border: none;
+    background: none;
+
 }
 .close-button:hover {
     opacity: .6;
@@ -56,10 +52,11 @@ a:hover {
     float: left;
 }
 .newsletter-form-input {
+    border: none;
     background-color: #FFF;
-    font-family: 'Nunito',sans-serif;
+    font-family: 'Open Sans',sans-serif;
     padding: 5px;
-    font-weight: 100;
+    font-weight: 400;
     color: #555459;
     border-radius: 4px;
     width: 200px;
@@ -67,18 +64,21 @@ a:hover {
     font-size: 15px;
 }
 .newsletter-form-submit {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
     background-color: #E26703;
+    border: none;
     border-bottom: 2px solid #B15204;
-    font-family: 'Nunito' ,sans-serif;
-    padding: 5px;
+    font-family: 'Open Sans' ,sans-serif;
+    padding: 5px 10px;
     border-radius: 4px;
-    font-weight: 100;
+    font-weight: 400;
     color: #FFF;
     cursor: pointer;
     margin-right: 10px;
+    position: relative;
+    top: -2px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 .display-inline-block { 
     display: inline-block; 
@@ -88,6 +88,8 @@ a:hover {
 }
 .newsletter-form-submit:active {
     border-bottom: 1px solid #194BA3;
-    margin-top: 1px;
+    top: -1px;
 }
+
+
 
