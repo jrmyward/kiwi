@@ -13,5 +13,10 @@
   </div>
   <div data-reminder-component data-event-id="<%= event.id %>" data-times="<%= event.reminders_for_user(current_user).map(&:time_to_event).to_json %>" data-logged-in="<%= current_user.present? %>" class="reminder-container">
   </div>
+  <div class="calendar-container">
+    <%= link_to(event_path(event, format: 'ics'), style:'color:#000000') do %>
+      <i class="glyphicon glyphicon-calendar"></i>
+    <% end %>
+  </div>
   <div class='clearfix'></div>
 </div>

@@ -13,6 +13,12 @@ GIT
     jasminerice (0.1.0)
       coffee-rails
 
+GIT
+  remote: https://github.com/icalendar/icalendar.git
+  revision: b699701bc9988f7b6bfa17c6b0e26637b3e6ce87
+  specs:
+    icalendar (2.2.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -405,6 +411,7 @@ DEPENDENCIES
   guard-rspec
   guard-spork
   hipchat
+  icalendar!
   jasminerice!
   jbuilder (~> 1.2)
   jquery-rails

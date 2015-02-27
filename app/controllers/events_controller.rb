@@ -70,6 +70,12 @@ class EventsController < ApplicationController
       # keep format.html first so facebook doesn't have a crawling problem when it's liked
       format.html
       format.json
+      format.ics do
+        cal = Icalendar::Calendar.new
+        cal.add_event(@event.to_ics)
+        cal.publish
+        render :text => cal.to_ical
+      end
     end
   end
 

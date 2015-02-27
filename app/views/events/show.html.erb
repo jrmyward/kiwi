@@ -29,6 +29,11 @@
         <div class="event-tools-container clearfix">
           <div class="pull-left" data-upvote-component data-upvote-count="<%= @event.upvote_count %>" data-upvoted="<%= @event.upvoted?(current_user) %>" data-event-id="<%= @event.id %>" data-logged-in="<%= current_user.present? %>"></div>
           <div class="pull-left reminder-container" style="margin-left: 5px;" data-reminder-component data-event-id="<%= @event.id %>" data-times="<%= @event.reminders_for_user(current_user).map(&:time_to_event).to_json %>" data-logged-in="<%= current_user.present? %>"></div>
+          <div class="pull-left calendar-container" style="margin-left:5px;">
+          <%= link_to(event_path(@event, format: 'ics'), style:'color:#000000') do %>
+            <i class="glyphicon glyphicon-calendar"></i>
+          <% end %>
+          </div>
           <% if can? :update, @event %>
             <div class="event-tool-container">
               <%= link_to "(Edit #{(current_user.username == @event.user) ? 'my' : ''} event)", edit_event_path(@event), class: 'event-tool' %>

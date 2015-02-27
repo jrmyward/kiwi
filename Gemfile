@@ -55,6 +55,8 @@ gem 'will_paginate_mongoid'
 
 gem 'open_uri_redirections'
 
+gem 'icalendar', :git => 'https://github.com/icalendar/icalendar.git'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

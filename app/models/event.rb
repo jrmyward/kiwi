@@ -59,6 +59,21 @@ class Event
     end
   end
 
+  def to_ics
+    e = Icalendar::Event.new
+    if all_day?
+      e.dtstart     = Icalendar::Values::Date.new(self.datetime.strftime("%Y%m%d"))
+      e.dtend       = Icalendar::Values::Date.new(self.datetime.strftime("%Y%m%d"))
+    else
+      e.dtstart     = Icalendar::Values::DateTime.new(self.datetime.strftime("%Y%m%dT%H%M%S"))
+      e.dtend       = Icalendar::Values::DateTime.new(self.datetime.strftime("%Y%m%dT%H%M%S"))
+    end
+    e.summary     = self.name
+    e.description = self.description
+    e.ip_class    = "PRIVATE"
+    e
+  end
+
   def country_name
     Country.find_by(code: country).en_name
   end
