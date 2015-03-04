@@ -26,3 +26,4 @@
 //= require browser_timezone_rails/application.js
 //= require home_page
 //= require event_form
+//= require jquery_cookie

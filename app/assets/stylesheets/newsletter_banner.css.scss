@@ -42,9 +42,8 @@
     top: 5px;
     border: none;
     background: none;
-
 }
-.close-button:hover {
+.newsletter-close-button:hover {
     opacity: .6;
 }
 .newsletter-form-object {
@@ -79,6 +78,15 @@
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+}
+.newsletter-form-input:focus {
+    outline: 0;
+}
+.newsletter-form-submit:focus {
+    outline: 0;
+}
+.newsletter-close-button:focus {
+    outline: 0;
 }
 .display-inline-block { 
     display: inline-block; 

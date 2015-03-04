@@ -1,5 +1,3 @@
-//= require jquery_cookie
-
 $(document).ready(function() {
     var closedNewsletterBar = $.cookie('forekast_closed_newsletter_bar');
     if (closedNewsletterBar === 'true') {
