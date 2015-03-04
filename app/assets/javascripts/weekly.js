@@ -1,24 +1,15 @@
 //= require jquery
-//= require weekly/mc-validation
-//= require weekly/smoothscroll.js
-//= require weekly/jquery.lettering-0.6.min.js
-//= require weekly/circletype.js
-//= require weekly/jquery.fittext.js
 
-
-$(document).scroll(function () {
-    var y = $(this).scrollTop();
-    if (y > 400) {
-        $('#navigation').fadeIn();
-    } else {
-        $('#navigation').fadeOut();
-    }
+var animateIntegrations = function() {
+    var integrationSequence = 0,
+        integrationLimit = jQuery(".em-integration li").length - 1;
+    setInterval(function() {
+        jQuery(".em-integration li").eq(integrationSequence).hide(),
+            integrationSequence = integrationSequence ==
+            integrationLimit ? 0 : integrationSequence + 1, jQuery(
+                ".em-integration li").eq(integrationSequence).fadeIn()
+    }, 1e3)
+};
+jQuery(document).on("ready", function() {
+    animateIntegrations()
 });
-
-$(document).ready(function() {
-    $(".curve-text").lettering();
-  });
-
-$(document).ready(function() {
-	$(".curve-text").circleType({fitText: true, radius: 2000});
-  });

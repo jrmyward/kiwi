@@ -2,24 +2,38 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The Weekly Forekast – The Best Upcoming Events Straight To Your Inbox">
-    <meta name="author" content="Forekast.com">
+    <!-- title -->
+    <title>The Weekly Forekast | A list of the best things happening every week.</title>
+    <meta name="description" content="A weekly email newsletter of notable upcoming events, curated by the Forekast.com community, and delivered right to your inbox!">
+    <!-- meta viewport to enable responsive designs on mobiles and tablets -->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">-->
+    <script src="//use.typekit.net/wec7wgn.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
 
-    <link rel="icon" href=<%= asset_path("favicon.ico") %> type="image/x-icon"/>
-    <link rel="shortcut icon" href=<%= asset_path("favicon.ico") %> type="image/x-icon"/>
-    <title>The Weekly Forekast</title>
+    <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
 
+    <!-- fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Satisfy|Leckerli+One|Damion' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Nunito:400,300,700' rel='stylesheet' type='text/css'>
 
-    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic|Raleway:400,300,700|Montserrat:400,700' rel='stylesheet' type='text/css'>
   <%= stylesheet_link_tag    "weekly.css", media: "all" %>
   <%= csrf_meta_tags %>
 
-
   </head>
-  <body data-spy="scroll" data-offset="0" data-target="#navigation">
+  <body>
 <%= yield %>
   <%= javascript_include_tag "weekly.js" %>
-  <script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));</script>
+    
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-48033129-3', 'auto');
+    ga('send', 'pageview');
+    </script>
+
   </body>
 </html>
