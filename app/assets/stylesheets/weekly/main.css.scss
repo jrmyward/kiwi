@@ -45,7 +45,7 @@ h1 h2 h3 h4 h5 h6 {
     margin: 0 auto;
 }
 .section-1 {
-    background-image: url('background.png');
+    background-image: url(asset-path('weekly/background.png'));
     background-repeat: no-repeat;
     background-size: cover;
     background-position: bottom;
@@ -55,7 +55,7 @@ h1 h2 h3 h4 h5 h6 {
     padding-top: 30px;
 }
 .logo {
-    background-image: url(../img/forekast-logo-white-sm-OFF.png);
+    background-image: url(asset-path('../img/forekast-logo-white-sm-OFF.png'));
     background-repeat: no-repeat;
     background-position: 0 0;
     width: 150px;
@@ -63,7 +63,7 @@ h1 h2 h3 h4 h5 h6 {
 }
 @media (-webkit-min-device-pixel-ratio:2),(min-resolution:192dpi) { 
     .logo {
-        background-image: url(../img/forekast-logo-white-2X-OFF.png);
+        background-image: url(asset-path('../img/forekast-logo-white-2X-OFF.png'));
         background-size: 150px 50px;
     }
 }
@@ -292,18 +292,18 @@ text-decoration: underline;
     height: 45px;
     width: 150px;
 }
-.product-hunt-logo { background-image: url('product-hunt-logo-sm.png') }
-.lifehacker-logo { background-image: url('lifehacker-logo-sm.png') }
-.reddit-logo { background-image: url('reddit-logo-sm.png') }
-.laughing-squid-logo { background-image: url('laughing-squid-logo-sm.png') }
-.awesomer-logo { background-image: url('awesomer-logo-sm.png') }
+.product-hunt-logo { background-image: url(asset-path('weekly/product-hunt-logo-sm.png')) }
+.lifehacker-logo { background-image: url(asset-path('weekly/lifehacker-logo-sm.png')) }
+.reddit-logo { background-image: url(asset-path('weekly/reddit-logo-sm.png')) }
+.laughing-squid-logo { background-image: url(asset-path('weekly/laughing-squid-logo-sm.png')) }
+.awesomer-logo { background-image: url(asset-path('weekly/awesomer-logo-sm.png')) }
 @media (-webkit-min-device-pixel-ratio:2),(min-resolution:192dpi) { 
     .startup-logo { background-size: 150px 45px }
-    .product-hunt-logo { background-image: url('product-hunt-logo-2X.png') }
-    .lifehacker-logo { background-image: url('lifehacker-logo-2X.png') }
-    .reddit-logo { background-image: url('reddit-logo-2X.png') }
-    .laughing-squid-logo { background-image: url('laughing-squid-logo-2X.png') }
-    .awesomer-logo { background-image: url('awesomer-logo-2X.png') }
+    .product-hunt-logo { background-image: url(asset-path('weekly/product-hunt-logo-2X.png')) }
+    .lifehacker-logo { background-image: url(asset-path('weekly/lifehacker-logo-2X.png')) }
+    .reddit-logo { background-image: url(asset-path('weekly/reddit-logo-2X.png')) }
+    .laughing-squid-logo { background-image: url(asset-path('weekly/laughing-squid-logo-2X.png')) }
+    .awesomer-logo { background-image: url(asset-path('weekly/awesomer-logo-2X.png')) }
 }
 .section-6-testimonial {
     padding: 40px 0;
