@@ -99,7 +99,9 @@ class EventsController < ApplicationController
   def get_time_zone
     return unless request.format == 'html'
     return if browser_timezone.present?
-    redirect_to "/welcome?continue=#{request.path}"
+    return if params[:time_zone].present?
+    return if params[:assume_time_zone].present?
+    return redirect_to "/welcome?continue=#{request.path}"
   end
 
   def client_timezone
