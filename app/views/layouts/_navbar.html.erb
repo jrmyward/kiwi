@@ -12,16 +12,16 @@
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li class="tagline hidden-xs">
-          The Crowdsourced Calendar of the Internet
+          Crowdsourced Calendar of the Internet
         </li>
-        <li class="what-is-global hidden-xs" data-toggle="tooltip" title="Global events are those that are not restricted by location - events people can watch, listen to, or take part in no matter where they live." data-placement="bottom">
-          <a href="#">What is a global event?</a>
-        </li>
-        <li data-option="new">
-          <%= link_to '+ Add Event', new_event_path, class: 'btn add-new btn-default' %>
+        <li class="what-is-global hidden-xs" data-toggle="tooltip" title="Forekast is for events that are not restricted by location - events people may watch, listen to, care about or take part in no matter where they live." data-placement="bottom">
+          <a href="#">What?</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li data-option="new">
+          <%= link_to '+ Add Event', new_event_path, class: 'btn add-new btn-default' %>
+        </li>
         <% if (current_user.present?) %>
           <li>
             <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><%= current_user.username %> <span class="caret"></span></a>
@@ -35,8 +35,8 @@
             Get the weekly event Forekast to your inbox!
           </li>
           <li class="newsletter-arrow hidden-xs"></li> -->
-          <li><a href="<%=new_user_registration_path%>" class="btn btn-focus" href="">Join the Community</a></li>
-          <li><a href="<%=new_user_session_path %>" class="btn btn-alt">Log In</a></li>
+          <li><a href="<%=new_user_registration_path%>" class="btn btn-focus join-btn" href="">Join the Community</a></li>
+          <li><a href="<%=new_user_session_path %>" class="btn btn-alt log-in">Log In</a></li>
         <% end %>
       </ul>
     </div>

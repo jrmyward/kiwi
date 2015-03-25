@@ -1,16 +1,27 @@
 <div class="event">
   <div class='upvote-container pull-left' data-upvote-component data-upvote-count="<%= event.upvote_count %>" data-upvoted="<%= event.upvoted?(current_user) %>" data-event-id="<%=event.id%>" data-logged-in="<%= current_user.present? %>">
   </div>
-  <div class='image-container pull-left'>
+<!--   <div class='image-container pull-left'>
     <%= link_to event_path(event), class: 'event-image' do %>
       <img src='<%=event.image.url(:thumb)%>' /></a>
     <% end %>
-  </div>
+  </div> -->
   <div class='meta-container pull-left'>
-    <a class='event-name' href="<%=event_path(event)%>"><%=event.name%></a><span class="event-info"> - <%=event.pretty_time(@time_zone)%></span><br />
-    <span class='event-meta'>Added by <%=event.user%> - <%=event.full_subkast%> <% if event.comment_count > 0 %> - <%= pluralize(event.comment_count, 'comment') %><% end %> - <%=event.location_string %>
+    <a class='event-name' href="<%=event_path(event)%>"><%=event.name%></a><br />
+    <span class="event-info"><%=event.pretty_time(@time_zone)%></span> - <span class='event-meta'>Added by <%=event.user%> to <%=event.full_subkast%> <!-- <% if event.comment_count > 0 %> - <%= pluralize(event.comment_count, 'comment') %><% end %> --> - <%=event.location_string %>
     </span>
   </div>
+<!--   <% if event.comment_count > 0 %>
+    <a href="<%=event_path(event)%>"><div class="glyphicon glyphicon-comment event-block-comments"><h5><%=event.comment_count %></h5></div></a>
+  <% end %> -->
+  <% if event.comment_count > 0 %>
+    <div class = "comment-bubble-container">
+      <a href="<%=event_path(event)%>">
+        <div class="glyphicon glyphicon-comment event-block-comments"></div>
+        <div class="comment-count"><%=event.comment_count %></div>
+      </a>
+    </div>
+  <% end %>
   <div data-reminder-component data-event-id="<%= event.id %>" data-times="<%= event.reminders_for_user(current_user).map(&:time_to_event).to_json %>" data-logged-in="<%= current_user.present? %>" class="reminder-container">
   </div>
   <div class='clearfix'></div>
