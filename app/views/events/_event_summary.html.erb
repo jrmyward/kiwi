@@ -1,19 +1,18 @@
 <div class="event">
   <div class='upvote-container pull-left' data-upvote-component data-upvote-count="<%= event.upvote_count %>" data-upvoted="<%= event.upvoted?(current_user) %>" data-event-id="<%=event.id%>" data-logged-in="<%= current_user.present? %>">
   </div>
-<!--   <div class='image-container pull-left'>
-    <%= link_to event_path(event), class: 'event-image' do %>
+<!-- TESTING REMOVAL OF IMAGE TO MAKE TITLES THE FOCUS
+   <div class='image-container pull-left'>
+      <%= link_to event_path(event), class: 'event-image' do %>
       <img src='<%=event.image.url(:thumb)%>' /></a>
     <% end %>
-  </div> -->
+  </div> 
+-->
   <div class='meta-container pull-left'>
     <a class='event-name' href="<%=event_path(event)%>"><%=event.name%></a><br />
-    <span class="event-info"><%=event.pretty_time(@time_zone)%></span> - <span class='event-meta'>Added by <%=event.user%> to <%=event.full_subkast%> <!-- <% if event.comment_count > 0 %> - <%= pluralize(event.comment_count, 'comment') %><% end %> --> - <%=event.location_string %>
+    <span class="event-info"><%=event.pretty_time(@time_zone)%></span> - <span class='event-meta'>Added by <%=event.user%> to <%=event.full_subkast%> <!-- TESTING NEW COMMENT STYLE BELOW  <% if event.comment_count > 0 %> - <%= pluralize(event.comment_count, 'comment') %><% end %> --> - <%=event.location_string %>
     </span>
   </div>
-<!--   <% if event.comment_count > 0 %>
-    <a href="<%=event_path(event)%>"><div class="glyphicon glyphicon-comment event-block-comments"><h5><%=event.comment_count %></h5></div></a>
-  <% end %> -->
   <% if event.comment_count > 0 %>
     <div class = "comment-bubble-container">
       <a href="<%=event_path(event)%>">

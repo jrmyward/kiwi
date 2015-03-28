@@ -174,12 +174,12 @@ body.not-found {
 
 .navbar .btn-focus,
 .btn-focus {
-  background: darken($active, 10%);
+  background: $active;
   color: $activeText;
-  border: 1px solid darken($active, 10%);
+  border: 1px solid $active;
   box-shadow: none !important;
   &:hover {
-    background: darken($active, 15%);
+    background: darken($active, 3%);
     color: $activeText;
   }
 }
@@ -218,14 +218,13 @@ body.not-found {
 .navbar-container {
   .navbar-collapse {
     padding: 0 !important;
-    margin-right: 20px;
     .tagline {
       color: #bbb;
-      font-size: 22px;
+      font-size: 15px;
       padding: 0 20px 0 0;
-      line-height: 56px;
+      line-height: 60px;
       position: relative;
-      top: 6px;
+      top: 1px;
     }
     .nav .what-is-global > a {
       color: #bbb;
@@ -240,7 +239,9 @@ body.not-found {
     .nav .what-is-global > a:hover {
       background: none;
     }
-/*    .nav .newsletter {
+/* REMOVED 'GET WEEKLY NEWSLETTER' ARROW & TEXT ON NAVBAR
+
+   .nav .newsletter {
       color: #FFF;
       display: block;
       padding: 17px 0 10px;
@@ -265,18 +266,16 @@ body.not-found {
   height: 35px;
   .forekast-navbar {
     border-width: 0;
-    padding: 15px 15px 0 15px;
+    padding: 10px;
   }
   a.logo {
     display: block;
-    width: 193px;
-    height: 77px;
+    width: 150px;
+    height: 60px;
     background: transparent url(asset-path('forekast_logo_new.png')) no-repeat;
     background-size: 100%;
     text-indent: -999px;
     overflow: hidden;
-    position: relative;
-    top: -5px;
   }
   .forekast-navbar {
     background-color: #fff;
@@ -311,8 +310,9 @@ body.not-found {
       }*/
     }
     .navbar-right {
-      position:relative;
-      top: 11px;
+      position: relative;
+      top: 2px;
+      right: 15px;
       li a {
       margin: 11px 10px 0px 0px;
       }
@@ -331,15 +331,15 @@ body.not-found {
       color: #bbb;
       box-shadow: none !important;
       border: none !important;
-      font-size: 18px;
+      font-size: 15px;
       &:hover{
-        color: #48A0DE;
+        color: $active;
       }
     }
     .log-in {
       background-color: transparent;
       color: #bbb;
-      font-size: 18px;
+      font-size: 15px;
       border: none !important;
       box-shadow: none !important;
       &:hover {
@@ -387,12 +387,12 @@ body.not-found {
     }
   }
   .subkast-navbar {
-    top: 92px;
+    top: 80px;
     min-height: initial;
     height: 32px;
     line-height: 32px;
     border: 0;
-    padding: 0 0 0 20px;
+    padding-left: 10px;
     background-color: #B6C8CF;
     .subkast-header {
       color: #6A7E97;
@@ -457,10 +457,9 @@ body.not-found {
 /* EVENTS */
 
 .event-block {
-  margin-top: 50px;
+  margin-top: 25px;
   h3 {
     color: #444;
-    margin-top: 36px;
     margin-bottom: 0;
     font-size: 20px;
     font-weight: 600;
@@ -499,9 +498,11 @@ body.not-found {
 .event {
   padding: 7px;
   position: relative;
+  margin-bottom: 10px;
+  background-color: #f7f7f7;
+  border-radius: 5px;
   &:hover {
     background-color: #E7F2FB;
-    border-radius: 5px;
   }
   .upvote-container {
     height: 40px;
@@ -513,7 +514,8 @@ body.not-found {
   img {
     cursor: pointer;
   }
-/*  .image-container {
+/*  REMOVED IMAGE FROM FRONT PAGE
+  .image-container {
     margin-right: 15px;
     margin-bottom: 10px;
     width: 80px;
@@ -712,7 +714,7 @@ body.not-found {
   padding: 0;
 }
 .sidebar {
-  margin-top: 50px;
+  margin-top: 25px;
   width: 350px;
   h5 {
     font-weight: 600;
@@ -799,7 +801,7 @@ body.not-found {
         cursor: pointer;
         color: #bbb;
         &:hover {
-          color: #48A0DE;
+          color: $active;
         }
       }
     }
@@ -1434,7 +1436,6 @@ div.label {
 }
 .login-container,
 .signup-container {
-  width: 100%;
   margin: 0;
   .login-subcontainer,
   .signup-subcontainer {
@@ -1445,7 +1446,6 @@ div.label {
       margin: 20px 0;
     }
     .sign-up {
-      width: 400px;
       margin: 0 auto;
       .form-group {
         label.control-label {
@@ -1462,8 +1462,7 @@ div.label {
         }
         div.remember-me {
           width: 300px;
-          padding: 0;
-          margin: 0 0 0 100px;
+          padding: 5px 0 0 0;
           text-align: left;
         }
       }
@@ -1471,7 +1470,6 @@ div.label {
   }
   .signup-subcontainer {
     .sign-up {
-      width: 475px;
       .form-group {
         label.control-label {
           width: 175px;
@@ -1489,28 +1487,25 @@ div.label {
   }
 }
 .formlegend {
-  border-top: 1px solid #666;
   margin: 30px 0 20px;
   div {
     text-align: center;
     background: #FFF;
     width: auto;
     margin: 0 auto;
-    margin-top: -10px;
+    margin-top: -20px;
     width: 150px;
-    font-weight: bold;
+    color: #bbb;
+    font-size: 20px;
   }
 }
 .omniauth-login {
-  width: 100%;
-  height: 80px;
+  height: 200px;
   margin: 20px auto;
   padding-left: 0;
   li {
     list-style: none;
-    width: 48%;
-    float: left;
-    height: 80px;
+    height: 100px;
     a {
       font-weight: lighter;
       color: #FFF;
@@ -1521,7 +1516,7 @@ div.label {
     a span.txt {
       display: block;
       line-height: 80px;
-      text-indent: 20px;
+      text-align: center;
     }
     span.icon {
       font-size: 40px;
@@ -1533,21 +1528,22 @@ div.label {
     }
   }
   li.twitter {
-    margin-right: 2%;
+    margin: auto;
   }
   li.twitter a {
     background: #90C7E7;
+    border-radius: 5px;
   }
   li.twitter a:hover {
     background: darken(#90C7E7, 5%);
     text-decoration: none;
   }
   li.facebook {
-    margin-left: 2%;
+    margin: auto;
   }
   li.facebook a {
     background: #7690BC;
-    margin-left: 2%;
+    border-radius: 5px;
     span.icon {
       padding-left: 15px;
       padding-right: 25px;
@@ -1579,6 +1575,9 @@ div.label {
   .form-footer {
     text-align: center;
   }
+}
+.form-control {
+  margin-bottom: 10px;
 }
 
 /* DARK THEME */
@@ -1741,7 +1740,7 @@ body.dark .container {
 }
 
 // Handheld
-@media only screen and (max-width: 991px) {
+@media only screen and (max-width: 1000px) {
   .forekast-navbar {
     padding: 0 !important;
     margin: 0 !important;
@@ -1755,7 +1754,7 @@ body.dark .container {
       padding: 0;
       margin: 20px 20px 0 0;
       .icon-bar {
-        background: #FFF;
+        background: $active;
       }
     }
   }

@@ -1,48 +1,39 @@
 <div id="container" class="container">
   <div class="row login-container">
-    <div class="col-md-10 login-subcontainer">
-      <h3>Log In</h3>
-      <%- if devise_mapping.omniauthable? %>
-        <ul class="omniauth-login">
-        <%- resource_class.omniauth_providers.each do |provider| %>
-          <li class="<%= provider %>">
-          <%= link_to "<span class=\"icon icon-#{provider}\"></span><span class=\"txt\">Login in with #{provider.to_s.titleize} </span>".html_safe, user_omniauth_authorize_path(provider), class: provider %></li>
-        <% end -%>
-      </ul>
-      <% end -%>
-      <div class="formlegend">
-        <div>Or via email</div>
-      </div>
+    <div class="col-md-4 col-md-offset-4 login-subcontainer">
+       <h3>Log In</h3>
       <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => 'form-horizontal sign-up' }) do |f| %>
         <% if alert.present? %>
           <div class="row">
-            <div class="alert alert-warning col-md-12">
+            <div class="alert alert-warning">
             <p> <%= alert %></p>
             </div>
           </div>
         <% end %>
-        <div class="form-group">
-          <%= f.label  :login, class: 'col-sm-2 control-label' %>
-          <div class="col-sm-offset-0 col-sm-4">
-            <%= f.text_field :login, class: 'form-control', :autofocus => true, value: params[:user].nil? ? '' : params[:user][:login] %>
-          </div>
-        </div>
-        <div class="form-group">
-          <%= f.label :password, class: 'col-sm-2 control-label' %>
-          <div class="col-sm-offset-0 col-sm-4">
-            <%= f.password_field :password, class: 'form-control' %>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-sm-offset-2 remember-me">
+
+            <%= f.text_field :login, class: 'form-control', :autofocus => true, :placeholder => "username", value: params[:user].nil? ? '' : params[:user][:login] %>
+
+            <%= f.password_field :password, class: 'form-control', :placeholder => "password" %>
+
+            <%= f.submit "Log in", class: 'btn btn-focus btn-block log-in-btn' %>
+
             <%= f.label :remember_me do %>
               <%= f.check_box :remember_me, checked: true %> Remember me
             <% end -%>
-          </div>
-        </div>
 
-        <center><%= f.submit "Log in", class: 'btn btn-focus' %></center>
       <% end %>
+
+    <div class="formlegend">
+      <div>Or via</div>
+    </div>
+      <%- if devise_mapping.omniauthable? %>
+        <ul class="omniauth-login">
+        <%- resource_class.omniauth_providers.each do |provider| %>
+          <li class="<%= provider %>">
+          <%= link_to "<span class=\"icon icon-#{provider}\"></span><span class=\"txt\">Login with #{provider.to_s.titleize} </span>".html_safe, user_omniauth_authorize_path(provider), class: provider %></li>
+        <% end -%>
+      </ul>
+      <% end -%>
       <hr />
       <div class="forgot-password">
         <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>

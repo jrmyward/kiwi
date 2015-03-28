@@ -1,12 +1,22 @@
-<h2>Forgot your password?</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h3>Forgot your password?</h3>
+            <p>Enter the email address you used when you joined and we’ll send you instructions to reset your password.</p>
+			
+			<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
+        <% if resource.errors.present? %>
+          <div class="alert alert-warning">
+            <p> <%= devise_error_messages! %></p>
+          </div>
+        <% end %>
 
-  <div><%= f.label :login %><br />
-  <%= f.email_field :login, :autofocus => true %></div>
+  			<div><%= f.email_field :login, :autofocus => true, :placeholder => 'email address', :class => 'form-control'%></div>
 
-  <div><%= f.submit "Send me reset password instructions" %></div>
-<% end %>
+  			<div><%= f.submit "Send Reset Instructions", :class => 'btn btn-focus btn-block' %></div>
+			<% end %>
+        </div>
+    </div>
+</div>
 
-<%= render "devise/shared/links" %>
